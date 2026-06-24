@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Spectral:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Space+Mono:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  html,body{margin:0;padding:0;height:100%;background:#E7DCC4;overflow:hidden;}
+  *{box-sizing:border-box;}
+  @keyframes washIn{0%{opacity:.45;filter:blur(11px)}100%{opacity:1;filter:blur(0)}}
+</style>
+<script src="./image-slot.js"></script>
+</helmet>
+<div style="position:relative;width:100vw;height:100vh;overflow:hidden;font-family:'Spectral',Georgia,serif;background:radial-gradient(circle at 28% 18%, rgba(255,255,255,.34), transparent 58%), radial-gradient(circle at 82% 86%, rgba(40,24,8,.07), transparent 55%), #E7DCC4;">
+
+  <!-- ADJUSTABLE GRAIN -->
+  <div data-grain style="position:absolute;inset:0;pointer-events:none;z-index:2;opacity:0;mix-blend-mode:overlay;">
+    <svg style="width:100%;height:100%;display:block;" xmlns="http://www.w3.org/2000/svg">
+      <filter id="sgf" x="0" y="0" width="100%" height="100%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.72 0.65" numOctaves="4" stitchTiles="stitch" result="noise"></feTurbulence>
+        <feColorMatrix in="noise" type="saturate" values="0" result="mono"></feColorMatrix>
+      </filter>
+      <rect width="100%" height="100%" filter="url(#sgf)" fill="#7a5820"></rect>
+    </svg>
+  </div>
+
+  <!-- THE SEA -->
+  <div style="position:absolute;inset:0;overflow:hidden;cursor:grab;touch-action:none;" onMouseDown="{{ onSeaDown }}" onTouchStart="{{ onSeaTouchStart }}">
+    <div ref="{{ seaRef }}" style="position:absolute;left:50%;top:50%;width:2600px;height:1700px;transform:translate(-50%,-50%);will-change:transform;">
+
+      <!-- floating taíno petroglyphs -->
+      <svg data-drift="0.6" data-phase="1.4" data-tf="" viewBox="0 0 100 100" style="position:absolute;left:980px;top:268px;width:74px;height:74px;opacity:.22;overflow:visible;" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="50" cy="50" r="30" fill="none" stroke="#1E3FCC" stroke-width="4.5"></circle>
+        <circle cx="50" cy="50" r="19" fill="none" stroke="#1E3FCC" stroke-width="4.5"></circle>
+        <circle cx="50" cy="50" r="6.5" fill="#1E3FCC"></circle>
+        <g stroke="#1E3FCC" stroke-width="4" stroke-linecap="round"><line x1="50" y1="20" x2="50" y2="12"></line><line x1="80" y1="50" x2="88" y2="50"></line><line x1="50" y1="80" x2="50" y2="88"></line><line x1="20" y1="50" x2="12" y2="50"></line></g>
+      </svg>
+      <svg data-drift="0.85" data-phase="3.2" data-tf="rotate(-8deg)" viewBox="0 0 100 100" style="position:absolute;left:1620px;top:540px;width:90px;height:90px;opacity:.18;overflow:visible;transform:rotate(-8deg);" xmlns="http://www.w3.org/2000/svg">
+        <path d="M50,16 C29,16 18,33 18,51 C18,70 33,84 50,84 C67,84 82,70 82,51 C82,33 71,16 50,16 Z" fill="none" stroke="#F4C20D" stroke-width="4.5"></path>
+        <circle cx="37" cy="44" r="8" fill="none" stroke="#F4C20D" stroke-width="4"></circle>
+        <circle cx="63" cy="44" r="8" fill="none" stroke="#F4C20D" stroke-width="4"></circle>
+        <circle cx="37" cy="44" r="1.7" fill="#F4C20D"></circle>
+        <circle cx="63" cy="44" r="1.7" fill="#F4C20D"></circle>
+        <ellipse cx="50" cy="68" rx="14" ry="6.5" fill="none" stroke="#F4C20D" stroke-width="4"></ellipse>
+      </svg>
+      <svg data-drift="1.1" data-phase="0.8" data-tf="rotate(6deg)" viewBox="0 0 100 100" style="position:absolute;left:700px;top:1060px;width:66px;height:66px;opacity:.28;overflow:visible;transform:rotate(6deg);" xmlns="http://www.w3.org/2000/svg">
+        <path d="M16,38 q11,-12 22,0 t22,0 t22,0" fill="none" stroke="#BC2E1C" stroke-width="5" stroke-linecap="round"></path>
+        <path d="M16,54 q11,-12 22,0 t22,0 t22,0" fill="none" stroke="#BC2E1C" stroke-width="5" stroke-linecap="round"></path>
+        <path d="M16,70 q11,-12 22,0 t22,0 t22,0" fill="none" stroke="#BC2E1C" stroke-width="5" stroke-linecap="round"></path>
+      </svg>
+      <svg data-drift="0.9" data-phase="5.1" data-tf="" viewBox="0 0 100 100" style="position:absolute;left:1860px;top:1180px;width:78px;height:78px;opacity:.2;overflow:visible;" xmlns="http://www.w3.org/2000/svg">
+        <path d="M50,50 C50,38 40,33 33,38 C26,43 28,54 37,55 C43,55 46,50 44,46" fill="none" stroke="#4F9E94" stroke-width="4.5" stroke-linecap="round"></path>
+        <path d="M50,50 C50,38 40,33 33,38 C26,43 28,54 37,55 C43,55 46,50 44,46" transform="rotate(180 50 50)" fill="none" stroke="#4F9E94" stroke-width="4.5" stroke-linecap="round"></path>
+        <circle cx="50" cy="50" r="3.5" fill="#4F9E94"></circle>
+      </svg>
+      <svg data-drift="1.3" data-phase="2.3" data-tf="rotate(-14deg)" viewBox="0 0 100 100" style="position:absolute;left:1480px;top:1320px;width:62px;height:62px;opacity:.24;overflow:visible;transform:rotate(-14deg);" xmlns="http://www.w3.org/2000/svg">
+        <path d="M50,20 C43,20 40,25 40,31 C34,32 30,38 31,45 C32,54 41,60 50,60 C59,60 68,54 69,45 C70,38 66,32 60,31 C60,25 57,20 50,20 Z" fill="none" stroke="#E69BA6" stroke-width="4.5" stroke-linejoin="round"></path>
+        <path d="M40,42 L28,46 L31,57 M60,42 L72,46 L69,57 M43,57 L29,67 L35,80 M57,57 L71,67 L65,80" fill="none" stroke="#E69BA6" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"></path>
+        <circle cx="44" cy="29" r="2.6" fill="#E69BA6"></circle><circle cx="56" cy="29" r="2.6" fill="#E69BA6"></circle>
+      </svg>
+      <svg data-drift="0.7" data-phase="4.6" data-tf="rotate(22deg)" viewBox="0 0 100 100" style="position:absolute;left:430px;top:490px;width:54px;height:54px;opacity:.26;overflow:visible;transform:rotate(22deg);" xmlns="http://www.w3.org/2000/svg">
+        <line x1="50" y1="80" x2="50" y2="40" stroke="#181410" stroke-width="4.5" stroke-linecap="round"></line>
+        <path d="M50,56 C36,54 33,42 35,33 C46,35 50,46 50,56 Z" fill="none" stroke="#181410" stroke-width="4"></path>
+        <path d="M50,50 C64,48 67,36 65,27 C54,29 50,40 50,50 Z" fill="none" stroke="#181410" stroke-width="4"></path>
+        <circle cx="50" cy="82" r="6" fill="none" stroke="#181410" stroke-width="4"></circle>
+      </svg>
+      <svg data-drift="1.0" data-phase="1.9" data-tf="" viewBox="0 0 100 100" style="position:absolute;left:2080px;top:640px;width:84px;height:84px;opacity:.19;overflow:visible;" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="50" cy="50" r="25" fill="none" stroke="#BC2E1C" stroke-width="4.5"></circle>
+        <g stroke="#BC2E1C" stroke-width="4.5" stroke-linecap="round"><line x1="77" y1="50" x2="86" y2="50"></line><line x1="73.4" y1="63.5" x2="80.9" y2="67"></line><line x1="63.5" y1="73.4" x2="67" y2="80.9"></line><line x1="50" y1="77" x2="50" y2="86"></line><line x1="36.5" y1="73.4" x2="33" y2="80.9"></line><line x1="26.6" y1="63.5" x2="19.1" y2="67"></line><line x1="23" y1="50" x2="14" y2="50"></line><line x1="26.6" y1="36.5" x2="19.1" y2="33"></line><line x1="36.5" y1="26.6" x2="33" y2="19.1"></line><line x1="50" y1="23" x2="50" y2="14"></line><line x1="63.5" y1="26.6" x2="67" y2="19.1"></line><line x1="73.4" y1="36.5" x2="80.9" y2="33"></line></g>
+        <circle cx="42" cy="46" r="3" fill="#BC2E1C"></circle><circle cx="58" cy="46" r="3" fill="#BC2E1C"></circle>
+        <path d="M41,58 Q50,64 59,58" fill="none" stroke="#BC2E1C" stroke-width="3.5" stroke-linecap="round"></path>
+      </svg>
+
+      <!-- ambient hand marks -->
+      <div data-drift="1.0" data-phase="0.3" data-tf="" style="position:absolute;left:1180px;top:340px;width:54px;height:54px;border:4px solid #1E3FCC;border-radius:50%;opacity:.5;"></div>
+      <div data-drift="0.8" data-phase="1.1" data-tf="rotate(-24deg)" style="position:absolute;left:1700px;top:980px;width:70px;height:8px;background:#BC2E1C;transform:rotate(-24deg);opacity:.55;"></div>
+      <div data-drift="1.2" data-phase="2.0" data-tf="rotate(18deg)" style="position:absolute;left:820px;top:900px;width:8px;height:64px;background:#F4C20D;transform:rotate(18deg);opacity:.6;"></div>
+      <div data-drift="0.7" data-phase="3.4" data-tf="rotate(12deg)" style="position:absolute;left:2180px;top:760px;width:46px;height:46px;border:4px solid #181410;opacity:.4;transform:rotate(12deg);"></div>
+      <div data-drift="1.0" data-phase="4.2" data-tf="rotate(-12deg)" style="position:absolute;left:560px;top:640px;width:8px;height:48px;background:#4F9E94;transform:rotate(-12deg);opacity:.6;"></div>
+
+      <sc-for list="{{ pieces }}" as="p" hint-placeholder-count="6">
+        <div data-cx="{{ p.cx }}" data-cy="{{ p.cy }}" data-pin="{{ p.pinAttr }}" style="{{ p.outerStyle }}" style-hover="{{ p.outerHover }}" onClick="{{ p.open }}">
+          <div data-drift="{{ p.amp }}" data-phase="{{ p.phase }}" data-tf="{{ p.floatTf }}" style="{{ p.floatStyle }}">
+
+            <sc-if value="{{ p.isHero }}" hint-placeholder-val="{{ false }}">
+              <div style="width:min(260px,60vw);height:min(260px,60vw);overflow:hidden;position:relative;pointer-events:none;">
+                <img src="assets/logo-white.png" alt="al colibrí" style="width:min(520px,120vw);height:auto;position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);filter:brightness(0);opacity:.75;mix-blend-mode:multiply;">
+              </div>
+              <div style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:30px;color:#181410;margin-top:16px;letter-spacing:-.01em;">al colibrí</div>
+              <div style="font-family:'Space Mono',monospace;font-style:italic;font-size:13px;letter-spacing:.07em;color:#3F8278;max-width:360px;">Taíno in diaspora · transmedia artist</div>
+              <div style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.07em;color:#BC2E1C;">the artist →</div>
+            </sc-if>
+
+            <sc-if value="{{ p.isPoem }}" hint-placeholder-val="{{ false }}">
+              <div style="font-family:'Space Mono',monospace;font-size:13px;font-style:italic;letter-spacing:.1em;color:#3F8278;">{{ p.tag }}</div>
+              <div style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:30px;line-height:.98;color:#181410;max-width:340px;letter-spacing:-.015em;">{{ p.title }}</div>
+              <div style="max-width:330px;max-height:128px;overflow:hidden;font-family:'Spectral',serif;font-weight:300;font-size:17px;line-height:1.5;color:#181410;white-space:pre-wrap;-webkit-mask-image:linear-gradient(180deg,#000 50%,transparent);mask-image:linear-gradient(180deg,#000 50%,transparent);">{{ p.preview }}</div>
+              <div style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.07em;color:#BC2E1C;">{{ p.cue }}</div>
+            </sc-if>
+
+            <sc-if value="{{ p.isMedia }}" hint-placeholder-val="{{ false }}">
+              <div style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#181410;opacity:.7;">{{ p.kindLabel }}</div>
+              <div style="{{ p.frameStyle }}">
+                <image-slot id="{{ p.slotId }}" src="{{ p.img }}" shape="rect" fit="cover" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;" placeholder="drop an image"></image-slot>
+              </div>
+              <div style="font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:24px;line-height:1;color:#181410;max-width:300px;">{{ p.title }}</div>
+            </sc-if>
+
+            <sc-if value="{{ p.isLink }}" hint-placeholder-val="{{ false }}">
+              <div style="{{ p.linkBoxStyle }}">
+                <div style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#3F8278;">{{ p.tag }}</div>
+                <div style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:30px;line-height:.95;color:#181410;letter-spacing:-.01em;">{{ p.title }} →</div>
+              </div>
+            </sc-if>
+
+            <sc-if value="{{ p.isPerf }}" hint-placeholder-val="{{ false }}">
+              <div style="width:320px;background:#F4C20D;border:3px solid #181410;box-shadow:9px 9px 0 #181410;">
+                <div style="padding:14px 18px 10px;border-bottom:3px solid #181410;display:flex;justify-content:space-between;align-items:baseline;">
+                  <div style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#181410;">recent</div>
+                  <div style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:19px;letter-spacing:-.01em;color:#181410;">Performances</div>
+                </div>
+                <sc-for list="{{ p.events }}" as="ev" hint-placeholder-count="3">
+                  <div style="padding:12px 18px;border-bottom:1.5px solid rgba(24,20,16,.2);display:flex;flex-direction:column;gap:4px;">
+                    <div style="display:flex;gap:10px;align-items:center;">
+                      <div style="font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;background:#181410;color:#F4C20D;padding:2px 6px;">{{ ev.date }}</div>
+                      <div style="font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#181410;opacity:.65;">{{ ev.tag }}</div>
+                    </div>
+                    <div style="font-family:'Spectral',serif;font-weight:400;font-size:16px;line-height:1.3;color:#181410;">{{ ev.venue }}</div>
+                  </div>
+                </sc-for>
+                <div style="padding:10px 18px;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.1em;color:#181410;opacity:.8;">all performances in archive →</div>
+              </div>
+            </sc-if>
+
+          </div>
+        </div>
+      </sc-for>
+
+    </div>
+  </div>
+
+  <!-- WORDMARK (identity, calm) -->
+  <div style="position:fixed;top:26px;left:30px;z-index:40;pointer-events:none;font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:22px;letter-spacing:-.01em;color:#181410;">al colibrí</div>
+
+  <!-- HOME / EXIT ANCHOR (the floor) -->
+  <div style="position:fixed;bottom:26px;left:50%;transform:translateX(-50%);z-index:60;display:flex;flex-direction:column;align-items:center;gap:8px;cursor:pointer;" onClick="{{ goHome }}">
+    <div data-bob="1" style="width:40px;height:40px;border:2px solid #181410;border-radius:50%;background:repeating-linear-gradient(45deg,#E69BA6 0 6px,transparent 6px 12px),#efe6d2;box-shadow:3px 3px 0 #1E3FCC;"></div>
+    <div style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#181410;opacity:.72;">home</div>
+  </div>
+
+  <!-- POEM / PIECE ENCOUNTER -->
+  <sc-if value="{{ selected }}" hint-placeholder-val="{{ false }}">
+    <div style="position:fixed;inset:0;z-index:50;display:grid;place-items:center;padding:6vh 7vw;cursor:pointer;animation:washIn .7s ease forwards;background:radial-gradient(circle at 50% 30%, rgba(255,255,255,.4), transparent 60%), repeating-linear-gradient(0deg, rgba(120,90,40,.04) 0 2px, transparent 2px 5px), #E7DCC4;" onClick="{{ close }}">
+
+      <sc-if value="{{ selected.isPoemModal }}" hint-placeholder-val="{{ false }}">
+        <div data-palfx onClick="{{ stop }}" style="max-width:720px;max-height:86vh;overflow:auto;text-align:center;padding:8px 6px;cursor:auto;">
+          <div style="font-family:'Space Mono',monospace;font-style:italic;font-size:15px;letter-spacing:.16em;color:#3F8278;margin-bottom:26px;">{{ selected.tag }}</div>
+          <sc-if value="{{ selected.hasNative }}" hint-placeholder-val="{{ false }}">
+            <div style="font-family:'Spectral',serif;font-style:italic;font-weight:400;font-size:clamp(19px,2.3vw,26px);line-height:1.62;color:#3F8278;white-space:pre-wrap;margin-bottom:22px;">{{ selected.native }}</div>
+            <div style="margin:0 auto 26px;height:3px;width:54px;background:#181410;opacity:.4;"></div>
+          </sc-if>
+          <div style="font-family:'Spectral',serif;font-weight:300;font-size:clamp(20px,2.5vw,30px);line-height:1.74;color:#181410;white-space:pre-wrap;letter-spacing:.005em;">{{ selected.body }}</div>
+          <div style="margin:38px auto 0;height:8px;width:90px;background:#F4C20D;transform:rotate(-1deg);"></div>
+          <div style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:20px;letter-spacing:-.01em;color:#181410;margin-top:22px;">{{ selected.title }}</div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ selected.isVideoModal }}" hint-placeholder-val="{{ false }}">
+        <div data-palfx onClick="{{ stop }}" style="text-align:center;max-width:920px;max-height:88vh;overflow:auto;cursor:auto;">
+          <div style="font-family:'Space Mono',monospace;font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:#3F8278;margin-bottom:20px;">{{ selected.kindLabel }}</div>
+          <div style="width:min(900px,86vw);aspect-ratio:16/9;margin:0 auto;border:3px solid #181410;box-shadow:12px 12px 0 #BC2E1C;background:#000;">
+            <iframe src="{{ selected.videoSrc }}" allow="autoplay; fullscreen; picture-in-picture" style="width:100%;height:100%;border:0;display:block;" title="{{ selected.title }}"></iframe>
+          </div>
+          <div style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:30px;color:#181410;margin-top:22px;">{{ selected.title }}</div>
+          <div style="font-family:'Spectral',serif;font-style:italic;font-weight:300;font-size:17px;color:#181410;opacity:.7;margin-top:8px;">{{ selected.caption }}</div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ selected.isImageModal }}" hint-placeholder-val="{{ false }}">
+        <div data-palfx onClick="{{ stop }}" style="text-align:center;max-width:760px;max-height:88vh;overflow:auto;cursor:auto;">
+          <div style="position:relative;width:min(560px,82vw);height:min(560px,64vh);margin:0 auto;border:3px solid #181410;box-shadow:12px 12px 0 #BC2E1C;background:#efe6d2;overflow:hidden;">
+            <image-slot id="{{ selected.slotId }}" src="{{ selected.img }}" shape="rect" fit="cover" style="position:absolute;inset:0;width:100%;height:100%;" placeholder="drop an image"></image-slot>
+          </div>
+          <div style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:30px;color:#181410;margin-top:22px;">{{ selected.title }}</div>
+          <div style="font-family:'Spectral',serif;font-style:italic;font-weight:300;font-size:17px;color:#181410;opacity:.72;margin-top:8px;max-width:460px;margin-left:auto;margin-right:auto;">{{ selected.caption }}</div>
+          <div style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#3F8278;margin-top:14px;opacity:.8;">drag a new image onto the frame to swap it</div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ selected.isBioModal }}" hint-placeholder-val="{{ false }}">
+        <div data-palfx onClick="{{ stop }}" style="cursor:auto;max-width:920px;max-height:88vh;overflow:auto;display:flex;gap:48px;align-items:center;justify-content:center;flex-wrap:wrap;text-align:left;">
+          <div style="position:relative;width:min(340px,72vw);aspect-ratio:1/1;border:3px solid #181410;box-shadow:14px 14px 0 #BC2E1C;background:#efe6d2;overflow:hidden;flex:0 0 auto;">
+            <image-slot id="{{ selected.bioSlotId }}" src="{{ selected.bioImg }}" shape="rect" fit="cover" style="position:absolute;inset:0;width:100%;height:100%;" placeholder="drop a portrait"></image-slot>
+          </div>
+          <div style="max-width:470px;">
+            <div style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:#3F8278;margin-bottom:12px;">the artist</div>
+            <div style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(42px,6vw,62px);line-height:.9;letter-spacing:-.02em;color:#181410;margin-bottom:24px;">al colibrí</div>
+            <div style="font-family:'Spectral',serif;font-weight:300;font-size:clamp(18px,2vw,21px);line-height:1.66;color:#181410;">{{ selected.bio }}</div>
+            <div style="margin-top:26px;height:8px;width:90px;background:#F4C20D;transform:rotate(-1deg);"></div>
+          </div>
+        </div>
+      </sc-if>
+
+      <div style="position:fixed;top:30px;right:34px;font-family:'Space Mono',monospace;font-size:13px;letter-spacing:.1em;color:#181410;opacity:.7;">drift back ↩</div>
+    </div>
+  </sc-if>
+
+  <!-- ENTRANCE: loading into bloom -->
+  <sc-if value="{{ showOverlay }}" hint-placeholder-val="{{ true }}">
+    <div style="position:fixed;inset:0;z-index:80;display:grid;place-items:center;cursor:pointer;background:radial-gradient(circle at 50% 42%, rgba(255,255,255,.5), transparent 62%), repeating-linear-gradient(0deg, rgba(120,90,40,.04) 0 2px, transparent 2px 5px), #E7DCC4;" onClick="{{ enter }}">
+
+      <sc-if value="{{ isBloom }}" hint-placeholder-val="{{ false }}">
+        <div data-splash="0" style="position:absolute;left:50%;top:50%;width:160px;height:160px;border-radius:50%;background:#F4C20D;transform:translate(-50%,-50%) scale(.15);opacity:0;"></div>
+        <div data-splash="1" style="position:absolute;left:50%;top:50%;width:160px;height:160px;border-radius:50%;background:#1E3FCC;transform:translate(-50%,-50%) scale(.15);opacity:0;"></div>
+        <div data-splash="2" style="position:absolute;left:50%;top:50%;width:160px;height:160px;border-radius:50%;background:#BC2E1C;transform:translate(-50%,-50%) scale(.15);opacity:0;"></div>
+        <div data-splash="3" style="position:absolute;left:50%;top:50%;width:160px;height:160px;border-radius:50%;background:#E69BA6;transform:translate(-50%,-50%) scale(.15);opacity:0;"></div>
+        <div data-splash="4" style="position:absolute;left:50%;top:50%;width:160px;height:160px;border-radius:50%;background:#4F9E94;transform:translate(-50%,-50%) scale(.15);opacity:0;"></div>
+      </sc-if>
+
+      <sc-if value="{{ isSeed }}" hint-placeholder-val="{{ true }}">
+        <div style="text-align:center;display:flex;flex-direction:column;align-items:center;gap:26px;">
+          <div data-pulse="1" style="width:58px;height:58px;border-radius:50%;background:#BC2E1C;display:flex;align-items:center;justify-content:center;">
+            <img src="assets/logo-white.png" style="width:42px;height:42px;filter:brightness(0);opacity:.88;pointer-events:none;" alt="">
+          </div>
+          <div style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(56px,11vw,140px);line-height:.86;color:#181410;letter-spacing:-.02em;">al<br>colibrí</div>
+          <div style="font-family:'Space Mono',monospace;font-style:italic;font-size:15px;letter-spacing:.22em;color:#3F8278;">koyaha · irudahialo · karariwa</div>
+          <div style="font-family:'Space Mono',monospace;font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:#181410;opacity:.66;margin-top:8px;">drift in →</div>
+        </div>
+      </sc-if>
+
+    </div>
+  </sc-if>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;driftSpeed&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;tidal&quot;,&quot;options&quot;:[&quot;calm&quot;,&quot;tidal&quot;,&quot;lively&quot;],&quot;tsType&quot;:&quot;string&quot;},&quot;parallax&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;floatAmp&quot;:{&quot;editor&quot;:&quot;float&quot;,&quot;default&quot;:1.2,&quot;min&quot;:0,&quot;max&quot;:2.5,&quot;step&quot;:0.1,&quot;tsType&quot;:&quot;number&quot;},&quot;spread&quot;:{&quot;editor&quot;:&quot;float&quot;,&quot;default&quot;:1.4,&quot;min&quot;:0.7,&quot;max&quot;:1.5,&quot;step&quot;:0.05,&quot;tsType&quot;:&quot;number&quot;},&quot;islandScale&quot;:{&quot;editor&quot;:&quot;float&quot;,&quot;default&quot;:1.1,&quot;min&quot;:0.75,&quot;max&quot;:1.35,&quot;step&quot;:0.05,&quot;tsType&quot;:&quot;number&quot;},&quot;palette&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;full&quot;,&quot;options&quot;:[&quot;full&quot;,&quot;sun-bleached&quot;,&quot;muted&quot;],&quot;tsType&quot;:&quot;string&quot;},&quot;entrancePace&quot;:{&quot;editor&quot;:&quot;float&quot;,&quot;default&quot;:1,&quot;min&quot;:0.4,&quot;max&quot;:2,&quot;step&quot;:0.1,&quot;tsType&quot;:&quot;number&quot;},&quot;grain&quot;:{&quot;editor&quot;:&quot;float&quot;,&quot;default&quot;:0,&quot;min&quot;:0,&quot;max&quot;:1,&quot;step&quot;:0.05,&quot;tsType&quot;:&quot;number&quot;}}">
+class Component extends DCLogic {
+  state = { phase: 'seed', selected: null };
+
+  pan = { x: 0, y: 0 };
+  target = { x: 0, y: 0 };
+  mouseN = { x: 0, y: 0 };
+  drag = null;
+  _moved = false;
+
+  componentDidMount() {
+    window.addEventListener('mousemove', this.onMove);
+    window.addEventListener('mouseup', this.onUp);
+    window.addEventListener('touchmove', this.onTouchMove, { passive: false });
+    window.addEventListener('touchend', this.onUp);
+    window.addEventListener('touchcancel', this.onUp);
+    window.addEventListener('resize', this._onResize);
+    this.raf = requestAnimationFrame(this.tick);
+    this._packTimers = [setTimeout(() => this.packIslands(), 280), setTimeout(() => this.packIslands(), 1000)];
+  }
+  componentWillUnmount() {
+    window.removeEventListener('mousemove', this.onMove);
+    window.removeEventListener('mouseup', this.onUp);
+    window.removeEventListener('touchmove', this.onTouchMove);
+    window.removeEventListener('touchend', this.onUp);
+    window.removeEventListener('touchcancel', this.onUp);
+    window.removeEventListener('resize', this._onResize);
+    (this._packTimers || []).forEach(clearTimeout);
+    cancelAnimationFrame(this.raf);
+  }
+  componentDidUpdate() { requestAnimationFrame(() => this.packIslands()); }
+  _onResize = () => this.packIslands();
+
+  // Compress islands toward the centre (hero pinned), then resolve overlaps
+  // so neighbours settle just touching — the tidal float makes them bump.
+  packIslands() {
+    if (!this._sea) return;
+    const nodes = [...this._sea.querySelectorAll('[data-cx]')];
+    if (nodes.length < 2) return;
+    const iScale = this.props.islandScale ?? 1;
+    const CX = 1300, CY = 850, GAP = 18, ITERS = 700, GRAVITY = 0.014;
+    const P = nodes.map((el) => {
+      const w = el.offsetWidth * iScale, h = el.offsetHeight * iScale;
+      const pin = el.dataset.pin === '1';
+      return { el, x: parseFloat(el.dataset.cx), y: parseFloat(el.dataset.cy),
+               hw: w / 2 + GAP / 2, hh: h / 2 + GAP / 2, pin };
+    });
+    for (let it = 0; it < ITERS; it++) {
+      // gentle gravity draws non-pinned islands toward the hero
+      for (const n of P) {
+        if (n.pin) continue;
+        n.x += (CX - n.x) * GRAVITY;
+        n.y += (CY - n.y) * GRAVITY;
+      }
+      // resolve pairwise overlaps
+      for (let i = 0; i < P.length; i++) {
+        for (let j = i + 1; j < P.length; j++) {
+          const a = P[i], b = P[j];
+          let dx = b.x - a.x, dy = b.y - a.y;
+          if (Math.abs(dx) + Math.abs(dy) < 0.5) { dx = Math.random() - 0.5; dy = Math.random() - 0.5; }
+          const ox = (a.hw + b.hw) - Math.abs(dx);
+          const oy = (a.hh + b.hh) - Math.abs(dy);
+          if (ox > 0 && oy > 0) {
+            if (ox < oy) {
+              const push = ox / 2, s = dx < 0 ? -1 : 1;
+              if (a.pin) { b.x += s * push * 2; }
+              else if (b.pin) { a.x -= s * push * 2; }
+              else { a.x -= s * push; b.x += s * push; }
+            } else {
+              const push = oy / 2, s = dy < 0 ? -1 : 1;
+              if (a.pin) { b.y += s * push * 2; }
+              else if (b.pin) { a.y -= s * push * 2; }
+              else { a.y -= s * push; b.y += s * push; }
+            }
+          }
+        }
+      }
+    }
+    for (const n of P) { n.el.style.left = n.x.toFixed(1) + 'px'; n.el.style.top = n.y.toFixed(1) + 'px'; }
+  }
+
+  speed() {
+    const s = this.props.driftSpeed || 'tidal';
+    return s === 'calm' ? 0.6 : s === 'lively' ? 1.7 : 1;
+  }
+
+  paletteFilter() {
+    const p = this.props.palette || 'full';
+    if (p === 'sun-bleached') return 'saturate(.66) brightness(1.07) sepia(.1)';
+    if (p === 'muted') return 'saturate(.42) brightness(1.03)';
+    return 'none';
+  }
+
+
+
+  tick = (t) => {
+    this.pan.x += (this.target.x - this.pan.x) * 0.07;
+    this.pan.y += (this.target.y - this.pan.y) * 0.07;
+    const m = this.speed();
+    const fa = this.props.floatAmp ?? 1;
+    const pace = this.props.entrancePace || 1;
+    const dx = Math.sin(t / (4200 / m)) * 16;
+    const dy = Math.cos(t / (5600 / m)) * 12;
+    const par = this.props.parallax === false ? 0 : 1;
+    const px = this.pan.x + dx - this.mouseN.x * 22 * par;
+    const py = this.pan.y + dy - this.mouseN.y * 16 * par;
+    if (this._sea) {
+      this._sea.style.transform = `translate(-50%,-50%) translate3d(${px}px, ${py}px, 0)`;
+      // tidal float on every drifting node (islands + ambient marks)
+      const fl = this._sea.querySelectorAll('[data-drift]');
+      for (const el of fl) {
+        const amp = parseFloat(el.dataset.drift) || 1;
+        const ph = parseFloat(el.dataset.phase) || 0;
+        const base = el.dataset.tf || '';
+        el.style.transform = `${base} translateY(${(Math.sin(t / (1500 / m) + ph) * 11 * amp * fa).toFixed(2)}px)`;
+      }
+      this._sea.style.filter = this.paletteFilter();
+    }
+    const pf = this.paletteFilter();
+    document.querySelectorAll('[data-palfx]').forEach((el) => { el.style.filter = pf; });
+    const gEl = document.querySelector('[data-grain]');
+    if (gEl) gEl.style.opacity = (this.props.grain ?? 0).toFixed(3);
+    // home anchor: quick hummingbird bob
+    const hb = document.querySelector('[data-bob]');
+    if (hb) {
+      const k = Math.sin(t / 620);
+      hb.style.transform = `translateY(${(k * 5).toFixed(2)}px) rotate(${(k * 6).toFixed(1)}deg)`;
+    }
+    // seed pulse
+    const sd = document.querySelector('[data-pulse]');
+    if (sd) sd.style.transform = `scale(${(1 + Math.sin(t / 480) * 0.13).toFixed(3)})`;
+    // bloom splash
+    if (this.state.phase === 'bloom') {
+      if (!this._bloomT0) this._bloomT0 = t;
+      const prog = Math.min(1, (t - this._bloomT0) / (1500 * pace));
+      const cs = document.querySelectorAll('[data-splash]');
+      for (const el of cs) {
+        const i = parseInt(el.dataset.splash, 10) || 0;
+        const pp = Math.max(0, Math.min(1, (prog - i * 0.09) / 0.6));
+        el.style.transform = `translate(-50%,-50%) scale(${(0.15 + pp * 3).toFixed(3)})`;
+        el.style.opacity = (0.95 * (1 - pp)).toFixed(3);
+      }
+    } else {
+      this._bloomT0 = 0;
+    }
+    this.raf = requestAnimationFrame(this.tick);
+  };
+
+  onSeaDown = (e) => {
+    this.drag = { sx: e.clientX, sy: e.clientY, ox: this.target.x, oy: this.target.y };
+    this._moved = false;
+  };
+  onMove = (e) => {
+    this.mouseN = { x: (e.clientX / window.innerWidth - 0.5) * 2, y: (e.clientY / window.innerHeight - 0.5) * 2 };
+    if (this.drag) {
+      const ddx = e.clientX - this.drag.sx;
+      const ddy = e.clientY - this.drag.sy;
+      if (Math.abs(ddx) + Math.abs(ddy) > 6) this._moved = true;
+      this.target.x = this.drag.ox + ddx;
+      this.target.y = this.drag.oy + ddy;
+    }
+  };
+  onUp = () => { this.drag = null; };
+
+  onSeaTouchStart = (e) => {
+    const t = e.touches[0];
+    if (!t) return;
+    this.drag = { sx: t.clientX, sy: t.clientY, ox: this.target.x, oy: this.target.y };
+    this._moved = false;
+  };
+  onTouchMove = (e) => {
+    if (!this.drag) return;
+    const t = e.touches[0];
+    if (!t) return;
+    const ddx = t.clientX - this.drag.sx;
+    const ddy = t.clientY - this.drag.sy;
+    if (Math.abs(ddx) + Math.abs(ddy) > 8) this._moved = true;
+    this.target.x = this.drag.ox + ddx;
+    this.target.y = this.drag.oy + ddy;
+    if (this._moved) e.preventDefault();
+  };
+
+  enter = () => {
+    if (this.state.phase !== 'seed') return;
+    this.setState({ phase: 'bloom' });
+    const pace = this.props.entrancePace || 1;
+    setTimeout(() => this.setState({ phase: 'sea' }), 1650 * pace);
+  };
+
+  openPiece = (p) => {
+    if (this._moved) return;
+    this._modalT0 = performance.now();
+    this.setState({ selected: p });
+  };
+  close = () => this.setState({ selected: null });
+  goHome = () => { this.target = { x: 0, y: 0 }; this.setState({ selected: null }); };
+
+  buildPieces() {
+    const INK = '#181410', YEL = '#F4C20D', RED = '#BC2E1C', BLU = '#1E3FCC', TEAL = '#4F9E94', PINK = '#E69BA6';
+    const raw = [
+      { kind: 'hero', title: 'al colibrí', modalKind: 'bio', accent: RED,
+        slotId: 'hero-mark', img: 'assets/logo-white.png',
+        bioSlotId: 'artist-portrait', bioImg: 'assets/mural.jpg',
+        bio: 'al colibrí is a Taíno in diaspora, living and working on the lands of the peoples of Tkaronto. He is a transmedia artist who experiments with digital video, gaming, poetry and non-fiction, and focuses on themes of spiritualized nature, the tenderness of grief, ancestral kinetics, and playful decadence. When he isn’t critically fabulating, he moonlights as a professor at multiple universities in Canada and the US and is a father of two little love goblins (emphasis on the goblins).',
+        x: 1300, y: 800, rot: -2, amp: 1.4, phase: 0, ph: [360, 300] },
+
+      { kind: 'poem', title: 'The Ancestors', tag: "ka hebeyo'no", accent: BLU, href: 'Archive.dc.html#poem-ancestors',
+        x: 600, y: 430, rot: -3, amp: 1.2, phase: 0.6,
+        native: `Gua'arikawabu\nNaiko aban\nHewibo hiana ka yuca\nKa kawia k'akirikatti\nWa itaa le bu abon'o\nWa eibun'no le bu kanowa\nAxahawa a yoba kaya'no\nAita'ni yara le aba hamaka  bia'bu\nYaha alu ka inkayeke`,
+        body: `We see you\nLittle one\nRipening like the yucca\nThe waxing pumpkin moon\nOur blood is your rivers\nOur bones are your canoe\nWander to many islands\nKnowing there is a hammock for you\nHere in the village` },
+
+      { kind: 'poem', title: 'Discovery Day', tag: 'arawak', accent: RED, href: 'Archive.dc.html#poem-discovery',
+        x: 2010, y: 430, rot: 2, amp: 1.7, phase: 1.7,
+        native: `Bu amariha kuiriba'no oma da\nBu karuda kasabi oma da\nMei da kuwata da anaka\nKena bu anuka tuei le waiba'ki lan da`,
+        body: `You make friends with me\nYou break bread with me\nThen I turn my back\nAnd you take what's left of me` },
+
+      { kind: 'poem', title: 'Black Squirrel Rhythm', tag: 'february', accent: TEAL, href: 'Archive.dc.html#poem-black-squirrel',
+        x: 470, y: 1180, rot: 3, amp: 1.3, phase: 2.9,
+        body: `Something about the violining trees in winter\nallows the grief to ease and sway\nUncongealing like the thawing swamps\nBudding green algae in the cool air\n      Chlorophyll calm\n      Life is on the way\nThat "ivy vines on a deadwood" chill\nA sun-dappled trunk beating heart,\nto a tune unhurried by human ears\n       Black squirrel rhythm\n       Wrestling tambourine leaves\nA winter blues becomes spring jazz\nYet it's February,\n      and life is still better in twos` },
+
+      { kind: 'poem', title: 'Gimme That Swamp Song', tag: 'bayou · published', accent: YEL, href: 'https://poets.ca/gimme-that-swamp-song-by-al-colibri/', external: true, cue: 'read at the League of Canadian Poets →',
+        x: 2090, y: 1230, rot: -2, amp: 1.5, phase: 4.1,
+        body: `Gimme that swamp song\nBreeze, water-falling through tree leaves\nThick, musky, oak half-dead\nAching with lively\nQuivering pond scum\nThe thump and rave of birdsong\n\nFeral shades of green\nDuckweed\nSultry obscenities\nUnashamed and lusty\nBantered between them thirsty birds\n\nThat deep summer soul\n\nA butterfly hustler flits on by\n   With a side eye\n   And flickering brows\nPaper skin queen of the bayou\nCrown-shy yet flirty\n\nTrill\n        O de ley o de ley\nPop\n      Snatch\nThistle prick\n\nNature’s sound and slurry\n\nBrackish pleasures\nSap-slick menageries\nRoots and vines in orgy\n\nShagbark hickory\nVirginia creeper\nSassafras Ecstasy\n\nAll of it moan-touched\n   Throaty\nAnd in heat\n   Singing\n\nWhile a tall white ash\nBare limbed and hungry\nHangs rootedly in beat\nTo the summer swamp swing\nAnd the distant sounds of\nSpreading wings and morning dove groans` },
+
+      { kind: 'poem', title: 'Ode to the Small Gods', tag: 'cemís', accent: PINK, href: 'Archive.dc.html#poem-small-gods',
+        x: 1060, y: 1380, rot: 1, amp: 0.95, phase: 5.0,
+        body: `This is an ode to the small gods\nTobacco stones\n   and prayer beads\nRaven on a power line\nTarot card, sunflower seed\n   teary-eyed incense\nCandlelight and wind chime\n\nSong sung in the deep of night\n\nGold scarab in a sewage ditch\n   half-danced rattles\nAnd daggers prayer-licked with blood\nSalt bowl\n   amulet\n      sage smoked fan\nCrystal, string, and braids\nFaded shell\n   and feather in flight\nTattooed shadow on the firelit wall of a cave\nCairns and clustered stars\nAnd that single tree\n   standing tall in the meadow\n\nYou who touch\n   the fingers of the big gods\nEver present listeners\nWe see\n   and smell\n      and sing\nFor you who actualize our hope\nHang softly round our necks\n   held gently\n   in palms\nCalm hearts with beats\nAnd breath\n   make sense\n   and divine sensuality\nVisualing the world with meaning\n\nYou are the truly mattering gods\n\nBrick and mortar gods\n\nMud and sewage gods\n\nPain and pleasure gods\n\nOh mighty living ones\n\nMay our bodies\n   be your temples of worship` },
+
+      { kind: 'media', subtype: 'video', title: 'The Gay Science', kindLabel: 'film · visual essay', accent: PINK, modalKind: 'video',
+        slotId: 'film-the-gay-science', img: 'assets/gay-science.png',
+        videoSrc: 'https://player.vimeo.com/video/116007704?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479',
+        caption: 'A Visual Essay in die Fröhliche Wissenschaft',
+        x: 1880, y: 840, rot: -2, amp: 1.0, phase: 3.3, ph: [300, 188] },
+
+      { kind: 'media', subtype: 'video', title: 'The Powers of the False', kindLabel: 'film · visual essay', accent: BLU, modalKind: 'video',
+        slotId: 'film-powers-of-false', img: 'assets/powers-of-false.png',
+        videoSrc: 'https://player.vimeo.com/video/94774272?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479',
+        caption: 'Deleuze, Welles, and the forger — a film that creates an event',
+        x: 650, y: 1360, rot: 2, amp: 1.0, phase: 2.1, ph: [300, 188] },
+
+      { kind: 'media', subtype: 'image', title: 'Live Readings', kindLabel: 'performance', accent: BLU, modalKind: 'image',
+        slotId: 'live-greenhouse', img: 'assets/greenhouse.jpg',
+        caption: 'readings in greenhouses, bars, and ceremonial gatherings — more in the archive',
+        x: 330, y: 820, rot: -3, amp: 0.9, phase: 1.2, ph: [220, 290] },
+
+      { kind: 'perf', title: 'Recent Performances', accent: YEL,
+        x: 1740, y: 400, rot: 1.5, amp: 0.9, phase: 2.6,
+        href: 'Archive.dc.html',
+        events: [
+          { date: 'Aug 9, 2025', tag: 'video spotlight', venue: 'Reencuentro Taíno Conference', accent: BLU },
+          { date: '2024', tag: 'mosaic s3e1', venue: 'Allan Gardens, Toronto', accent: TEAL },
+          { date: '2023', tag: 'mosaic s2e1', venue: 'Spirituality, Mysticism & Magic', accent: RED },
+        ] },
+
+      { kind: 'link', title: 'the archive', tag: 'past work', href: 'Archive.dc.html', accent: INK,
+        x: 1520, y: 1540, rot: 2, amp: 0.8, phase: 6.0 },
+    ];
+
+    const spread = this.props.spread ?? 1, iScale = this.props.islandScale ?? 1;
+    const cx = 1300, cy = 850;
+    return raw.map((r) => {
+      const px = cx + (r.x - cx) * spread;
+      const py = cy + (r.y - cy) * spread;
+      const base = `translate(-50%,-50%) rotate(${r.rot}deg)`;
+      const outerStyle = {
+        position: 'absolute', left: px + 'px', top: py + 'px',
+        transform: base, cursor: 'pointer',
+        transition: 'transform .55s cubic-bezier(.2,.8,.2,1)',
+      };
+      const outerHover = { ...outerStyle, transform: base + ' scale(1.07)', zIndex: 6 };
+      const floatStyle = {
+        display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: '11px',
+        transform: `scale(${iScale})`, transformOrigin: 'center',
+      };
+      const barStyle = { height: '9px', width: '128px', background: r.accent, transform: 'rotate(-1.5deg)', borderRadius: '1px' };
+      let frameStyle = null;
+      if (r.ph) {
+        frameStyle = {
+          position: 'relative', width: r.ph[0] + 'px', height: r.ph[1] + 'px',
+          border: '3px solid #181410', boxShadow: `9px 9px 0 ${r.accent}`,
+          background: '#efe6d2', overflow: 'hidden',
+        };
+      }
+      const linkBoxStyle = {
+        display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: '8px',
+        padding: '20px 26px', border: '2px dashed #181410', background: 'rgba(231,220,196,.55)',
+      };
+      const p = {
+        ...r,
+        isHero: r.kind === 'hero', isPoem: r.kind === 'poem',
+        isMedia: r.kind === 'media', isLink: r.kind === 'link', isPerf: r.kind === 'perf',
+        isPoemModal: r.modalKind === 'poem', isVideoModal: r.modalKind === 'video', isImageModal: r.modalKind === 'image', isBioModal: r.modalKind === 'bio',
+        hasNative: !!r.native,
+        kindLabel: r.kindLabel || '',
+        outerStyle, outerHover, floatStyle, barStyle, frameStyle, linkBoxStyle,
+        floatTf: `scale(${iScale})`,
+        cx: px, cy: py, pinAttr: r.kind === 'hero' ? '1' : '0',
+      };
+      if (r.kind === 'poem') {
+        p.preview = (r.body || '').split('\n').slice(0, 5).join('\n');
+        p.cue = r.cue || 'read the full poem →';
+        p.open = () => { if (this._moved) return; if (r.external) window.open(r.href, '_blank', 'noopener'); else window.location.href = r.href; };
+      } else if (r.kind === 'link' || r.kind === 'perf') {
+        p.open = () => { if (!this._moved) window.location.href = r.href; };
+      } else {
+        p.open = () => this.openPiece(p);
+      }
+      return p;
+    });
+  }
+
+  renderVals() {
+    const phase = this.state.phase;
+    return {
+      pieces: this.buildPieces(),
+      selected: this.state.selected,
+      showOverlay: phase !== 'sea',
+      isSeed: phase === 'seed',
+      isBloom: phase === 'bloom',
+      enter: this.enter,
+      close: this.close,
+      goHome: this.goHome,
+      stop: (e) => e.stopPropagation(),
+      onSeaDown: this.onSeaDown,
+      onSeaTouchStart: this.onSeaTouchStart,
+      seaRef: (el) => { this._sea = el; },
+    };
+  }
+}
+</script>
+</body>
+</html>
