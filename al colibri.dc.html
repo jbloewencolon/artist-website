@@ -1,8 +1,22 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<title>al colibrí — Taíno in diaspora transmedia artist</title>
+<meta name="description" content="al colibrí is a Taíno in diaspora transmedia artist working through poetry, digital video, game-like spaces, performance, and spiritualized nature.">
+<link rel="canonical" href="https://alcolibri.com/al%20colibri.dc.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="al colibrí — Taíno in diaspora transmedia artist">
+<meta property="og:description" content="Poetry, film, performance, and drifting digital work from al colibrí.">
+<meta property="og:url" content="https://alcolibri.com/al%20colibri.dc.html">
+<meta property="og:image" content="https://alcolibri.com/assets/mural.jpg">
+<meta property="og:site_name" content="al colibrí">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="al colibrí — Taíno in diaspora transmedia artist">
+<meta name="twitter:description" content="Poetry, film, performance, and drifting digital work from al colibrí.">
+<meta name="twitter:image" content="https://alcolibri.com/assets/mural.jpg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"al colibrí","url":"https://alcolibri.com/al%20colibri.dc.html","image":"https://alcolibri.com/assets/mural.jpg","sameAs":["https://www.instagram.com/al_colibri_jlc/"],"jobTitle":"Transmedia artist","description":"Taíno in diaspora transmedia artist working across poetry, digital video, game-like spaces, and performance.","knowsAbout":["Taíno diaspora","Transmedia art","Poetry","Digital video","Performance art"]}</script>
 <script src="./support.js"></script>
 </head>
 <body>
@@ -14,14 +28,22 @@
 <style>
   html,body{margin:0;padding:0;height:100%;background:#E7DCC4;overflow:hidden;}
   *{box-sizing:border-box;}
+  :focus-visible{outline:3px solid #1E3FCC;outline-offset:4px;box-shadow:4px 4px 0 #F4C20D;}
+  .skip-link{position:fixed;top:14px;left:14px;z-index:90;transform:translateY(-180%);background:#E7DCC4;color:#181410;border:2px solid #181410;box-shadow:4px 4px 0 #BC2E1C;padding:8px 12px;font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;transition:transform .15s ease;}
+  .skip-link:focus{transform:none;}
+  button{font:inherit;}
   @keyframes washIn{0%{opacity:.45;filter:blur(11px)}100%{opacity:1;filter:blur(0)}}
+  @media (prefers-reduced-motion: reduce){
+    *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.001ms!important;}
+  }
 </style>
 <script src="./image-slot.js"></script>
 </helmet>
-<div style="position:relative;width:100vw;height:100vh;overflow:hidden;font-family:'Spectral',Georgia,serif;background:radial-gradient(circle at 28% 18%, rgba(255,255,255,.34), transparent 58%), radial-gradient(circle at 82% 86%, rgba(40,24,8,.07), transparent 55%), #E7DCC4;">
+<main id="sea" style="position:relative;width:100vw;height:100vh;overflow:hidden;font-family:'Spectral',Georgia,serif;background:radial-gradient(circle at 28% 18%, rgba(255,255,255,.34), transparent 58%), radial-gradient(circle at 82% 86%, rgba(40,24,8,.07), transparent 55%), #E7DCC4;">
+  <a class="skip-link" href="Archive.dc.html">skip to archive</a>
 
   <!-- ADJUSTABLE GRAIN -->
-  <div data-grain style="position:absolute;inset:0;pointer-events:none;z-index:2;opacity:0;mix-blend-mode:overlay;">
+  <div data-grain aria-hidden="true" style="position:absolute;inset:0;pointer-events:none;z-index:2;opacity:0;mix-blend-mode:overlay;">
     <svg style="width:100%;height:100%;display:block;" xmlns="http://www.w3.org/2000/svg">
       <filter id="sgf" x="0" y="0" width="100%" height="100%">
         <feTurbulence type="fractalNoise" baseFrequency="0.72 0.65" numOctaves="4" stitchTiles="stitch" result="noise"></feTurbulence>
@@ -86,12 +108,12 @@
       <div data-drift="1.0" data-phase="4.2" data-tf="rotate(-12deg)" style="position:absolute;left:560px;top:640px;width:8px;height:48px;background:#4F9E94;transform:rotate(-12deg);opacity:.6;"></div>
 
       <sc-for list="{{ pieces }}" as="p" hint-placeholder-count="6">
-        <div data-cx="{{ p.cx }}" data-cy="{{ p.cy }}" data-pin="{{ p.pinAttr }}" style="{{ p.outerStyle }}" style-hover="{{ p.outerHover }}" onClick="{{ p.open }}">
+        <div data-cx="{{ p.cx }}" data-cy="{{ p.cy }}" data-pin="{{ p.pinAttr }}" style="{{ p.outerStyle }}" style-hover="{{ p.outerHover }}" onClick="{{ p.open }}" role="button" tabIndex="0" aria-label="{{ p.ariaLabel }}" onKeyDown="{{ p.activate }}">
           <div data-drift="{{ p.amp }}" data-phase="{{ p.phase }}" data-tf="{{ p.floatTf }}" style="{{ p.floatStyle }}">
 
             <sc-if value="{{ p.isHero }}" hint-placeholder-val="{{ false }}">
               <div style="width:min(260px,60vw);height:min(260px,60vw);overflow:hidden;position:relative;pointer-events:none;">
-                <img src="assets/logo-white.png" alt="al colibrí" style="width:min(520px,120vw);height:auto;position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);filter:brightness(0);opacity:.75;mix-blend-mode:multiply;">
+                <img src="assets/logo-white.webp" alt="al colibrí" decoding="async" style="width:min(520px,120vw);height:auto;position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);filter:brightness(0);opacity:.75;mix-blend-mode:multiply;">
               </div>
               <div style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:30px;color:#181410;margin-top:16px;letter-spacing:-.01em;">al colibrí</div>
               <div style="font-family:'Space Mono',monospace;font-style:italic;font-size:13px;letter-spacing:.07em;color:#3F8278;max-width:360px;">Taíno in diaspora · transmedia artist</div>
@@ -108,7 +130,7 @@
             <sc-if value="{{ p.isMedia }}" hint-placeholder-val="{{ false }}">
               <div style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#181410;opacity:.7;">{{ p.kindLabel }}</div>
               <div style="{{ p.frameStyle }}">
-                <image-slot id="{{ p.slotId }}" src="{{ p.img }}" shape="rect" fit="cover" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;" placeholder="drop an image"></image-slot>
+                <image-slot id="{{ p.slotId }}" src="{{ p.img }}" alt="{{ p.alt }}" loading="lazy" shape="rect" fit="cover" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;" placeholder="drop an image"></image-slot>
               </div>
               <div style="font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:24px;line-height:1;color:#181410;max-width:300px;">{{ p.title }}</div>
             </sc-if>
@@ -150,14 +172,14 @@
   <div style="position:fixed;top:26px;left:30px;z-index:40;pointer-events:none;font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:22px;letter-spacing:-.01em;color:#181410;">al colibrí</div>
 
   <!-- HOME / EXIT ANCHOR (the floor) -->
-  <div style="position:fixed;bottom:26px;left:50%;transform:translateX(-50%);z-index:60;display:flex;flex-direction:column;align-items:center;gap:8px;cursor:pointer;" onClick="{{ goHome }}">
+  <div style="position:fixed;bottom:26px;left:50%;transform:translateX(-50%);z-index:60;display:flex;flex-direction:column;align-items:center;gap:8px;cursor:pointer;" onClick="{{ goHome }}" role="button" tabIndex="0" aria-label="Return to the center of the sea" onKeyDown="{{ activateHome }}">
     <div data-bob="1" style="width:40px;height:40px;border:2px solid #181410;border-radius:50%;background:repeating-linear-gradient(45deg,#E69BA6 0 6px,transparent 6px 12px),#efe6d2;box-shadow:3px 3px 0 #1E3FCC;"></div>
     <div style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#181410;opacity:.72;">home</div>
   </div>
 
   <!-- POEM / PIECE ENCOUNTER -->
   <sc-if value="{{ selected }}" hint-placeholder-val="{{ false }}">
-    <div style="position:fixed;inset:0;z-index:50;display:grid;place-items:center;padding:6vh 7vw;cursor:pointer;animation:washIn .7s ease forwards;background:radial-gradient(circle at 50% 30%, rgba(255,255,255,.4), transparent 60%), repeating-linear-gradient(0deg, rgba(120,90,40,.04) 0 2px, transparent 2px 5px), #E7DCC4;" onClick="{{ close }}">
+    <div data-modal-root style="position:fixed;inset:0;z-index:50;display:grid;place-items:center;padding:6vh 7vw;cursor:pointer;animation:washIn .7s ease forwards;background:radial-gradient(circle at 50% 30%, rgba(255,255,255,.4), transparent 60%), repeating-linear-gradient(0deg, rgba(120,90,40,.04) 0 2px, transparent 2px 5px), #E7DCC4;" onClick="{{ close }}" role="dialog" aria-modal="true" aria-label="{{ selected.modalLabel }}" tabIndex="-1" onKeyDown="{{ closeOnEscape }}">
 
       <sc-if value="{{ selected.isPoemModal }}" hint-placeholder-val="{{ false }}">
         <div data-palfx onClick="{{ stop }}" style="max-width:720px;max-height:86vh;overflow:auto;text-align:center;padding:8px 6px;cursor:auto;">
@@ -176,7 +198,7 @@
         <div data-palfx onClick="{{ stop }}" style="text-align:center;max-width:920px;max-height:88vh;overflow:auto;cursor:auto;">
           <div style="font-family:'Space Mono',monospace;font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:#3F8278;margin-bottom:20px;">{{ selected.kindLabel }}</div>
           <div style="width:min(900px,86vw);aspect-ratio:16/9;margin:0 auto;border:3px solid #181410;box-shadow:12px 12px 0 #BC2E1C;background:#000;">
-            <iframe src="{{ selected.videoSrc }}" allow="autoplay; fullscreen; picture-in-picture" style="width:100%;height:100%;border:0;display:block;" title="{{ selected.title }}"></iframe>
+            <iframe src="{{ selected.videoSrc }}" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen style="width:100%;height:100%;border:0;display:block;" title="{{ selected.title }}"></iframe>
           </div>
           <div style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:30px;color:#181410;margin-top:22px;">{{ selected.title }}</div>
           <div style="font-family:'Spectral',serif;font-style:italic;font-weight:300;font-size:17px;color:#181410;opacity:.7;margin-top:8px;">{{ selected.caption }}</div>
@@ -186,7 +208,7 @@
       <sc-if value="{{ selected.isImageModal }}" hint-placeholder-val="{{ false }}">
         <div data-palfx onClick="{{ stop }}" style="text-align:center;max-width:760px;max-height:88vh;overflow:auto;cursor:auto;">
           <div style="position:relative;width:min(560px,82vw);height:min(560px,64vh);margin:0 auto;border:3px solid #181410;box-shadow:12px 12px 0 #BC2E1C;background:#efe6d2;overflow:hidden;">
-            <image-slot id="{{ selected.slotId }}" src="{{ selected.img }}" shape="rect" fit="cover" style="position:absolute;inset:0;width:100%;height:100%;" placeholder="drop an image"></image-slot>
+            <image-slot id="{{ selected.slotId }}" src="{{ selected.img }}" alt="{{ selected.alt }}" loading="lazy" shape="rect" fit="cover" style="position:absolute;inset:0;width:100%;height:100%;" placeholder="drop an image"></image-slot>
           </div>
           <div style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:30px;color:#181410;margin-top:22px;">{{ selected.title }}</div>
           <div style="font-family:'Spectral',serif;font-style:italic;font-weight:300;font-size:17px;color:#181410;opacity:.72;margin-top:8px;max-width:460px;margin-left:auto;margin-right:auto;">{{ selected.caption }}</div>
@@ -197,7 +219,7 @@
       <sc-if value="{{ selected.isBioModal }}" hint-placeholder-val="{{ false }}">
         <div data-palfx onClick="{{ stop }}" style="cursor:auto;max-width:920px;max-height:88vh;overflow:auto;display:flex;gap:48px;align-items:center;justify-content:center;flex-wrap:wrap;text-align:left;">
           <div style="position:relative;width:min(340px,72vw);aspect-ratio:1/1;border:3px solid #181410;box-shadow:14px 14px 0 #BC2E1C;background:#efe6d2;overflow:hidden;flex:0 0 auto;">
-            <image-slot id="{{ selected.bioSlotId }}" src="{{ selected.bioImg }}" shape="rect" fit="cover" style="position:absolute;inset:0;width:100%;height:100%;" placeholder="drop a portrait"></image-slot>
+            <image-slot id="{{ selected.bioSlotId }}" src="{{ selected.bioImg }}" alt="al colibrí before a hummingbird mural" loading="lazy" shape="rect" fit="cover" style="position:absolute;inset:0;width:100%;height:100%;" placeholder="drop a portrait"></image-slot>
           </div>
           <div style="max-width:470px;">
             <div style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:#3F8278;margin-bottom:12px;">the artist</div>
@@ -208,13 +230,13 @@
         </div>
       </sc-if>
 
-      <div style="position:fixed;top:30px;right:34px;font-family:'Space Mono',monospace;font-size:13px;letter-spacing:.1em;color:#181410;opacity:.7;">drift back ↩</div>
+      <button type="button" onClick="{{ close }}" style="position:fixed;top:30px;right:34px;appearance:none;border:0;background:transparent;font-family:'Space Mono',monospace;font-size:13px;letter-spacing:.1em;color:#181410;opacity:.8;cursor:pointer;">drift back ↩</button>
     </div>
   </sc-if>
 
   <!-- ENTRANCE: loading into bloom -->
   <sc-if value="{{ showOverlay }}" hint-placeholder-val="{{ true }}">
-    <div style="position:fixed;inset:0;z-index:80;display:grid;place-items:center;cursor:pointer;background:radial-gradient(circle at 50% 42%, rgba(255,255,255,.5), transparent 62%), repeating-linear-gradient(0deg, rgba(120,90,40,.04) 0 2px, transparent 2px 5px), #E7DCC4;" onClick="{{ enter }}">
+    <div style="position:fixed;inset:0;z-index:80;display:grid;place-items:center;cursor:pointer;background:radial-gradient(circle at 50% 42%, rgba(255,255,255,.5), transparent 62%), repeating-linear-gradient(0deg, rgba(120,90,40,.04) 0 2px, transparent 2px 5px), #E7DCC4;" onClick="{{ enter }}" role="button" tabIndex="0" aria-label="Enter the sea" onKeyDown="{{ activateEnter }}">
 
       <sc-if value="{{ isBloom }}" hint-placeholder-val="{{ false }}">
         <div data-splash="0" style="position:absolute;left:50%;top:50%;width:160px;height:160px;border-radius:50%;background:#F4C20D;transform:translate(-50%,-50%) scale(.15);opacity:0;"></div>
@@ -227,7 +249,7 @@
       <sc-if value="{{ isSeed }}" hint-placeholder-val="{{ true }}">
         <div style="text-align:center;display:flex;flex-direction:column;align-items:center;gap:26px;">
           <div data-pulse="1" style="width:58px;height:58px;border-radius:50%;background:#BC2E1C;display:flex;align-items:center;justify-content:center;">
-            <img src="assets/logo-white.png" style="width:42px;height:42px;filter:brightness(0);opacity:.88;pointer-events:none;" alt="">
+            <img src="assets/logo-white.webp" style="width:42px;height:42px;filter:brightness(0);opacity:.88;pointer-events:none;" alt="">
           </div>
           <div style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(56px,11vw,140px);line-height:.86;color:#181410;letter-spacing:-.02em;">al<br>colibrí</div>
           <div style="font-family:'Space Mono',monospace;font-style:italic;font-size:15px;letter-spacing:.22em;color:#3F8278;">koyaha · irudahialo · karariwa</div>
@@ -238,7 +260,7 @@
     </div>
   </sc-if>
 
-</div>
+</main>
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;driftSpeed&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;tidal&quot;,&quot;options&quot;:[&quot;calm&quot;,&quot;tidal&quot;,&quot;lively&quot;],&quot;tsType&quot;:&quot;string&quot;},&quot;parallax&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;floatAmp&quot;:{&quot;editor&quot;:&quot;float&quot;,&quot;default&quot;:1.2,&quot;min&quot;:0,&quot;max&quot;:2.5,&quot;step&quot;:0.1,&quot;tsType&quot;:&quot;number&quot;},&quot;spread&quot;:{&quot;editor&quot;:&quot;float&quot;,&quot;default&quot;:1.4,&quot;min&quot;:0.7,&quot;max&quot;:1.5,&quot;step&quot;:0.05,&quot;tsType&quot;:&quot;number&quot;},&quot;islandScale&quot;:{&quot;editor&quot;:&quot;float&quot;,&quot;default&quot;:1.1,&quot;min&quot;:0.75,&quot;max&quot;:1.35,&quot;step&quot;:0.05,&quot;tsType&quot;:&quot;number&quot;},&quot;palette&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;full&quot;,&quot;options&quot;:[&quot;full&quot;,&quot;sun-bleached&quot;,&quot;muted&quot;],&quot;tsType&quot;:&quot;string&quot;},&quot;entrancePace&quot;:{&quot;editor&quot;:&quot;float&quot;,&quot;default&quot;:1,&quot;min&quot;:0.4,&quot;max&quot;:2,&quot;step&quot;:0.1,&quot;tsType&quot;:&quot;number&quot;},&quot;grain&quot;:{&quot;editor&quot;:&quot;float&quot;,&quot;default&quot;:0,&quot;min&quot;:0,&quot;max&quot;:1,&quot;step&quot;:0.05,&quot;tsType&quot;:&quot;number&quot;}}">
 class Component extends DCLogic {
@@ -257,6 +279,8 @@ class Component extends DCLogic {
     window.addEventListener('touchend', this.onUp);
     window.addEventListener('touchcancel', this.onUp);
     window.addEventListener('resize', this._onResize);
+    window.addEventListener('keydown', this.onGlobalKeyDown);
+    this._reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     this.raf = requestAnimationFrame(this.tick);
     this._packTimers = [setTimeout(() => this.packIslands(), 280), setTimeout(() => this.packIslands(), 1000)];
   }
@@ -267,6 +291,7 @@ class Component extends DCLogic {
     window.removeEventListener('touchend', this.onUp);
     window.removeEventListener('touchcancel', this.onUp);
     window.removeEventListener('resize', this._onResize);
+    window.removeEventListener('keydown', this.onGlobalKeyDown);
     (this._packTimers || []).forEach(clearTimeout);
     cancelAnimationFrame(this.raf);
   }
@@ -336,14 +361,15 @@ class Component extends DCLogic {
 
 
   tick = (t) => {
+    const reduce = !!this._reduceMotion;
     this.pan.x += (this.target.x - this.pan.x) * 0.07;
     this.pan.y += (this.target.y - this.pan.y) * 0.07;
-    const m = this.speed();
-    const fa = this.props.floatAmp ?? 1;
+    const m = reduce ? 1 : this.speed();
+    const fa = reduce ? 0 : (this.props.floatAmp ?? 1);
     const pace = this.props.entrancePace || 1;
-    const dx = Math.sin(t / (4200 / m)) * 16;
-    const dy = Math.cos(t / (5600 / m)) * 12;
-    const par = this.props.parallax === false ? 0 : 1;
+    const dx = reduce ? 0 : Math.sin(t / (4200 / m)) * 16;
+    const dy = reduce ? 0 : Math.cos(t / (5600 / m)) * 12;
+    const par = reduce || this.props.parallax === false ? 0 : 1;
     const px = this.pan.x + dx - this.mouseN.x * 22 * par;
     const py = this.pan.y + dy - this.mouseN.y * 16 * par;
     if (this._sea) {
@@ -366,13 +392,13 @@ class Component extends DCLogic {
     const hb = document.querySelector('[data-bob]');
     if (hb) {
       const k = Math.sin(t / 620);
-      hb.style.transform = `translateY(${(k * 5).toFixed(2)}px) rotate(${(k * 6).toFixed(1)}deg)`;
+      hb.style.transform = reduce ? 'none' : `translateY(${(k * 5).toFixed(2)}px) rotate(${(k * 6).toFixed(1)}deg)`;
     }
     // seed pulse
     const sd = document.querySelector('[data-pulse]');
-    if (sd) sd.style.transform = `scale(${(1 + Math.sin(t / 480) * 0.13).toFixed(3)})`;
+    if (sd) sd.style.transform = reduce ? 'none' : `scale(${(1 + Math.sin(t / 480) * 0.13).toFixed(3)})`;
     // bloom splash
-    if (this.state.phase === 'bloom') {
+    if (this.state.phase === 'bloom' && !reduce) {
       if (!this._bloomT0) this._bloomT0 = t;
       const prog = Math.min(1, (t - this._bloomT0) / (1500 * pace));
       const cs = document.querySelectorAll('[data-splash]');
@@ -424,25 +450,44 @@ class Component extends DCLogic {
 
   enter = () => {
     if (this.state.phase !== 'seed') return;
+    if (this._reduceMotion) { this.setState({ phase: 'sea' }); return; }
     this.setState({ phase: 'bloom' });
     const pace = this.props.entrancePace || 1;
     setTimeout(() => this.setState({ phase: 'sea' }), 1650 * pace);
   };
 
+  onGlobalKeyDown = (e) => {
+    if (e.key === 'Escape' && this.state.selected) this.close();
+  };
+  activateEnter = (e) => {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); this.enter(); }
+  };
+  activateHome = (e) => {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); this.goHome(); }
+  };
+  closeOnEscape = (e) => {
+    if (e.key === 'Escape') { e.stopPropagation(); this.close(); }
+  };
+
   openPiece = (p) => {
     if (this._moved) return;
+    this._lastFocus = document.activeElement;
     this._modalT0 = performance.now();
-    this.setState({ selected: p });
+    this.setState({ selected: p }, () => setTimeout(() => document.querySelector('[data-modal-root]')?.focus(), 0));
   };
-  close = () => this.setState({ selected: null });
+  close = () => this.setState({ selected: null }, () => {
+    const el = this._lastFocus;
+    this._lastFocus = null;
+    if (el && typeof el.focus === 'function') el.focus();
+  });
   goHome = () => { this.target = { x: 0, y: 0 }; this.setState({ selected: null }); };
 
   buildPieces() {
     const INK = '#181410', YEL = '#F4C20D', RED = '#BC2E1C', BLU = '#1E3FCC', TEAL = '#4F9E94', PINK = '#E69BA6';
     const raw = [
       { kind: 'hero', title: 'al colibrí', modalKind: 'bio', accent: RED,
-        slotId: 'hero-mark', img: 'assets/logo-white.png',
-        bioSlotId: 'artist-portrait', bioImg: 'assets/mural.jpg',
+        slotId: 'hero-mark', img: 'assets/logo-white.webp',
+        bioSlotId: 'artist-portrait', bioImg: 'assets/mural.webp',
         bio: 'al colibrí is a Taíno in diaspora, living and working on the lands of the peoples of Tkaronto. He is a transmedia artist who experiments with digital video, gaming, poetry and non-fiction, and focuses on themes of spiritualized nature, the tenderness of grief, ancestral kinetics, and playful decadence. When he isn’t critically fabulating, he moonlights as a professor at multiple universities in Canada and the US and is a father of two little love goblins (emphasis on the goblins).',
         x: 1300, y: 800, rot: -2, amp: 1.4, phase: 0, ph: [360, 300] },
 
@@ -475,7 +520,7 @@ class Component extends DCLogic {
         x: 1880, y: 840, rot: -2, amp: 1.0, phase: 3.3, ph: [300, 188] },
 
       { kind: 'media', subtype: 'video', title: 'The Powers of the False', kindLabel: 'film · visual essay', accent: BLU, modalKind: 'video',
-        slotId: 'film-powers-of-false', img: 'assets/powers-of-false.png',
+        slotId: 'film-powers-of-false', img: 'assets/powers-of-false.webp',
         videoSrc: 'https://player.vimeo.com/video/94774272?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479',
         caption: 'Deleuze, Welles, and the forger — a film that creates an event',
         x: 650, y: 1360, rot: 2, amp: 1.0, phase: 2.1, ph: [300, 188] },
@@ -534,6 +579,13 @@ class Component extends DCLogic {
         isPoemModal: r.modalKind === 'poem', isVideoModal: r.modalKind === 'video', isImageModal: r.modalKind === 'image', isBioModal: r.modalKind === 'bio',
         hasNative: !!r.native,
         kindLabel: r.kindLabel || '',
+        alt: r.alt || (r.kind === 'media' ? `${r.title}: ${r.caption || r.kindLabel || 'artwork image'}` : ''),
+        ariaLabel: r.kind === 'hero' ? 'Open artist bio'
+          : r.kind === 'poem' ? `Read ${r.title}`
+          : r.kind === 'perf' ? 'Open performance archive'
+          : r.kind === 'link' ? `Open ${r.title}`
+          : `Open ${r.title}`,
+        modalLabel: r.kind === 'hero' ? 'Artist bio' : r.title,
         outerStyle, outerHover, floatStyle, barStyle, frameStyle, linkBoxStyle,
         floatTf: `scale(${iScale})`,
         cx: px, cy: py, pinAttr: r.kind === 'hero' ? '1' : '0',
@@ -547,6 +599,9 @@ class Component extends DCLogic {
       } else {
         p.open = () => this.openPiece(p);
       }
+      p.activate = (e) => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); p.open(); }
+      };
       return p;
     });
   }
@@ -562,6 +617,9 @@ class Component extends DCLogic {
       enter: this.enter,
       close: this.close,
       goHome: this.goHome,
+      activateEnter: this.activateEnter,
+      activateHome: this.activateHome,
+      closeOnEscape: this.closeOnEscape,
       stop: (e) => e.stopPropagation(),
       onSeaDown: this.onSeaDown,
       onSeaTouchStart: this.onSeaTouchStart,

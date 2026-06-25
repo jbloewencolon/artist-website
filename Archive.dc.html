@@ -1,8 +1,22 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<title>the archive — al colibrí</title>
+<meta name="description" content="Archive of al colibrí performances, poems, film work, and still images.">
+<link rel="canonical" href="https://alcolibri.com/Archive.dc.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="the archive — al colibrí">
+<meta property="og:description" content="Performances, poems, films, and stills from al colibrí.">
+<meta property="og:url" content="https://alcolibri.com/Archive.dc.html">
+<meta property="og:image" content="https://alcolibri.com/assets/reencuentro.webp">
+<meta property="og:site_name" content="al colibrí">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="the archive — al colibrí">
+<meta name="twitter:description" content="Performances, poems, films, and stills from al colibrí.">
+<meta name="twitter:image" content="https://alcolibri.com/assets/reencuentro.webp">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"CollectionPage","name":"the archive — al colibrí","url":"https://alcolibri.com/Archive.dc.html","about":{"@type":"Person","name":"al colibrí","url":"https://alcolibri.com/al%20colibri.dc.html"},"hasPart":[{"@type":"CreativeWork","name":"The Ancestors"},{"@type":"CreativeWork","name":"Discovery Day"},{"@type":"CreativeWork","name":"Black Squirrel Rhythm"},{"@type":"CreativeWork","name":"Gimme That Swamp Song"},{"@type":"CreativeWork","name":"Ode to the Small Gods"},{"@type":"VideoObject","name":"The Gay Science","embedUrl":"https://player.vimeo.com/video/116007704"},{"@type":"VideoObject","name":"The Powers of the False","embedUrl":"https://player.vimeo.com/video/94774272"}]}</script>
 <script src="./support.js"></script>
 </head>
 <body>
@@ -14,6 +28,11 @@
 <style>
   html,body{margin:0;padding:0;background:#E7DCC4;}
   *{box-sizing:border-box;}
+  :focus-visible{outline:3px solid #1E3FCC;outline-offset:4px;box-shadow:4px 4px 0 #F4C20D;}
+  button{font:inherit;}
+  @media (prefers-reduced-motion: reduce){
+    *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.001ms!important;}
+  }
   .poemrow{display:grid;grid-template-columns:200px 1fr;gap:40px;}
   @media (max-width:680px){
     .archwrap{padding:34px 20px 96px !important;}
@@ -22,7 +41,7 @@
 </style>
 <script src="./image-slot.js"></script>
 </helmet>
-<div style="min-height:100vh;font-family:'Spectral',Georgia,serif;color:#181410;background:radial-gradient(circle at 22% 10%, rgba(255,255,255,.4), transparent 56%), repeating-linear-gradient(0deg, rgba(120,90,40,.04) 0 2px, transparent 2px 5px), #E7DCC4;">
+<main id="archive" style="min-height:100vh;font-family:'Spectral',Georgia,serif;color:#181410;background:radial-gradient(circle at 22% 10%, rgba(255,255,255,.4), transparent 56%), repeating-linear-gradient(0deg, rgba(120,90,40,.04) 0 2px, transparent 2px 5px), #E7DCC4;">
   <div class="archwrap" style="max-width:1000px;margin:0 auto;padding:42px 36px 120px;">
 
     <!-- top bar -->
@@ -50,12 +69,12 @@
         <sc-for list="{{ performances }}" as="pf" hint-placeholder-count="3">
           <div>
             <div data-tone style="position:relative;width:100%;aspect-ratio:4/3;border:3px solid #181410;box-shadow:8px 8px 0 {{ pf.accent }};overflow:hidden;background:#efe6d2;">
-              <image-slot id="{{ pf.slotId }}" src="{{ pf.img }}" shape="rect" fit="cover" style="position:absolute;inset:0;width:100%;height:100%;" placeholder="drop an image"></image-slot>
+              <image-slot id="{{ pf.slotId }}" src="{{ pf.img }}" alt="{{ pf.alt }}" loading="lazy" shape="rect" fit="cover" style="position:absolute;inset:0;width:100%;height:100%;" placeholder="drop an image"></image-slot>
             </div>
             <div style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#3F8278;margin-top:16px;">{{ pf.tag }}</div>
             <div style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:23px;line-height:1.05;margin-top:6px;">{{ pf.title }}</div>
             <div style="font-family:'Spectral',serif;font-weight:300;font-size:15px;line-height:1.55;margin-top:8px;opacity:.85;">{{ pf.note }}</div>
-            <a href="{{ pf.href }}" target="_blank" rel="noopener" style="display:inline-block;margin-top:10px;font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.08em;color:#BC2E1C;text-decoration:none;">{{ pf.linkLabel }}</a>
+            <a href="{{ pf.href }}" target="_blank" rel="noopener noreferrer" style="display:inline-block;margin-top:10px;font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.08em;color:#BC2E1C;text-decoration:none;">{{ pf.linkLabel }}</a>
           </div>
         </sc-for>
       </div>
@@ -69,14 +88,14 @@
         <div style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.16em;text-transform:uppercase;opacity:.6;">visual essay</div>
       </div>
       <div style="width:100%;aspect-ratio:16/9;border:3px solid #181410;box-shadow:12px 12px 0 #1E3FCC;background:#000;">
-        <iframe src="https://player.vimeo.com/video/116007704?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479" allow="autoplay; fullscreen; picture-in-picture" style="width:100%;height:100%;border:0;display:block;" title="The Gay Science"></iframe>
+        <iframe src="https://player.vimeo.com/video/116007704?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen style="width:100%;height:100%;border:0;display:block;" title="The Gay Science"></iframe>
       </div>
       <div style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:24px;margin-top:18px;">The Gay Science</div>
       <div style="font-family:'Spectral',serif;font-style:italic;font-weight:300;font-size:16px;opacity:.72;margin-top:4px;">A Visual Essay in die Fröhliche Wissenschaft</div>
       <div style="margin-top:72px;">
         <div style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.16em;text-transform:uppercase;opacity:.6;margin-bottom:20px;">second film</div>
         <div style="width:100%;aspect-ratio:16/10;border:3px solid #181410;box-shadow:12px 12px 0 #1E3FCC;background:#000;">
-          <iframe src="https://player.vimeo.com/video/94774272?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479" allow="autoplay; fullscreen; picture-in-picture" style="width:100%;height:100%;border:0;display:block;" title="The Powers of the False"></iframe>
+          <iframe src="https://player.vimeo.com/video/94774272?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen style="width:100%;height:100%;border:0;display:block;" title="The Powers of the False"></iframe>
         </div>
         <div style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:24px;margin-top:18px;">The Powers of the False</div>
         <div style="font-family:'Spectral',serif;font-weight:300;font-size:16px;line-height:1.55;opacity:.8;margin-top:8px;max-width:680px;">Deleuze, Welles, and the forger — a film that creates an event rather than explains a concept. Drawing from Orson Welles' <em>F for Fake</em> and <em>Gilles Deleuze: From A to Z</em> to embody the powers of the false through form and experience.</div>
@@ -98,7 +117,7 @@
             <div style="height:8px;width:80px;background:{{ pm.accent }};transform:rotate(-1.5deg);margin-top:16px;"></div>
             <sc-if value="{{ pm.credit }}" hint-placeholder-val="{{ false }}">
               <div style="margin-top:20px;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.04em;line-height:1.55;color:#181410;opacity:.6;">{{ pm.credit }}</div>
-              <a href="{{ pm.link }}" target="_blank" rel="noopener" style="display:inline-block;margin-top:8px;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.06em;color:#BC2E1C;text-decoration:none;">{{ pm.linkLabel }}</a>
+              <a href="{{ pm.link }}" target="_blank" rel="noopener noreferrer" style="display:inline-block;margin-top:8px;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.06em;color:#BC2E1C;text-decoration:none;">{{ pm.linkLabel }}</a>
             </sc-if>
           </div>
           <div>
@@ -123,7 +142,7 @@
         <sc-for list="{{ gallery }}" as="g" hint-placeholder-count="5">
           <div>
             <div data-tone style="position:relative;width:100%;aspect-ratio:{{ g.ratio }};border:3px solid #181410;box-shadow:7px 7px 0 {{ g.accent }};overflow:hidden;background:#efe6d2;">
-              <image-slot id="{{ g.slotId }}" src="{{ g.img }}" shape="rect" fit="cover" style="position:absolute;inset:0;width:100%;height:100%;" placeholder="drop an image"></image-slot>
+              <image-slot id="{{ g.slotId }}" src="{{ g.img }}" alt="{{ g.alt }}" loading="lazy" shape="rect" fit="cover" style="position:absolute;inset:0;width:100%;height:100%;" placeholder="drop an image"></image-slot>
             </div>
             <div style="font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:17px;margin-top:12px;">{{ g.title }}</div>
             <div style="font-family:'Spectral',serif;font-style:italic;font-weight:300;font-size:14px;opacity:.7;margin-top:3px;">{{ g.note }}</div>
@@ -133,13 +152,13 @@
     </div>
 
     <!-- FOOTER -->
-    <div style="margin-top:100px;border-top:2px solid #181410;padding-top:34px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:18px;">
+    <footer style="margin-top:100px;border-top:2px solid #181410;padding-top:34px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:18px;">
       <a href="al%20colibri.dc.html" style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:26px;letter-spacing:-.01em;color:#181410;text-decoration:none;">← back to the sea</a>
-      <div style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;opacity:.6;">al colibrí · @al_colibri_jlc</div>
-    </div>
+      <a href="https://www.instagram.com/al_colibri_jlc/" target="_blank" rel="noopener noreferrer" style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;opacity:.72;color:#181410;text-decoration:none;">al colibrí · @al_colibri_jlc</a>
+    </footer>
 
   </div>
-</div>
+</main>
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{
   &quot;galleryColumns&quot;: { &quot;editor&quot;: &quot;int&quot;, &quot;default&quot;: 3, &quot;min&quot;: 2, &quot;max&quot;: 4, &quot;tsType&quot;: &quot;number&quot; },
@@ -173,9 +192,10 @@ class Component extends DCLogic {
     const YEL = '#F4C20D', RED = '#BC2E1C', BLU = '#1E3FCC', TEAL = '#4F9E94', PINK = '#E69BA6';
     const cols = this.props.galleryColumns ?? 3;
     const galMin = cols >= 4 ? 165 : cols === 2 ? 300 : 210;
+    const withAlt = (items) => items.map((x) => ({ ...x, alt: x.alt || `${x.title}. ${x.note || ''}`.trim() }));
     return {
       cols, galMin,
-      performances: [
+      performances: withAlt([
         { tag: 'video spotlight · aug 9, 2025', title: 'Reencuentro Taíno Conference', accent: BLU,
           slotId: 'arch-reencuentro', img: 'assets/reencuentro.webp',
           note: "Featured video spotlight — Ka Hebeyo'no (The Ancestors) — for the International Decade of Indigenous Languages.",
@@ -188,12 +208,12 @@ class Component extends DCLogic {
           slotId: 'arch-bar', img: 'assets/bar.jpg',
           note: 'A live performance to stir the senses, opening a night on the thin veil between worlds.',
           href: 'https://luma.com/9heuergt', linkLabel: 'see the event →' },
-      ],
-      gallery: [
+      ]),
+      gallery: withAlt([
         { title: 'A Violent Evangelism', note: 'Luis N. Rivera — read against river stones.', accent: RED, ratio: '4/5',
           slotId: 'arch-book', img: 'assets/book.jpg' },
         { title: 'Silver Line', note: 'In transit.', accent: BLU, ratio: '1/1',
-          slotId: 'arch-silverline', img: 'assets/silverline.jpg' },
+          slotId: 'arch-silverline', img: 'assets/silverline.webp' },
         { title: 'Smoke & Light', note: 'From a live performance.', accent: PINK, ratio: '3/5',
           slotId: 'arch-smoke', img: 'assets/gay-science.jpg' },
         { title: 'Allan Gardens, II', note: 'MOSAIC S3E1, among the plants.', accent: YEL, ratio: '3/5',
@@ -203,8 +223,8 @@ class Component extends DCLogic {
         { title: 'Allan Gardens, I', note: 'MOSAIC S3E1, reading in overalls.', accent: RED, ratio: '4/5',
           slotId: 'arch-farmer', img: 'assets/farmer.jpg' },
         { title: 'al colibrí', note: 'Before the hummingbird mural.', accent: BLU, ratio: '1/1',
-          slotId: 'arch-mural', img: 'assets/mural.jpg' },
-      ],
+          slotId: 'arch-mural', img: 'assets/mural.webp' },
+      ]),
       poems: [
         { title: 'The Ancestors', tag: "ka hebeyo'no", accent: BLU, anchor: 'poem-ancestors', hasNative: true,
           native: `Gua'arikawabu\nNaiko aban\nHewibo hiana ka yuca\nKa kawia k'akirikatti\nWa itaa le bu abon'o\nWa eibun'no le bu kanowa\nAxahawa a yoba kaya'no\nAita'ni yara le aba hamaka  bia'bu\nYaha alu ka inkayeke`,
