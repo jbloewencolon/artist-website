@@ -262,7 +262,7 @@
 
 </main>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;driftSpeed&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;tidal&quot;,&quot;options&quot;:[&quot;calm&quot;,&quot;tidal&quot;,&quot;lively&quot;],&quot;tsType&quot;:&quot;string&quot;},&quot;parallax&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;floatAmp&quot;:{&quot;editor&quot;:&quot;float&quot;,&quot;default&quot;:1.2,&quot;min&quot;:0,&quot;max&quot;:2.5,&quot;step&quot;:0.1,&quot;tsType&quot;:&quot;number&quot;},&quot;spread&quot;:{&quot;editor&quot;:&quot;float&quot;,&quot;default&quot;:1.4,&quot;min&quot;:0.7,&quot;max&quot;:1.5,&quot;step&quot;:0.05,&quot;tsType&quot;:&quot;number&quot;},&quot;islandScale&quot;:{&quot;editor&quot;:&quot;float&quot;,&quot;default&quot;:1.1,&quot;min&quot;:0.75,&quot;max&quot;:1.35,&quot;step&quot;:0.05,&quot;tsType&quot;:&quot;number&quot;},&quot;palette&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;full&quot;,&quot;options&quot;:[&quot;full&quot;,&quot;sun-bleached&quot;,&quot;muted&quot;],&quot;tsType&quot;:&quot;string&quot;},&quot;entrancePace&quot;:{&quot;editor&quot;:&quot;float&quot;,&quot;default&quot;:1,&quot;min&quot;:0.4,&quot;max&quot;:2,&quot;step&quot;:0.1,&quot;tsType&quot;:&quot;number&quot;},&quot;grain&quot;:{&quot;editor&quot;:&quot;float&quot;,&quot;default&quot;:0,&quot;min&quot;:0,&quot;max&quot;:1,&quot;step&quot;:0.05,&quot;tsType&quot;:&quot;number&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;driftSpeed&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;tidal&quot;,&quot;options&quot;:[&quot;calm&quot;,&quot;tidal&quot;,&quot;lively&quot;],&quot;tsType&quot;:&quot;string&quot;},&quot;parallax&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;floatAmp&quot;:{&quot;editor&quot;:&quot;float&quot;,&quot;default&quot;:1.2,&quot;min&quot;:0,&quot;max&quot;:2.5,&quot;step&quot;:0.1,&quot;tsType&quot;:&quot;number&quot;},&quot;spread&quot;:{&quot;editor&quot;:&quot;float&quot;,&quot;default&quot;:1.65,&quot;min&quot;:0.7,&quot;max&quot;:2,&quot;step&quot;:0.05,&quot;tsType&quot;:&quot;number&quot;},&quot;islandScale&quot;:{&quot;editor&quot;:&quot;float&quot;,&quot;default&quot;:1.1,&quot;min&quot;:0.75,&quot;max&quot;:1.35,&quot;step&quot;:0.05,&quot;tsType&quot;:&quot;number&quot;},&quot;palette&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;full&quot;,&quot;options&quot;:[&quot;full&quot;,&quot;sun-bleached&quot;,&quot;muted&quot;],&quot;tsType&quot;:&quot;string&quot;},&quot;entrancePace&quot;:{&quot;editor&quot;:&quot;float&quot;,&quot;default&quot;:1,&quot;min&quot;:0.4,&quot;max&quot;:2,&quot;step&quot;:0.1,&quot;tsType&quot;:&quot;number&quot;},&quot;grain&quot;:{&quot;editor&quot;:&quot;float&quot;,&quot;default&quot;:0,&quot;min&quot;:0,&quot;max&quot;:1,&quot;step&quot;:0.05,&quot;tsType&quot;:&quot;number&quot;}}">
 class Component extends DCLogic {
   state = { phase: 'seed', selected: null };
 
@@ -305,7 +305,8 @@ class Component extends DCLogic {
     const nodes = [...this._sea.querySelectorAll('[data-cx]')];
     if (nodes.length < 2) return;
     const iScale = this.props.islandScale ?? 1;
-    const CX = 1300, CY = 850, GAP = 18, ITERS = 700, GRAVITY = 0.014;
+    // ponytail: one global gap fits the current island set; use per-island radii if the archive grows dense.
+    const CX = 1300, CY = 850, GAP = 88, ITERS = 900, GRAVITY = 0.006;
     const P = nodes.map((el) => {
       const w = el.offsetWidth * iScale, h = el.offsetHeight * iScale;
       const pin = el.dataset.pin === '1';
