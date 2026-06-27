@@ -75,6 +75,11 @@
 
   function load() {
     if (loadP) return loadP;
+    // ponytail: public pages use author `src` only; restore sidecar reads when a public state file ships.
+    if (!(window.omelette && window.omelette.writeFile)) {
+      loadP = Promise.resolve().then(() => { loaded = true; subs.forEach((fn) => fn()); });
+      return loadP;
+    }
     loadP = fetch(STATE_FILE)
       .then((r) => (r.ok ? r.json() : null))
       .then((j) => {
@@ -118,6 +123,7 @@
 
   const S_MAX = 5;
   const clampS = (s) => Math.max(1, Math.min(S_MAX, s));
+  const isTemplateValue = (v) => /\{\{|\}\}/.test(v || '');
 
   // Normalize a stored slot value. Pre-reframe sidecars stored a bare
   // data-URL string; newer ones store {u, s, x, y}. Either shape is valid.
@@ -226,7 +232,7 @@
 
   class ImageSlot extends HTMLElement {
     static get observedAttributes() {
-      return ['shape', 'radius', 'mask', 'fit', 'position', 'placeholder', 'src', 'id', 'alt', 'loading'];
+      return ['shape', 'radius', 'mask', 'fit', 'position', 'placeholder', 'src', 'srcset', 'sizes', 'id', 'alt', 'loading'];
     }
 
     constructor() {
@@ -599,11 +605,16 @@
 
       // Content. The sidecar is also writable by the agent's write_file
       // tool, so its value isn't guaranteed canvas-originated — only accept
-      // data:image/ URLs from it. The `src` attribute is author-controlled
-      // (Claude wrote it into the HTML) so it passes through unchanged.
+      // data:image/ URLs from it. Author `src`/`srcset` passes through after
+      // the template engine replaces any raw {{ placeholders }}.
       let stored = this.id ? getSlot(this.id) : this._local;
       if (stored && stored.u && !/^data:image\//i.test(stored.u)) stored = null;
-      const srcAttr = this.getAttribute('src') || '';
+      const rawSrc = this.getAttribute('src') || '';
+      const srcAttr = isTemplateValue(rawSrc) ? '' : rawSrc;
+      const rawSrcset = this.getAttribute('srcset') || '';
+      const srcsetAttr = isTemplateValue(rawSrcset) ? '' : rawSrcset;
+      const rawSizes = this.getAttribute('sizes') || '';
+      const sizesAttr = isTemplateValue(rawSizes) ? '' : rawSizes;
       this._userUrl = (stored && stored.u) || null;
       const url = this._userUrl || srcAttr;
       this._img.alt = this.getAttribute('alt') || '';
@@ -625,6 +636,20 @@
           this._img.src = url;
           this._ghost.src = url;
         }
+        if (!this._userUrl && srcsetAttr) {
+          this._img.srcset = srcsetAttr;
+          this._ghost.srcset = srcsetAttr;
+        } else {
+          this._img.removeAttribute('srcset');
+          this._ghost.removeAttribute('srcset');
+        }
+        if (!this._userUrl && sizesAttr) {
+          this._img.sizes = sizesAttr;
+          this._ghost.sizes = sizesAttr;
+        } else {
+          this._img.removeAttribute('sizes');
+          this._ghost.removeAttribute('sizes');
+        }
         this._img.style.display = 'block';
         this._empty.style.display = 'none';
         this.setAttribute('data-filled', '');
@@ -633,7 +658,11 @@
       } else {
         this._img.style.display = 'none';
         this._img.removeAttribute('src');
+        this._img.removeAttribute('srcset');
+        this._img.removeAttribute('sizes');
         this._ghost.removeAttribute('src');
+        this._ghost.removeAttribute('srcset');
+        this._ghost.removeAttribute('sizes');
         this._empty.style.display = 'flex';
         this.removeAttribute('data-filled');
       }
