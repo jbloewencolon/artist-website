@@ -199,7 +199,7 @@
         <div data-palfx onClick="{{ stop }}" style="text-align:center;max-width:920px;max-height:88vh;overflow:auto;cursor:auto;">
           <div style="font-family:'Space Mono',monospace;font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:#3F8278;margin-bottom:20px;">{{ selected.kindLabel }}</div>
           <div style="width:min(900px,86vw);aspect-ratio:16/9;margin:0 auto;border:3px solid #181410;box-shadow:12px 12px 0 #BC2E1C;background:#000;">
-            <iframe src="{{ selected.videoSrc }}" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen style="width:100%;height:100%;border:0;display:block;" title="{{ selected.title }}"></iframe>
+            <iframe data-video-src="{{ selected.videoSrc }}" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen style="width:100%;height:100%;border:0;display:block;" title="{{ selected.title }}"></iframe>
           </div>
           <div style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:30px;color:#181410;margin-top:22px;">{{ selected.title }}</div>
           <div style="font-family:'Spectral',serif;font-style:italic;font-weight:300;font-size:17px;color:#181410;opacity:.7;margin-top:8px;">{{ selected.caption }}</div>
@@ -299,6 +299,7 @@ class Component extends DCLogic {
   }
   componentDidUpdate(prevProps) {
     if (!prevProps || prevProps.spread !== this.props.spread || prevProps.islandScale !== this.props.islandScale) this.schedulePack();
+    this.hydrateVideoFrames();
   }
   _onResize = () => this.schedulePack();
   schedulePack = () => {
@@ -306,6 +307,12 @@ class Component extends DCLogic {
     this._packRaf = requestAnimationFrame(() => {
       this._packRaf = 0;
       this.packIslands();
+    });
+  };
+  hydrateVideoFrames = () => {
+    document.querySelectorAll('iframe[data-video-src]').forEach((frame) => {
+      const src = frame.getAttribute('data-video-src');
+      if (src && !/\{\{|\}\}/.test(src) && frame.getAttribute('src') !== src) frame.setAttribute('src', src);
     });
   };
 
@@ -548,8 +555,8 @@ class Component extends DCLogic {
         href: 'Archive.dc.html',
         events: [
           { date: 'Aug 9, 2025', tag: 'video spotlight', venue: 'Reencuentro Taíno Conference', accent: BLU },
-          { date: '2024', tag: 'mosaic s3e1', venue: 'Allan Gardens, Toronto', accent: TEAL },
-          { date: '2023', tag: 'mosaic s2e1', venue: 'Spirituality, Mysticism & Magic', accent: RED },
+          { date: 'Jun 11, 2026', tag: 'mosaic', venue: 'Allan Gardens, Toronto', accent: TEAL },
+          { date: 'Mar 14, 2025', tag: 'mosaic', venue: 'Spirituality, Mysticism & Magic', accent: RED },
         ] },
 
       { kind: 'link', title: 'the archive', tag: 'past work', href: 'Archive.dc.html', accent: INK,

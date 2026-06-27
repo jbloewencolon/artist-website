@@ -19,7 +19,7 @@
 - [ ] Move custom headers to a host that supports them; GitHub Pages ignores `_headers`.
 - [ ] Serve immutable cache headers for versioned assets.
 - [ ] Replace runtime `new Function` path with a static build/prerender when feasible.
-- [ ] Vendor third-party runtime scripts locally or remove runtime dependency.
+- [x] Vendor third-party runtime scripts locally or remove runtime dependency.
 
 ## Later, only if needed
 - [x] Replace archive Vimeo iframes with click-to-load poster cards.
