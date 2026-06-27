@@ -94,7 +94,7 @@
         </sc-if>
         <sc-if value="{{ !loadedVideoGay }}" hint-placeholder-val="{{ false }}">
           <button type="button" onClick="{{ loadGay }}" aria-label="Load The Gay Science video" style="width:100%;height:100%;padding:0;border:0;background:#000;cursor:pointer;position:relative;">
-            <img src="assets/gay-science-480.webp" alt="" aria-hidden="true" style="width:100%;height:100%;object-fit:cover;display:block;filter:saturate(.9) contrast(1.05);opacity:.96;">
+            <img src="assets/gay-science-poster-480.webp" srcset="assets/gay-science-poster-480.webp 480w, assets/gay-science-poster-960.webp 960w, assets/gay-science.png 1032w" sizes="(max-width: 680px) 88vw, 920px" alt="" aria-hidden="true" style="width:100%;height:100%;object-fit:cover;display:block;filter:saturate(.9) contrast(1.05);opacity:.96;">
             <div style="position:absolute;inset:auto 20px 20px 20px;display:flex;align-items:center;justify-content:space-between;gap:16px;color:#fff;font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.18em;text-transform:uppercase;text-shadow:0 1px 2px rgba(0,0,0,.45);">
               <span>play video</span>
               <span style="width:56px;height:56px;border-radius:50%;border:2px solid rgba(255,255,255,.9);display:grid;place-items:center;background:rgba(0,0,0,.18);">▶</span>
@@ -251,11 +251,11 @@ class Component extends DCLogic {
           slotId: 'arch-reencuentro', img: 'assets/reencuentro.webp',
           note: "Featured video spotlight — Ka Hebeyo'no (The Ancestors) — for the International Decade of Indigenous Languages.",
           href: 'https://www.tainoconference.org', linkLabel: 'tainoconference.org →' },
-        { tag: 'mosaic s3e1 · allan gardens, toronto', title: 'Culture • Psychedelics • Community', accent: TEAL,
+        { tag: 'mosaic · june 11, 2026 · allan gardens, toronto', title: 'Culture • Psychedelics • Community', accent: TEAL,
           slotId: 'arch-greenhouse', img: 'assets/greenhouse.jpg',
           note: 'A reading inside the Victorian glass dome of Allan Gardens — among the orchids, palms, and floating turtles.',
           href: 'https://luma.com/c2mlwb19', linkLabel: 'see the event →' },
-        { tag: 'mosaic s2e1 · toronto', title: 'Spirituality, Mysticism & Magic', accent: RED,
+        { tag: 'mosaic · mar 14, 2025 · toronto', title: 'Spirituality, Mysticism & Magic', accent: RED,
           slotId: 'arch-bar', img: 'assets/bar.jpg',
           note: 'A live performance to stir the senses, opening a night on the thin veil between worlds.',
           href: 'https://luma.com/9heuergt', linkLabel: 'see the event →' },
