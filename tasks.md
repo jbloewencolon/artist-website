@@ -22,6 +22,6 @@
 - [ ] Vendor third-party runtime scripts locally or remove runtime dependency.
 
 ## Later, only if needed
-- [ ] Replace archive Vimeo iframes with click-to-load poster cards.
+- [x] Replace archive Vimeo iframes with click-to-load poster cards.
 - [ ] Self-host/subset fonts.
 - [ ] Add automated visual smoke checks for desktop and mobile.
