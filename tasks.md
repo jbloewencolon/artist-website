@@ -23,5 +23,5 @@
 
 ## Later, only if needed
 - [x] Replace archive Vimeo iframes with click-to-load poster cards.
-- [ ] Self-host/subset fonts.
+- [x] Self-host/subset fonts.
 - [ ] Add automated visual smoke checks for desktop and mobile.
