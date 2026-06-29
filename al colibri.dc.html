@@ -54,7 +54,7 @@
   </div>
 
   <!-- THE SEA -->
-  <div style="position:absolute;inset:0;overflow:hidden;cursor:grab;touch-action:none;" onMouseDown="{{ onSeaDown }}" onTouchStart="{{ onSeaTouchStart }}">
+  <div style="position:absolute;inset:0;overflow:hidden;cursor:grab;touch-action:none;" onPointerDown="{{ onSeaPointerDown }}">
     <div ref="{{ seaRef }}" style="position:absolute;left:50%;top:50%;width:2600px;height:1700px;transform:translate(-50%,-50%);will-change:transform;">
 
       <!-- floating taíno petroglyphs -->
@@ -273,11 +273,9 @@ class Component extends DCLogic {
   _moved = false;
 
   componentDidMount() {
-    window.addEventListener('mousemove', this.onMove);
-    window.addEventListener('mouseup', this.onUp);
-    window.addEventListener('touchmove', this.onTouchMove, { passive: false });
-    window.addEventListener('touchend', this.onUp);
-    window.addEventListener('touchcancel', this.onUp);
+    window.addEventListener('pointermove', this.onPointerMove, { passive: false });
+    window.addEventListener('pointerup', this.onPointerUp);
+    window.addEventListener('pointercancel', this.onPointerUp);
     window.addEventListener('resize', this._onResize);
     window.addEventListener('keydown', this.onGlobalKeyDown);
     this._reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -285,11 +283,9 @@ class Component extends DCLogic {
     this._packTimers = [setTimeout(() => this.schedulePack(), 280), setTimeout(() => this.schedulePack(), 1000)];
   }
   componentWillUnmount() {
-    window.removeEventListener('mousemove', this.onMove);
-    window.removeEventListener('mouseup', this.onUp);
-    window.removeEventListener('touchmove', this.onTouchMove);
-    window.removeEventListener('touchend', this.onUp);
-    window.removeEventListener('touchcancel', this.onUp);
+    window.removeEventListener('pointermove', this.onPointerMove);
+    window.removeEventListener('pointerup', this.onPointerUp);
+    window.removeEventListener('pointercancel', this.onPointerUp);
     window.removeEventListener('resize', this._onResize);
     window.removeEventListener('keydown', this.onGlobalKeyDown);
     (this._packTimers || []).forEach(clearTimeout);
@@ -433,38 +429,27 @@ class Component extends DCLogic {
     this.raf = requestAnimationFrame(this.tick);
   };
 
-  onSeaDown = (e) => {
-    this.drag = { sx: e.clientX, sy: e.clientY, ox: this.target.x, oy: this.target.y };
+  onSeaPointerDown = (e) => {
+    if (e.button != null && e.button !== 0) return;
+    this.drag = { id: e.pointerId, sx: e.clientX, sy: e.clientY, ox: this.target.x, oy: this.target.y };
     this._moved = false;
-  };
-  onMove = (e) => {
     this.mouseN = { x: (e.clientX / window.innerWidth - 0.5) * 2, y: (e.clientY / window.innerHeight - 0.5) * 2 };
-    if (this.drag) {
+  };
+  onPointerMove = (e) => {
+    this.mouseN = { x: (e.clientX / window.innerWidth - 0.5) * 2, y: (e.clientY / window.innerHeight - 0.5) * 2 };
+    if (this.drag && (this.drag.id == null || e.pointerId === this.drag.id)) {
       const ddx = e.clientX - this.drag.sx;
       const ddy = e.clientY - this.drag.sy;
-      if (Math.abs(ddx) + Math.abs(ddy) > 6) this._moved = true;
+      const threshold = e.pointerType === 'touch' ? 8 : 6;
+      if (Math.abs(ddx) + Math.abs(ddy) > threshold) this._moved = true;
       this.target.x = this.drag.ox + ddx;
       this.target.y = this.drag.oy + ddy;
+      if (this._moved && e.cancelable) e.preventDefault();
     }
   };
-  onUp = () => { this.drag = null; };
-
-  onSeaTouchStart = (e) => {
-    const t = e.touches[0];
-    if (!t) return;
-    this.drag = { sx: t.clientX, sy: t.clientY, ox: this.target.x, oy: this.target.y };
-    this._moved = false;
-  };
-  onTouchMove = (e) => {
-    if (!this.drag) return;
-    const t = e.touches[0];
-    if (!t) return;
-    const ddx = t.clientX - this.drag.sx;
-    const ddy = t.clientY - this.drag.sy;
-    if (Math.abs(ddx) + Math.abs(ddy) > 8) this._moved = true;
-    this.target.x = this.drag.ox + ddx;
-    this.target.y = this.drag.oy + ddy;
-    if (this._moved) e.preventDefault();
+  onPointerUp = (e) => {
+    if (!this.drag || (e && this.drag.id != null && e.pointerId !== this.drag.id)) return;
+    this.drag = null;
   };
 
   enter = () => {
@@ -651,8 +636,7 @@ class Component extends DCLogic {
       activateHome: this.activateHome,
       closeOnEscape: this.closeOnEscape,
       stop: (e) => e.stopPropagation(),
-      onSeaDown: this.onSeaDown,
-      onSeaTouchStart: this.onSeaTouchStart,
+      onSeaPointerDown: this.onSeaPointerDown,
       seaRef: (el) => { this._sea = el; },
     };
   }
