@@ -17,6 +17,7 @@
 - [x] Fix type exploration mobile overflow and add responsive breakpoints.
 - [x] Raise mobile tap targets and safe-area spacing where fixed controls or dense headers need it.
 - [x] Replace `100vh`-only screens with `dvh`-safe sizing on mobile-facing pages.
+- [x] Make sea touch dragging strong enough to explore all islands on mobile.
 - [ ] Extend visual smoke checks to catch mobile overflow and cover the type exploration page.
 
 ## Phase 3 - Hosting/security hardening
