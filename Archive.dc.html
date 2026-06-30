@@ -38,14 +38,17 @@
   }
   .poemrow{display:grid;grid-template-columns:200px 1fr;gap:40px;}
   @media (max-width:680px){
-    .archwrap{padding:34px 20px 96px !important;}
+    .archwrap{padding:calc(34px + env(safe-area-inset-top)) 20px calc(96px + env(safe-area-inset-bottom)) !important;}
     .poemrow{grid-template-columns:1fr !important;gap:14px;}
-    .archive-toggle{align-items:center;}
+    .archwrap > div:first-child{align-items:flex-start !important;gap:18px;}
+    .archive-toggle{align-items:center;min-height:44px;padding:4px 0;}
+    .archwrap > div:first-child > a:first-child,
+    footer a{min-height:44px;padding:6px 0;display:inline-flex;align-items:center;}
   }
 </style>
 <script src="./image-slot.js"></script>
 </helmet>
-<main id="archive" style="min-height:100vh;font-family:'Spectral',Georgia,serif;color:#181410;background:radial-gradient(circle at 22% 10%, rgba(255,255,255,.4), transparent 56%), repeating-linear-gradient(0deg, rgba(120,90,40,.04) 0 2px, transparent 2px 5px), #E7DCC4;">
+<main id="archive" style="min-height:100vh;min-height:100dvh;font-family:'Spectral',Georgia,serif;color:#181410;background:radial-gradient(circle at 22% 10%, rgba(255,255,255,.4), transparent 56%), repeating-linear-gradient(0deg, rgba(120,90,40,.04) 0 2px, transparent 2px 5px), #E7DCC4;">
   <div class="archwrap" style="max-width:1000px;margin:0 auto;padding:42px 36px 120px;">
 
     <!-- top bar -->

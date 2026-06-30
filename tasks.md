@@ -14,6 +14,10 @@
 - [x] Wire `image-slot` to `srcset`/`sizes` so mobile gets smaller images.
 - [x] Reduce repeated sea layout work during modal open/close.
 - [x] Keep Vimeo embeds lazy and verify playback after changes.
+- [x] Fix type exploration mobile overflow and add responsive breakpoints.
+- [x] Raise mobile tap targets and safe-area spacing where fixed controls or dense headers need it.
+- [x] Replace `100vh`-only screens with `dvh`-safe sizing on mobile-facing pages.
+- [ ] Extend visual smoke checks to catch mobile overflow and cover the type exploration page.
 
 ## Phase 3 - Hosting/security hardening
 - [ ] Move custom headers to a host that supports them; GitHub Pages ignores `_headers`.
@@ -24,4 +28,4 @@
 ## Later, only if needed
 - [x] Replace archive Vimeo iframes with click-to-load poster cards.
 - [x] Self-host/subset fonts.
- - [x] Add automated visual smoke checks for desktop and mobile.
+- [x] Add automated visual smoke checks for desktop and mobile.

@@ -36,10 +36,17 @@
   @media (prefers-reduced-motion: reduce){
     *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.001ms!important;}
   }
+  @media (max-width:680px){
+    .skip-link{top:calc(14px + env(safe-area-inset-top));left:calc(14px + env(safe-area-inset-left));}
+    div[style*="position:fixed;top:26px;left:30px"]{top:calc(26px + env(safe-area-inset-top))!important;left:calc(24px + env(safe-area-inset-left))!important;}
+    div[style*="position:fixed;bottom:26px;left:50%;transform:translateX(-50%)"]{bottom:calc(26px + env(safe-area-inset-bottom))!important;}
+    button[style*="position:fixed;top:30px;right:34px"]{top:calc(30px + env(safe-area-inset-top))!important;right:calc(28px + env(safe-area-inset-right))!important;}
+    div[style*="font-style:italic;font-size:15px;letter-spacing:.22em;color:#3F8278"]{max-width:min(88vw,420px);padding:0 10px;font-size:13px!important;letter-spacing:.16em!important;line-height:1.7;text-align:center;color:#2F6E66!important;}
+  }
 </style>
 <script src="./image-slot.js"></script>
 </helmet>
-<main id="sea" style="position:relative;width:100vw;height:100vh;overflow:hidden;font-family:'Spectral',Georgia,serif;background:radial-gradient(circle at 28% 18%, rgba(255,255,255,.34), transparent 58%), radial-gradient(circle at 82% 86%, rgba(40,24,8,.07), transparent 55%), #E7DCC4;">
+<main id="sea" style="position:relative;width:100vw;height:100vh;height:100dvh;min-height:100vh;min-height:100dvh;overflow:hidden;font-family:'Spectral',Georgia,serif;background:radial-gradient(circle at 28% 18%, rgba(255,255,255,.34), transparent 58%), radial-gradient(circle at 82% 86%, rgba(40,24,8,.07), transparent 55%), #E7DCC4;">
   <a class="skip-link" href="Archive.dc.html">skip to archive</a>
 
   <!-- ADJUSTABLE GRAIN -->
