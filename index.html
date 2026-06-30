@@ -61,7 +61,7 @@
   </div>
 
   <!-- THE SEA -->
-  <div style="position:absolute;inset:0;overflow:hidden;cursor:grab;touch-action:none;" onPointerDown="{{ onSeaPointerDown }}">
+  <div ref="{{ seaViewportRef }}" style="position:absolute;inset:0;overflow:hidden;cursor:grab;touch-action:none;" onPointerDown="{{ onSeaPointerDown }}">
     <div ref="{{ seaRef }}" style="position:absolute;left:50%;top:50%;width:2600px;height:1700px;transform:translate(-50%,-50%);will-change:transform;">
 
       <!-- floating taíno petroglyphs -->
@@ -283,6 +283,9 @@ class Component extends DCLogic {
     window.addEventListener('pointermove', this.onPointerMove, { passive: false });
     window.addEventListener('pointerup', this.onPointerUp);
     window.addEventListener('pointercancel', this.onPointerUp);
+    window.addEventListener('touchmove', this.onSeaTouchMove, { passive: false });
+    window.addEventListener('touchend', this.onSeaTouchEnd);
+    window.addEventListener('touchcancel', this.onSeaTouchEnd);
     window.addEventListener('resize', this._onResize);
     window.addEventListener('keydown', this.onGlobalKeyDown);
     this._reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -293,6 +296,10 @@ class Component extends DCLogic {
     window.removeEventListener('pointermove', this.onPointerMove);
     window.removeEventListener('pointerup', this.onPointerUp);
     window.removeEventListener('pointercancel', this.onPointerUp);
+    window.removeEventListener('touchmove', this.onSeaTouchMove);
+    window.removeEventListener('touchend', this.onSeaTouchEnd);
+    window.removeEventListener('touchcancel', this.onSeaTouchEnd);
+    if (this._seaViewport) this._seaViewport.removeEventListener('touchstart', this.onSeaTouchStart);
     window.removeEventListener('resize', this._onResize);
     window.removeEventListener('keydown', this.onGlobalKeyDown);
     (this._packTimers || []).forEach(clearTimeout);
@@ -380,12 +387,26 @@ class Component extends DCLogic {
     return 'none';
   }
 
+  clampTarget(pos) {
+    const viewW = window.innerWidth || 1;
+    const viewH = window.innerHeight || 1;
+    const worldW = this._sea ? this._sea.offsetWidth : 2600;
+    const worldH = this._sea ? this._sea.offsetHeight : 1700;
+    const maxX = Math.max(0, (worldW - viewW) / 2);
+    const maxY = Math.max(0, (worldH - viewH) / 2);
+    return {
+      x: Math.max(-maxX, Math.min(maxX, pos.x)),
+      y: Math.max(-maxY, Math.min(maxY, pos.y)),
+    };
+  }
+
 
 
   tick = (t) => {
     const reduce = !!this._reduceMotion;
-    this.pan.x += (this.target.x - this.pan.x) * 0.07;
-    this.pan.y += (this.target.y - this.pan.y) * 0.07;
+    const follow = this.drag ? 0.36 : 0.1;
+    this.pan.x += (this.target.x - this.pan.x) * follow;
+    this.pan.y += (this.target.y - this.pan.y) * follow;
     const m = reduce ? 1 : this.speed();
     const fa = reduce ? 0 : (this.props.floatAmp ?? 1);
     const pace = this.props.entrancePace || 1;
@@ -438,24 +459,62 @@ class Component extends DCLogic {
 
   onSeaPointerDown = (e) => {
     if (e.button != null && e.button !== 0) return;
+    if (e.currentTarget?.setPointerCapture && e.pointerId != null) {
+      try { e.currentTarget.setPointerCapture(e.pointerId); this._dragEl = e.currentTarget; } catch {}
+    }
     this.drag = { id: e.pointerId, sx: e.clientX, sy: e.clientY, ox: this.target.x, oy: this.target.y };
     this._moved = false;
     this.mouseN = { x: (e.clientX / window.innerWidth - 0.5) * 2, y: (e.clientY / window.innerHeight - 0.5) * 2 };
+  };
+  onSeaTouchStart = (e) => {
+    if (!e.touches || e.touches.length !== 1) return;
+    const t = e.touches[0];
+    this.drag = { id: t.identifier, touch: true, sx: t.clientX, sy: t.clientY, ox: this.target.x, oy: this.target.y };
+    this._moved = false;
+    this.mouseN = { x: (t.clientX / window.innerWidth - 0.5) * 2, y: (t.clientY / window.innerHeight - 0.5) * 2 };
+  };
+  onSeaTouchMove = (e) => {
+    if (!this.drag?.touch || !e.touches || !e.touches.length) return;
+    const touch = [...e.touches].find((t) => t.identifier === this.drag.id) || e.touches[0];
+    this.mouseN = { x: (touch.clientX / window.innerWidth - 0.5) * 2, y: (touch.clientY / window.innerHeight - 0.5) * 2 };
+    const ddx = touch.clientX - this.drag.sx;
+    const ddy = touch.clientY - this.drag.sy;
+    if (Math.abs(ddx) + Math.abs(ddy) > 8) this._moved = true;
+    this.target = this.clampTarget({ x: this.drag.ox + ddx * 2.65, y: this.drag.oy + ddy * 2.65 });
+    if (this._moved) {
+      this.pan.x += (this.target.x - this.pan.x) * 0.65;
+      this.pan.y += (this.target.y - this.pan.y) * 0.65;
+      if (e.cancelable) e.preventDefault();
+    }
+  };
+  onSeaTouchEnd = (e) => {
+    if (!this.drag?.touch) return;
+    if (e?.changedTouches?.length && ![...e.changedTouches].some((t) => t.identifier === this.drag.id)) return;
+    this.drag = null;
   };
   onPointerMove = (e) => {
     this.mouseN = { x: (e.clientX / window.innerWidth - 0.5) * 2, y: (e.clientY / window.innerHeight - 0.5) * 2 };
     if (this.drag && (this.drag.id == null || e.pointerId === this.drag.id)) {
       const ddx = e.clientX - this.drag.sx;
       const ddy = e.clientY - this.drag.sy;
-      const threshold = e.pointerType === 'touch' ? 8 : 6;
+      const isCoarse = e.pointerType === 'touch' || (!e.pointerType && window.matchMedia?.('(pointer: coarse)').matches);
+      const threshold = isCoarse ? 8 : 6;
       if (Math.abs(ddx) + Math.abs(ddy) > threshold) this._moved = true;
-      this.target.x = this.drag.ox + ddx;
-      this.target.y = this.drag.oy + ddy;
-      if (this._moved && e.cancelable) e.preventDefault();
+      const scale = isCoarse ? 2.65 : 1;
+      this.target = this.clampTarget({ x: this.drag.ox + ddx * scale, y: this.drag.oy + ddy * scale });
+      if (this._moved) {
+        this.pan.x += (this.target.x - this.pan.x) * 0.65;
+        this.pan.y += (this.target.y - this.pan.y) * 0.65;
+        if (e.cancelable) e.preventDefault();
+      }
     }
   };
   onPointerUp = (e) => {
     if (!this.drag || (e && this.drag.id != null && e.pointerId !== this.drag.id)) return;
+    if (this._dragEl?.releasePointerCapture && this.drag.id != null) {
+      try { this._dragEl.releasePointerCapture(this.drag.id); } catch {}
+    }
+    this._dragEl = null;
     this.drag = null;
   };
 
@@ -491,7 +550,7 @@ class Component extends DCLogic {
     this._lastFocus = null;
     if (el && typeof el.focus === 'function') el.focus();
   });
-  goHome = () => { this.target = { x: 0, y: 0 }; this.setState({ selected: null }); };
+  goHome = () => { this.target = this.clampTarget({ x: 0, y: 0 }); this.setState({ selected: null }); };
 
   buildPieces() {
     const INK = '#181410', YEL = '#F4C20D', RED = '#BC2E1C', BLU = '#1E3FCC', TEAL = '#4F9E94', PINK = '#E69BA6';
@@ -644,6 +703,12 @@ class Component extends DCLogic {
       closeOnEscape: this.closeOnEscape,
       stop: (e) => e.stopPropagation(),
       onSeaPointerDown: this.onSeaPointerDown,
+      seaViewportRef: (el) => {
+        if (this._seaViewport === el) return;
+        if (this._seaViewport) this._seaViewport.removeEventListener('touchstart', this.onSeaTouchStart);
+        this._seaViewport = el;
+        if (el) el.addEventListener('touchstart', this.onSeaTouchStart, { passive: true });
+      },
       seaRef: (el) => { this._sea = el; },
     };
   }
