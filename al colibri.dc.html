@@ -115,7 +115,7 @@
       <div data-drift="1.0" data-phase="4.2" data-tf="rotate(-12deg)" style="position:absolute;left:560px;top:640px;width:8px;height:48px;background:#4F9E94;transform:rotate(-12deg);opacity:.6;"></div>
 
       <sc-for list="{{ pieces }}" as="p" hint-placeholder-count="6">
-        <div data-cx="{{ p.cx }}" data-cy="{{ p.cy }}" data-pin="{{ p.pinAttr }}" style="{{ p.outerStyle }}" style-hover="{{ p.outerHover }}" onClick="{{ p.open }}" role="button" tabIndex="0" aria-label="{{ p.ariaLabel }}" onKeyDown="{{ p.activate }}">
+        <div data-sea-piece="1" data-cx="{{ p.cx }}" data-cy="{{ p.cy }}" data-pin="{{ p.pinAttr }}" style="{{ p.outerStyle }}" style-hover="{{ p.outerHover }}" onClick="{{ p.open }}" role="button" tabIndex="0" aria-label="{{ p.ariaLabel }}" onKeyDown="{{ p.activate }}">
           <div data-drift="{{ p.amp }}" data-phase="{{ p.phase }}" data-tf="{{ p.floatTf }}" style="{{ p.floatStyle }}">
 
             <sc-if value="{{ p.isHero }}" hint-placeholder-val="{{ false }}">
@@ -315,6 +315,7 @@ class Component extends DCLogic {
     window.removeEventListener('resize', this._onResize);
     window.removeEventListener('keydown', this.onGlobalKeyDown);
     (this._packTimers || []).forEach(clearTimeout);
+    clearTimeout(this._movedTimer);
     if (this._packRaf) cancelAnimationFrame(this._packRaf);
     cancelAnimationFrame(this.raf);
   }
@@ -472,6 +473,7 @@ class Component extends DCLogic {
   onSeaPointerDown = (e) => {
     if (this.state.phase !== 'sea' || this.state.selected) return;
     if (e.button != null && e.button !== 0) return;
+    this._pressButton = e.target?.closest?.('[data-sea-piece="1"]') || null;
     if (e.currentTarget?.setPointerCapture && e.pointerId != null) {
       try { e.currentTarget.setPointerCapture(e.pointerId); this._dragEl = e.currentTarget; } catch {}
     }
@@ -482,6 +484,7 @@ class Component extends DCLogic {
   onSeaMouseDown = (e) => {
     if (this.state.phase !== 'sea' || this.state.selected) return;
     if (e.button != null && e.button !== 0) return;
+    this._pressButton = e.target?.closest?.('[data-sea-piece="1"]') || null;
     this.drag = { mouse: true, sx: e.clientX, sy: e.clientY, ox: this.target.x, oy: this.target.y };
     this._moved = false;
     this.mouseN = { x: (e.clientX / window.innerWidth - 0.5) * 2, y: (e.clientY / window.innerHeight - 0.5) * 2 };
@@ -490,6 +493,7 @@ class Component extends DCLogic {
     if (this.state.phase !== 'sea' || this.state.selected) return;
     if (!e.touches || e.touches.length !== 1) return;
     const t = e.touches[0];
+    this._pressButton = e.target?.closest?.('[data-sea-piece="1"]') || null;
     this.drag = { id: t.identifier, touch: true, sx: t.clientX, sy: t.clientY, ox: this.target.x, oy: this.target.y };
     this._moved = false;
     this.mouseN = { x: (t.clientX / window.innerWidth - 0.5) * 2, y: (t.clientY / window.innerHeight - 0.5) * 2 };
@@ -511,6 +515,8 @@ class Component extends DCLogic {
   onSeaTouchEnd = (e) => {
     if (!this.drag?.touch) return;
     if (e?.changedTouches?.length && ![...e.changedTouches].some((t) => t.identifier === this.drag.id)) return;
+    this.activatePressedPiece();
+    this.clearMovedSoon();
     this.drag = null;
   };
   onPointerMove = (e) => {
@@ -540,6 +546,8 @@ class Component extends DCLogic {
       try { this._dragEl.releasePointerCapture(this.drag.id); } catch {}
     }
     this._dragEl = null;
+    this.activatePressedPiece();
+    this.clearMovedSoon();
     this.drag = null;
   };
   onMouseMove = (e) => {
@@ -560,8 +568,26 @@ class Component extends DCLogic {
     }
   };
   onMouseUp = () => {
+    this.activatePressedPiece();
+    this.clearMovedSoon();
     if (this.drag?.mouse) this.drag = null;
   };
+  activatePressedPiece() {
+    const button = this._pressButton;
+    this._pressButton = null;
+    if (!button || this._moved) return;
+    button.click();
+  }
+  clearMovedSoon() {
+    clearTimeout(this._movedTimer);
+    if (this._moved) this._movedTimer = setTimeout(() => { this._moved = false; }, 220);
+  }
+  consumeMoved() {
+    const moved = !!this._moved;
+    this._moved = false;
+    clearTimeout(this._movedTimer);
+    return moved;
+  }
 
   enter = () => {
     if (this.state.phase !== 'seed') return;
@@ -585,11 +611,14 @@ class Component extends DCLogic {
   };
 
   openPiece = (p) => {
-    if (this._moved) return;
+    if (this.consumeMoved()) return;
+    this.selectPiece(p);
+  };
+  selectPiece(p) {
     this._lastFocus = document.activeElement;
     this._modalT0 = performance.now();
     this.setState({ selected: p }, () => setTimeout(() => document.querySelector('[data-modal-root]')?.focus(), 0));
-  };
+  }
   close = () => this.setState({ selected: null }, () => {
     const el = this._lastFocus;
     this._lastFocus = null;
@@ -724,12 +753,12 @@ class Component extends DCLogic {
         p.preview = (r.body || '').split('\n').slice(0, 5).join('\n');
         p.cue = r.cue || 'read the full poem →';
         p.open = () => {
-          if (this._moved) return;
+          if (this.consumeMoved()) return;
           if (r.external) window.open(r.href, '_blank', 'noopener');
-          else this.openPiece({ ...p, modalKind: 'poem' });
+          else this.selectPiece({ ...p, modalKind: 'poem' });
         };
       } else if (r.kind === 'link' || r.kind === 'perf') {
-        p.open = () => { if (!this._moved) window.location.href = r.href; };
+        p.open = () => { if (!this.consumeMoved()) window.location.href = r.href; };
       } else {
         p.open = () => this.openPiece(p);
       }
