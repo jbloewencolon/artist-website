@@ -61,7 +61,7 @@
   </div>
 
   <!-- THE SEA -->
-  <div ref="{{ seaViewportRef }}" style="position:absolute;inset:0;overflow:hidden;cursor:grab;touch-action:none;" onPointerDown="{{ onSeaPointerDown }}">
+  <div ref="{{ seaViewportRef }}" style="position:absolute;inset:0;overflow:hidden;cursor:grab;touch-action:none;">
     <div ref="{{ seaRef }}" style="position:absolute;left:50%;top:50%;width:2600px;height:1700px;transform:translate(-50%,-50%);will-change:transform;">
 
       <!-- floating taíno petroglyphs -->
@@ -283,6 +283,10 @@ class Component extends DCLogic {
     window.addEventListener('pointermove', this.onPointerMove, { passive: false });
     window.addEventListener('pointerup', this.onPointerUp);
     window.addEventListener('pointercancel', this.onPointerUp);
+    window.addEventListener('pointerdown', this.onSeaPointerDown, { passive: true });
+    window.addEventListener('mousedown', this.onSeaMouseDown, { passive: true });
+    window.addEventListener('mousemove', this.onMouseMove, { passive: false });
+    window.addEventListener('mouseup', this.onMouseUp);
     window.addEventListener('touchmove', this.onSeaTouchMove, { passive: false });
     window.addEventListener('touchend', this.onSeaTouchEnd);
     window.addEventListener('touchcancel', this.onSeaTouchEnd);
@@ -296,10 +300,18 @@ class Component extends DCLogic {
     window.removeEventListener('pointermove', this.onPointerMove);
     window.removeEventListener('pointerup', this.onPointerUp);
     window.removeEventListener('pointercancel', this.onPointerUp);
+    window.removeEventListener('pointerdown', this.onSeaPointerDown);
+    window.removeEventListener('mousedown', this.onSeaMouseDown);
+    window.removeEventListener('mousemove', this.onMouseMove);
+    window.removeEventListener('mouseup', this.onMouseUp);
     window.removeEventListener('touchmove', this.onSeaTouchMove);
     window.removeEventListener('touchend', this.onSeaTouchEnd);
     window.removeEventListener('touchcancel', this.onSeaTouchEnd);
-    if (this._seaViewport) this._seaViewport.removeEventListener('touchstart', this.onSeaTouchStart);
+    if (this._seaViewport) {
+      this._seaViewport.removeEventListener('pointerdown', this.onSeaPointerDown);
+      this._seaViewport.removeEventListener('mousedown', this.onSeaMouseDown);
+      this._seaViewport.removeEventListener('touchstart', this.onSeaTouchStart);
+    }
     window.removeEventListener('resize', this._onResize);
     window.removeEventListener('keydown', this.onGlobalKeyDown);
     (this._packTimers || []).forEach(clearTimeout);
@@ -458,6 +470,7 @@ class Component extends DCLogic {
   };
 
   onSeaPointerDown = (e) => {
+    if (this.state.phase !== 'sea' || this.state.selected) return;
     if (e.button != null && e.button !== 0) return;
     if (e.currentTarget?.setPointerCapture && e.pointerId != null) {
       try { e.currentTarget.setPointerCapture(e.pointerId); this._dragEl = e.currentTarget; } catch {}
@@ -466,7 +479,15 @@ class Component extends DCLogic {
     this._moved = false;
     this.mouseN = { x: (e.clientX / window.innerWidth - 0.5) * 2, y: (e.clientY / window.innerHeight - 0.5) * 2 };
   };
+  onSeaMouseDown = (e) => {
+    if (this.state.phase !== 'sea' || this.state.selected) return;
+    if (e.button != null && e.button !== 0) return;
+    this.drag = { mouse: true, sx: e.clientX, sy: e.clientY, ox: this.target.x, oy: this.target.y };
+    this._moved = false;
+    this.mouseN = { x: (e.clientX / window.innerWidth - 0.5) * 2, y: (e.clientY / window.innerHeight - 0.5) * 2 };
+  };
   onSeaTouchStart = (e) => {
+    if (this.state.phase !== 'sea' || this.state.selected) return;
     if (!e.touches || e.touches.length !== 1) return;
     const t = e.touches[0];
     this.drag = { id: t.identifier, touch: true, sx: t.clientX, sy: t.clientY, ox: this.target.x, oy: this.target.y };
@@ -494,6 +515,10 @@ class Component extends DCLogic {
   };
   onPointerMove = (e) => {
     this.mouseN = { x: (e.clientX / window.innerWidth - 0.5) * 2, y: (e.clientY / window.innerHeight - 0.5) * 2 };
+    if (!this.drag && e.buttons === 1 && this.state.phase === 'sea' && !this.state.selected) {
+      this.drag = { id: e.pointerId, sx: e.clientX, sy: e.clientY, ox: this.target.x, oy: this.target.y };
+      this._moved = false;
+    }
     if (this.drag && (this.drag.id == null || e.pointerId === this.drag.id)) {
       const ddx = e.clientX - this.drag.sx;
       const ddy = e.clientY - this.drag.sy;
@@ -516,6 +541,26 @@ class Component extends DCLogic {
     }
     this._dragEl = null;
     this.drag = null;
+  };
+  onMouseMove = (e) => {
+    this.mouseN = { x: (e.clientX / window.innerWidth - 0.5) * 2, y: (e.clientY / window.innerHeight - 0.5) * 2 };
+    if (!this.drag && e.buttons === 1 && this.state.phase === 'sea' && !this.state.selected) {
+      this.drag = { mouse: true, sx: e.clientX, sy: e.clientY, ox: this.target.x, oy: this.target.y };
+      this._moved = false;
+    }
+    if (!this.drag?.mouse) return;
+    const ddx = e.clientX - this.drag.sx;
+    const ddy = e.clientY - this.drag.sy;
+    if (Math.abs(ddx) + Math.abs(ddy) > 6) this._moved = true;
+    this.target = this.clampTarget({ x: this.drag.ox + ddx, y: this.drag.oy + ddy });
+    if (this._moved) {
+      this.pan.x += (this.target.x - this.pan.x) * 0.6;
+      this.pan.y += (this.target.y - this.pan.y) * 0.6;
+      if (e.cancelable) e.preventDefault();
+    }
+  };
+  onMouseUp = () => {
+    if (this.drag?.mouse) this.drag = null;
   };
 
   enter = () => {
@@ -711,11 +756,20 @@ class Component extends DCLogic {
       closeOnEscape: this.closeOnEscape,
       stop: (e) => e.stopPropagation(),
       onSeaPointerDown: this.onSeaPointerDown,
+      onSeaMouseDown: this.onSeaMouseDown,
       seaViewportRef: (el) => {
         if (this._seaViewport === el) return;
-        if (this._seaViewport) this._seaViewport.removeEventListener('touchstart', this.onSeaTouchStart);
+        if (this._seaViewport) {
+          this._seaViewport.removeEventListener('pointerdown', this.onSeaPointerDown);
+          this._seaViewport.removeEventListener('mousedown', this.onSeaMouseDown);
+          this._seaViewport.removeEventListener('touchstart', this.onSeaTouchStart);
+        }
         this._seaViewport = el;
-        if (el) el.addEventListener('touchstart', this.onSeaTouchStart, { passive: true });
+        if (el) {
+          el.addEventListener('pointerdown', this.onSeaPointerDown, { passive: true });
+          el.addEventListener('mousedown', this.onSeaMouseDown, { passive: true });
+          el.addEventListener('touchstart', this.onSeaTouchStart, { passive: true });
+        }
       },
       seaRef: (el) => { this._sea = el; },
     };
