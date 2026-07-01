@@ -18,6 +18,8 @@
 <meta name="twitter:image" content="https://alcolibri.com/assets/mural.jpg">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"al colibrí","url":"https://alcolibri.com/","image":"https://alcolibri.com/assets/mural.jpg","sameAs":["https://www.instagram.com/al_colibri_jlc/"],"jobTitle":"Transmedia artist","description":"Taíno in diaspora transmedia artist working across poetry, digital video, game-like spaces, and performance.","knowsAbout":["Taíno diaspora","Transmedia art","Poetry","Digital video","Performance art"]}</script>
 <link rel="icon" href="assets/logo-white.webp" type="image/webp">
+<link rel="preload" href="assets/site-fonts.css" as="style">
+<link rel="preload" href="assets/logo-white.webp" as="image" type="image/webp">
 <link href="assets/site-fonts.css" rel="stylesheet">
 <style>x-dc{display:none!important}</style>
 <script src="./support.js"></script>
@@ -47,7 +49,7 @@
 <script src="./image-slot.js"></script>
 </helmet>
 <main id="sea" style="position:relative;width:100vw;height:100vh;height:100dvh;min-height:100vh;min-height:100dvh;overflow:hidden;font-family:'Spectral',Georgia,serif;background:radial-gradient(circle at 28% 18%, rgba(255,255,255,.34), transparent 58%), radial-gradient(circle at 82% 86%, rgba(40,24,8,.07), transparent 55%), #E7DCC4;">
-  <a class="skip-link" href="Archive.dc.html">skip to archive</a>
+  <a class="skip-link" href="archive.html">skip to archive</a>
 
   <!-- ADJUSTABLE GRAIN -->
   <div data-grain aria-hidden="true" style="position:absolute;inset:0;pointer-events:none;z-index:2;opacity:0;mix-blend-mode:overlay;">
@@ -654,19 +656,19 @@ class Component extends DCLogic {
         bio: 'al colibrí is a Taíno in diaspora, living and working on the lands of the peoples of Tkaronto. He is a transmedia artist who experiments with digital video, gaming, poetry and non-fiction, and focuses on themes of spiritualized nature, the tenderness of grief, ancestral kinetics, and playful decadence. When he isn’t critically fabulating, he moonlights as a professor at multiple universities in Canada and the US and is a father of two little love goblins (emphasis on the goblins).',
         x: 1300, y: 800, rot: -2, amp: 1.4, phase: 0, ph: [360, 300] },
 
-      { kind: 'poem', title: 'The Ancestors', tag: "ka hebeyo'no", accent: BLU, href: 'Archive.dc.html#poem-ancestors',
+      { kind: 'poem', title: 'The Ancestors', tag: "ka hebeyo'no", accent: BLU, href: 'archive.html#poem-ancestors',
         x: 600, y: 430, rot: -3, amp: 1.2, phase: 0.6,
         modalKind: 'poem',
         native: `Gua'arikawabu\nNaiko aban\nHewibo hiana ka yuca\nKa kawia k'akirikatti\nWa itaa le bu abon'o\nWa eibun'no le bu kanowa\nAxahawa a yoba kaya'no\nAita'ni yara le aba hamaka  bia'bu\nYaha alu ka inkayeke`,
         body: `We see you\nLittle one\nRipening like the yucca\nThe waxing pumpkin moon\nOur blood is your rivers\nOur bones are your canoe\nWander to many islands\nKnowing there is a hammock for you\nHere in the village` },
 
-      { kind: 'poem', title: 'Discovery Day', tag: 'arawak', accent: RED, href: 'Archive.dc.html#poem-discovery',
+      { kind: 'poem', title: 'Discovery Day', tag: 'arawak', accent: RED, href: 'archive.html#poem-discovery',
         x: 2010, y: 430, rot: 2, amp: 1.7, phase: 1.7,
         modalKind: 'poem',
         native: `Bu amariha kuiriba'no oma da\nBu karuda kasabi oma da\nMei da kuwata da anaka\nKena bu anuka tuei le waiba'ki lan da`,
         body: `You make friends with me\nYou break bread with me\nThen I turn my back\nAnd you take what's left of me` },
 
-      { kind: 'poem', title: 'Black Squirrel Rhythm', tag: 'february', accent: TEAL, href: 'Archive.dc.html#poem-black-squirrel',
+      { kind: 'poem', title: 'Black Squirrel Rhythm', tag: 'february', accent: TEAL, href: 'archive.html#poem-black-squirrel',
         x: 470, y: 1180, rot: 3, amp: 1.3, phase: 2.9,
         modalKind: 'poem',
         body: `Something about the violining trees in winter\nallows the grief to ease and sway\nUncongealing like the thawing swamps\nBudding green algae in the cool air\n      Chlorophyll calm\n      Life is on the way\nThat "ivy vines on a deadwood" chill\nA sun-dappled trunk beating heart,\nto a tune unhurried by human ears\n       Black squirrel rhythm\n       Wrestling tambourine leaves\nA winter blues becomes spring jazz\nYet it's February,\n      and life is still better in twos` },
@@ -675,7 +677,7 @@ class Component extends DCLogic {
         x: 2090, y: 1230, rot: -2, amp: 1.5, phase: 4.1,
         body: `Gimme that swamp song\nBreeze, water-falling through tree leaves\nThick, musky, oak half-dead\nAching with lively\nQuivering pond scum\nThe thump and rave of birdsong\n\nFeral shades of green\nDuckweed\nSultry obscenities\nUnashamed and lusty\nBantered between them thirsty birds\n\nThat deep summer soul\n\nA butterfly hustler flits on by\n   With a side eye\n   And flickering brows\nPaper skin queen of the bayou\nCrown-shy yet flirty\n\nTrill\n        O de ley o de ley\nPop\n      Snatch\nThistle prick\n\nNature’s sound and slurry\n\nBrackish pleasures\nSap-slick menageries\nRoots and vines in orgy\n\nShagbark hickory\nVirginia creeper\nSassafras Ecstasy\n\nAll of it moan-touched\n   Throaty\nAnd in heat\n   Singing\n\nWhile a tall white ash\nBare limbed and hungry\nHangs rootedly in beat\nTo the summer swamp swing\nAnd the distant sounds of\nSpreading wings and morning dove groans` },
 
-      { kind: 'poem', title: 'Ode to the Small Gods', tag: 'cemís', accent: PINK, href: 'Archive.dc.html#poem-small-gods',
+      { kind: 'poem', title: 'Ode to the Small Gods', tag: 'cemís', accent: PINK, href: 'archive.html#poem-small-gods',
         x: 1060, y: 1380, rot: 1, amp: 0.95, phase: 5.0,
         modalKind: 'poem',
         body: `This is an ode to the small gods\nTobacco stones\n   and prayer beads\nRaven on a power line\nTarot card, sunflower seed\n   teary-eyed incense\nCandlelight and wind chime\n\nSong sung in the deep of night\n\nGold scarab in a sewage ditch\n   half-danced rattles\nAnd daggers prayer-licked with blood\nSalt bowl\n   amulet\n      sage smoked fan\nCrystal, string, and braids\nFaded shell\n   and feather in flight\nTattooed shadow on the firelit wall of a cave\nCairns and clustered stars\nAnd that single tree\n   standing tall in the meadow\n\nYou who touch\n   the fingers of the big gods\nEver present listeners\nWe see\n   and smell\n      and sing\nFor you who actualize our hope\nHang softly round our necks\n   held gently\n   in palms\nCalm hearts with beats\nAnd breath\n   make sense\n   and divine sensuality\nVisualing the world with meaning\n\nYou are the truly mattering gods\n\nBrick and mortar gods\n\nMud and sewage gods\n\nPain and pleasure gods\n\nOh mighty living ones\n\nMay our bodies\n   be your temples of worship` },
@@ -699,14 +701,14 @@ class Component extends DCLogic {
 
       { kind: 'perf', title: 'Recent Performances', accent: YEL,
         x: 1740, y: 400, rot: 1.5, amp: 0.9, phase: 2.6,
-        href: 'Archive.dc.html',
+        href: 'archive.html',
         events: [
           { date: 'Jun 11, 2026', tag: 'mosaic', venue: 'Allan Gardens, Toronto', accent: TEAL },
           { date: 'Aug 9, 2025', tag: 'video spotlight', venue: 'Reencuentro Taíno Conference', accent: BLU },
           { date: 'Mar 14, 2025', tag: 'mosaic', venue: 'Spirituality, Mysticism & Magic', accent: RED },
         ] },
 
-      { kind: 'link', title: 'the archive', tag: 'past work', href: 'Archive.dc.html', accent: INK,
+      { kind: 'link', title: 'the archive', tag: 'past work', href: 'archive.html', accent: INK,
         x: 1520, y: 1540, rot: 2, amp: 0.8, phase: 6.0 },
     ];
 
@@ -1056,7 +1058,7 @@ May our bodies
   </section>
 
   <footer class="nc-footer">
-    <p>© al colibrí — all rights reserved · <a href="Archive.dc.html">the archive</a></p>
+    <p>© al colibrí — all rights reserved · <a href="archive.html">the archive</a></p>
     <p style="margin-top:8px;opacity:.6;">Enable JavaScript for the full drifting-sea experience.</p>
   </footer>
 

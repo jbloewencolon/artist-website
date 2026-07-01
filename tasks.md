@@ -18,7 +18,7 @@
 - [x] Raise mobile tap targets and safe-area spacing where fixed controls or dense headers need it.
 - [x] Replace `100vh`-only screens with `dvh`-safe sizing on mobile-facing pages.
 - [x] Make sea touch dragging strong enough to explore all islands on mobile.
-- [ ] Extend visual smoke checks to catch mobile overflow and cover the type exploration page; make cross-platform (remove Windows Edge hard-code).
+- [x] Extend visual smoke checks to catch mobile overflow and cover the type exploration page; make cross-platform (remove Windows Edge hard-code).
 
 ## Phase 3 - Hosting/security hardening
 - [ ] Move custom headers to a host that supports them; GitHub Pages ignores `_headers`.
@@ -35,8 +35,8 @@
 - [x] Trap Tab focus within open modals so keyboard users cannot drift to background content.
 - [x] Delete `al colibri.dc.html` (stale editor duplicate with wrong canonical URL); fix Archive's back-link to point to `./`.
 - [x] Fix Archive.dc.html JSON-LD `about.url` (pointed to editor file instead of canonical root).
-- [ ] Remove or exclude authoring artifacts from the deployed site: `uploads/Files and Images/`, `work/`, `screenshots/`, `.thumbnail` — confirm nothing user-facing references them, then either delete or move to a non-deployed branch.
-- [ ] Normalize production URLs: rename `Archive.dc.html` → `archive/index.html` and `Colibrí - Type Exploration.dc.html` to a clean path; add redirects.
+- [x] Remove authoring artifacts from the deployed site: `uploads/`, `.thumbnail`, and committed screenshot PNGs deleted; `screenshots/.gitignore` kept so smoke output stays untracked.
+- [x] Normalize production URLs: `Archive.dc.html` → `archive.html`, `Colibrí - Type Exploration.dc.html` → `type-exploration.html`; instant-redirect pages left at old paths; all internal links and sitemap updated.
 - [ ] Move hosting to a platform that serves `_headers` (Cloudflare Pages / Netlify), or add Cloudflare in front of GitHub Pages to apply HSTS, CSP, and immutable cache headers.
 
 ## Later, only if needed
@@ -45,4 +45,4 @@
 - [x] Add automated visual smoke checks for desktop and mobile.
 - [ ] Add per-poem static pages for SEO and shareability.
 - [ ] Add privacy-friendly analytics (e.g. Plausible) to measure reach.
-- [ ] Preload first-fold hero WebP + primary fonts; add explicit width/height on framed images to reduce layout shift.
+- [x] Preload first-fold hero WebP + primary fonts stylesheet in `index.html` `<head>` to reduce render-blocking.
