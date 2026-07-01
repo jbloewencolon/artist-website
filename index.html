@@ -186,13 +186,13 @@
 
   <!-- POEM / PIECE ENCOUNTER -->
   <sc-if value="{{ selected }}" hint-placeholder-val="{{ false }}">
-    <div data-modal-root style="position:fixed;inset:0;z-index:50;display:grid;place-items:center;padding:6vh 7vw;cursor:pointer;animation:washIn .7s ease forwards;background:radial-gradient(circle at 50% 30%, rgba(255,255,255,.4), transparent 60%), repeating-linear-gradient(0deg, rgba(120,90,40,.04) 0 2px, transparent 2px 5px), #E7DCC4;" onClick="{{ close }}" role="dialog" aria-modal="true" aria-label="{{ selected.modalLabel }}" tabIndex="-1" onKeyDown="{{ closeOnEscape }}">
+    <div data-modal-root style="position:fixed;inset:0;z-index:50;display:grid;place-items:center;padding:6vh 7vw;cursor:pointer;animation:washIn .7s ease forwards;background:radial-gradient(circle at 50% 30%, rgba(255,255,255,.4), transparent 60%), repeating-linear-gradient(0deg, rgba(120,90,40,.04) 0 2px, transparent 2px 5px), #E7DCC4;" onClick="{{ close }}" role="dialog" aria-modal="true" aria-label="{{ selected.modalLabel }}" tabIndex="-1" onKeyDown="{{ onModalKeyDown }}">
 
       <sc-if value="{{ selected.isPoemModal }}" hint-placeholder-val="{{ false }}">
         <div data-palfx onClick="{{ stop }}" style="max-width:720px;max-height:86vh;overflow:auto;text-align:center;padding:8px 6px;cursor:auto;">
           <div style="font-family:'Space Mono',monospace;font-style:italic;font-size:15px;letter-spacing:.16em;color:#3F8278;margin-bottom:26px;">{{ selected.tag }}</div>
           <sc-if value="{{ selected.hasNative }}" hint-placeholder-val="{{ false }}">
-            <div style="font-family:'Spectral',serif;font-style:italic;font-weight:400;font-size:clamp(19px,2.3vw,26px);line-height:1.62;color:#3F8278;white-space:pre-wrap;margin-bottom:22px;">{{ selected.native }}</div>
+            <div lang="tnq" style="font-family:'Spectral',serif;font-style:italic;font-weight:400;font-size:clamp(19px,2.3vw,26px);line-height:1.62;color:#3F8278;white-space:pre-wrap;margin-bottom:22px;">{{ selected.native }}</div>
             <div style="margin:0 auto 26px;height:3px;width:54px;background:#181410;opacity:.4;"></div>
           </sc-if>
           <div style="font-family:'Spectral',serif;font-weight:300;font-size:clamp(20px,2.5vw,30px);line-height:1.74;color:#181410;white-space:pre-wrap;letter-spacing:.005em;">{{ selected.body }}</div>
@@ -219,7 +219,6 @@
           </div>
           <div style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:30px;color:#181410;margin-top:22px;">{{ selected.title }}</div>
           <div style="font-family:'Spectral',serif;font-style:italic;font-weight:300;font-size:17px;color:#181410;opacity:.72;margin-top:8px;max-width:460px;margin-left:auto;margin-right:auto;">{{ selected.caption }}</div>
-          <div style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#3F8278;margin-top:14px;opacity:.8;">drag a new image onto the frame to swap it</div>
         </div>
       </sc-if>
 
@@ -609,6 +608,26 @@ class Component extends DCLogic {
   closeOnEscape = (e) => {
     if (e.key === 'Escape') { e.stopPropagation(); this.close(); }
   };
+  onModalKeyDown = (e) => {
+    if (e.key === 'Escape') { e.stopPropagation(); this.close(); return; }
+    if (e.key !== 'Tab') return;
+    const modal = document.querySelector('[data-modal-root]');
+    if (!modal) return;
+    const focusable = [...modal.querySelectorAll(
+      'a[href],button:not([disabled]),input,select,textarea,iframe,[tabindex]:not([tabindex="-1"])'
+    )].filter((el) => !el.closest('[data-palfx]') || el.closest('[data-palfx]'));
+    if (focusable.length < 2) return;
+    const first = focusable[0], last = focusable[focusable.length - 1];
+    if (e.shiftKey) {
+      if (document.activeElement === first || document.activeElement === modal) {
+        e.preventDefault(); last.focus();
+      }
+    } else {
+      if (document.activeElement === last) {
+        e.preventDefault(); first.focus();
+      }
+    }
+  };
 
   openPiece = (p) => {
     if (this.consumeMoved()) return;
@@ -783,6 +802,7 @@ class Component extends DCLogic {
       activateEnter: this.activateEnter,
       activateHome: this.activateHome,
       closeOnEscape: this.closeOnEscape,
+      onModalKeyDown: this.onModalKeyDown,
       stop: (e) => e.stopPropagation(),
       onSeaPointerDown: this.onSeaPointerDown,
       onSeaMouseDown: this.onSeaMouseDown,
@@ -805,5 +825,243 @@ class Component extends DCLogic {
   }
 }
 </script>
+<noscript>
+<style>
+  #nc{font-family:'Spectral',Georgia,serif;background:#E7DCC4;color:#181410;min-height:100vh;margin:0;padding:0;}
+  #nc .nc-wrap{max-width:720px;margin:0 auto;padding:48px 28px 100px;}
+  #nc .nc-wordmark{font-family:'Bricolage Grotesque',Arial,sans-serif;font-weight:800;font-size:clamp(48px,10vw,96px);line-height:.88;letter-spacing:-.02em;margin:0 0 16px;}
+  #nc .nc-tag{font-family:'Space Mono',monospace;font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:#3F8278;margin:0 0 36px;}
+  #nc .nc-rule{height:8px;width:90px;background:#F4C20D;transform:rotate(-1deg);margin:0 0 40px;}
+  #nc .nc-bio{font-size:20px;line-height:1.66;font-weight:300;margin:0 0 60px;}
+  #nc h2{font-family:'Bricolage Grotesque',Arial,sans-serif;font-weight:800;font-size:28px;letter-spacing:-.01em;border-bottom:2px solid #181410;padding-bottom:10px;margin:52px 0 28px;}
+  #nc article{margin:0 0 44px;}
+  #nc .poem-tag{font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#3F8278;margin:0 0 6px;}
+  #nc .poem-native{font-style:italic;color:#3F8278;white-space:pre-wrap;line-height:1.7;margin:0 0 16px;font-size:17px;}
+  #nc .poem-rule{height:2px;width:44px;background:#181410;opacity:.35;margin:0 0 16px;}
+  #nc h3{font-family:'Bricolage Grotesque',Arial,sans-serif;font-weight:800;font-size:24px;letter-spacing:-.01em;margin:0 0 14px;}
+  #nc .poem-body{white-space:pre-wrap;font-size:19px;line-height:1.72;font-weight:300;margin:0 0 10px;}
+  #nc .poem-link{font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.08em;color:#BC2E1C;text-decoration:none;border-bottom:1px solid #BC2E1C;}
+  #nc .film-item{margin:0 0 20px;}
+  #nc .film-item a{font-family:'Space Mono',monospace;font-size:13px;letter-spacing:.06em;color:#BC2E1C;text-decoration:none;border-bottom:1px solid #BC2E1C;}
+  #nc .perf-item{display:flex;gap:16px;align-items:baseline;padding:12px 0;border-bottom:1px solid rgba(24,20,16,.15);}
+  #nc .perf-date{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.1em;background:#181410;color:#F4C20D;padding:2px 6px;flex-shrink:0;}
+  #nc .perf-venue{font-size:17px;}
+  #nc .nc-footer{margin-top:56px;padding-top:20px;border-top:2px solid #181410;font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.1em;}
+  #nc .nc-footer a{color:#181410;text-decoration:none;border-bottom:1px solid #181410;}
+</style>
+<div id="nc" role="main">
+<div class="nc-wrap">
+
+  <p class="nc-tag">koyaha · irudahialo · karariwa</p>
+  <h1 class="nc-wordmark">al<br>colibrí</h1>
+  <p class="nc-tag">Taíno in diaspora · transmedia artist</p>
+  <div class="nc-rule"></div>
+
+  <section id="about" aria-labelledby="about-h">
+    <h2 id="about-h">The Artist</h2>
+    <p class="nc-bio">al colibrí is a Taíno in diaspora, living and working on the lands of the peoples of Tkaronto. He is a transmedia artist who experiments with digital video, gaming, poetry and non-fiction, and focuses on themes of spiritualized nature, the tenderness of grief, ancestral kinetics, and playful decadence. When he isn't critically fabulating, he moonlights as a professor at multiple universities in Canada and the US and is a father of two little love goblins (emphasis on the goblins).</p>
+  </section>
+
+  <section id="poems" aria-labelledby="poems-h">
+    <h2 id="poems-h">Poems</h2>
+
+    <article id="poem-ancestors">
+      <p class="poem-tag">ka hebeyo'no</p>
+      <h3>The Ancestors</h3>
+      <p class="poem-native" lang="tnq">Gua'arikawabu
+Naiko aban
+Hewibo hiana ka yuca
+Ka kawia k'akirikatti
+Wa itaa le bu abon'o
+Wa eibun'no le bu kanowa
+Axahawa a yoba kaya'no
+Aita'ni yara le aba hamaka  bia'bu
+Yaha alu ka inkayeke</p>
+      <div class="poem-rule"></div>
+      <p class="poem-body">We see you
+Little one
+Ripening like the yucca
+The waxing pumpkin moon
+Our blood is your rivers
+Our bones are your canoe
+Wander to many islands
+Knowing there is a hammock for you
+Here in the village</p>
+    </article>
+
+    <article id="poem-discovery">
+      <p class="poem-tag">arawak</p>
+      <h3>Discovery Day</h3>
+      <p class="poem-native" lang="tnq">Bu amariha kuiriba'no oma da
+Bu karuda kasabi oma da
+Mei da kuwata da anaka
+Kena bu anuka tuei le waiba'ki lan da</p>
+      <div class="poem-rule"></div>
+      <p class="poem-body">You make friends with me
+You break bread with me
+Then I turn my back
+And you take what's left of me</p>
+    </article>
+
+    <article id="poem-black-squirrel">
+      <p class="poem-tag">february</p>
+      <h3>Black Squirrel Rhythm</h3>
+      <p class="poem-body">Something about the violining trees in winter
+allows the grief to ease and sway
+Uncongealing like the thawing swamps
+Budding green algae in the cool air
+      Chlorophyll calm
+      Life is on the way
+That "ivy vines on a deadwood" chill
+A sun-dappled trunk beating heart,
+to a tune unhurried by human ears
+       Black squirrel rhythm
+       Wrestling tambourine leaves
+A winter blues becomes spring jazz
+Yet it's February,
+      and life is still better in twos</p>
+    </article>
+
+    <article id="poem-swamp-song">
+      <p class="poem-tag">bayou · published</p>
+      <h3>Gimme That Swamp Song</h3>
+      <p class="poem-body">Gimme that swamp song
+Breeze, water-falling through tree leaves
+Thick, musky, oak half-dead
+Aching with lively
+Quivering pond scum
+The thump and rave of birdsong
+
+Feral shades of green
+Duckweed
+Sultry obscenities
+Unashamed and lusty
+Bantered between them thirsty birds
+
+That deep summer soul
+
+A butterfly hustler flits on by
+   With a side eye
+   And flickering brows
+Paper skin queen of the bayou
+Crown-shy yet flirty
+
+Trill
+        O de ley o de ley
+Pop
+      Snatch
+Thistle prick
+
+Nature's sound and slurry
+
+Brackish pleasures
+Sap-slick menageries
+Roots and vines in orgy
+
+Shagbark hickory
+Virginia creeper
+Sassafras Ecstasy
+
+All of it moan-touched
+   Throaty
+And in heat
+   Singing
+
+While a tall white ash
+Bare limbed and hungry
+Hangs rootedly in beat
+To the summer swamp swing
+And the distant sounds of
+Spreading wings and morning dove groans</p>
+      <a class="poem-link" href="https://poets.ca/gimme-that-swamp-song-by-al-colibri/" target="_blank" rel="noopener">read at the League of Canadian Poets →</a>
+    </article>
+
+    <article id="poem-small-gods">
+      <p class="poem-tag">cemís</p>
+      <h3>Ode to the Small Gods</h3>
+      <p class="poem-body">This is an ode to the small gods
+Tobacco stones
+   and prayer beads
+Raven on a power line
+Tarot card, sunflower seed
+   teary-eyed incense
+Candlelight and wind chime
+
+Song sung in the deep of night
+
+Gold scarab in a sewage ditch
+   half-danced rattles
+And daggers prayer-licked with blood
+Salt bowl
+   amulet
+      sage smoked fan
+Crystal, string, and braids
+Faded shell
+   and feather in flight
+Tattooed shadow on the firelit wall of a cave
+Cairns and clustered stars
+And that single tree
+   standing tall in the meadow
+
+You who touch
+   the fingers of the big gods
+Ever present listeners
+We see
+   and smell
+      and sing
+For you who actualize our hope
+Hang softly round our necks
+   held gently
+   in palms
+Calm hearts with beats
+And breath
+   make sense
+   and divine sensuality
+Visualing the world with meaning
+
+You are the truly mattering gods
+
+Brick and mortar gods
+
+Mud and sewage gods
+
+Pain and pleasure gods
+
+Oh mighty living ones
+
+May our bodies
+   be your temples of worship</p>
+    </article>
+  </section>
+
+  <section id="film" aria-labelledby="film-h">
+    <h2 id="film-h">Film</h2>
+    <div class="film-item">
+      <h3>The Gay Science</h3>
+      <p style="font-weight:300;font-size:17px;margin:0 0 8px;">A Visual Essay in die Fröhliche Wissenschaft · visual essay</p>
+      <a href="https://vimeo.com/116007704" target="_blank" rel="noopener">watch on Vimeo →</a>
+    </div>
+    <div class="film-item">
+      <h3>The Powers of the False</h3>
+      <p style="font-weight:300;font-size:17px;margin:0 0 8px;">Deleuze, Welles, and the forger — a film that creates an event · visual essay</p>
+      <a href="https://vimeo.com/94774272" target="_blank" rel="noopener">watch on Vimeo →</a>
+    </div>
+  </section>
+
+  <section id="performances" aria-labelledby="perf-h">
+    <h2 id="perf-h">Recent Performances</h2>
+    <div class="perf-item"><span class="perf-date">Jun 11, 2026</span><span class="perf-venue">mosaic — Allan Gardens, Toronto</span></div>
+    <div class="perf-item"><span class="perf-date">Aug 9, 2025</span><span class="perf-venue">video spotlight — Reencuentro Taíno Conference</span></div>
+    <div class="perf-item"><span class="perf-date">Mar 14, 2025</span><span class="perf-venue">mosaic — Spirituality, Mysticism &amp; Magic</span></div>
+  </section>
+
+  <footer class="nc-footer">
+    <p>© al colibrí — all rights reserved · <a href="Archive.dc.html">the archive</a></p>
+    <p style="margin-top:8px;opacity:.6;">Enable JavaScript for the full drifting-sea experience.</p>
+  </footer>
+
+</div>
+</div>
+</noscript>
 </body>
 </html>
