@@ -296,6 +296,7 @@ class Component extends DCLogic {
     this._reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     this.raf = requestAnimationFrame(this.tick);
     this._packTimers = [setTimeout(() => this.schedulePack(), 280), setTimeout(() => this.schedulePack(), 1000)];
+    document.getElementById('nc')?.remove();
   }
   componentWillUnmount() {
     window.removeEventListener('pointermove', this.onPointerMove);
@@ -828,7 +829,6 @@ class Component extends DCLogic {
   }
 }
 </script>
-<noscript>
 <style>
   #nc{font-family:'Spectral',Georgia,serif;background:#E7DCC4;color:#181410;min-height:100vh;margin:0;padding:0;}
   #nc .nc-wrap{max-width:720px;margin:0 auto;padding:48px 28px 100px;}
@@ -1060,11 +1060,9 @@ May our bodies
 
   <footer class="nc-footer">
     <p>© al colibrí — all rights reserved · <a href="archive.html">the archive</a></p>
-    <p style="margin-top:8px;opacity:.6;">Enable JavaScript for the full drifting-sea experience.</p>
   </footer>
 
 </div>
 </div>
-</noscript>
 </body>
 </html>
