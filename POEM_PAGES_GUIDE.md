@@ -79,15 +79,15 @@ Use this as a starting point. Adapt colors and titles per poem:
   :focus-visible{outline:3px solid #1E3FCC;outline-offset:4px;box-shadow:4px 4px 0 #F4C20D;}
   .poem-wrap{max-width:680px;margin:0 auto;padding:52px 28px 80px;}
   .poem-nav{font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#181410;margin-bottom:56px;}
-  .poem-nav a{color:#BC2E1C;text-decoration:none;border-bottom:1px solid #BC2E1C;}
-  .poem-tag{font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#3F8278;margin-bottom:12px;}
+  .poem-nav a{color:#B82D1B;text-decoration:none;border-bottom:1px solid #BC2E1C;}
+  .poem-tag{font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#2C6960;margin-bottom:12px;}
   .poem-title{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:48px;line-height:.95;letter-spacing:-.02em;margin:0 0 32px;}
-  .poem-native{font-style:italic;color:#3F8278;white-space:pre-wrap;line-height:1.8;margin:0 0 20px;font-size:19px;}
+  .poem-native{font-style:italic;color:#2C6960;white-space:pre-wrap;line-height:1.8;margin:0 0 20px;font-size:19px;}
   .poem-divider{height:2px;width:54px;background:#181410;opacity:.35;margin:0 0 24px;}
   .poem-body{font-weight:300;font-size:21px;line-height:1.8;white-space:pre-wrap;color:#181410;margin:0 0 48px;}
-  .poem-meta{font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.1em;color:#3F8278;opacity:.8;margin-top:56px;padding-top:20px;border-top:1px solid rgba(24,20,16,.2);}
+  .poem-meta{font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.1em;color:#2C6960;opacity:.8;margin-top:56px;padding-top:20px;border-top:1px solid rgba(24,20,16,.2);}
   .poem-footer{margin-top:56px;padding-top:20px;border-top:2px solid #181410;text-align:center;}
-  .poem-footer a{font-family:'Space Mono',monospace;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:#BC2E1C;text-decoration:none;border-bottom:1px solid #BC2E1C;}
+  .poem-footer a{font-family:'Space Mono',monospace;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:#B82D1B;text-decoration:none;border-bottom:1px solid #BC2E1C;}
   @media (max-width:680px){
     .poem-wrap{padding:32px 20px 60px;}
     .poem-title{font-size:36px;}

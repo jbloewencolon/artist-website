@@ -52,8 +52,8 @@ function renderIsland(p, i) {
         <img src="assets/logo-white.webp" alt="al colibrí" decoding="async" style="width:min(520px,120vw);height:auto;position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);filter:brightness(0);opacity:.75;mix-blend-mode:multiply;">
       </div>
       <div style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:30px;color:#181410;margin-top:16px;letter-spacing:-.01em;">al colibrí</div>
-      <div style="font-family:'Space Mono',monospace;font-style:italic;font-size:13px;letter-spacing:.07em;color:#3F8278;max-width:360px;">Taíno in diaspora · transmedia artist</div>
-      <div style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.07em;color:#BC2E1C;">the artist →</div>`;
+      <div style="font-family:'Space Mono',monospace;font-style:italic;font-size:13px;letter-spacing:.07em;color:#2C6960;max-width:360px;">Taíno in diaspora · transmedia artist</div>
+      <div style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.07em;color:#B82D1B;">the artist →</div>`;
   } else if (p.kind === 'perf') {
     inner = `
       <div style="width:320px;background:#F4C20D;border:3px solid #181410;box-shadow:9px 9px 0 #181410;">
