@@ -39,10 +39,14 @@
 - [x] Normalize production URLs: `Archive.dc.html` → `archive.html`, `Colibrí - Type Exploration.dc.html` → `type-exploration.html`; instant-redirect pages left at old paths; all internal links and sitemap updated.
 - [ ] Move hosting to a platform that serves `_headers` (Cloudflare Pages / Netlify), or add Cloudflare in front of GitHub Pages to apply HSTS, CSP, and immutable cache headers.
 
+## Phase 5 - Advanced optimization (ready to implement)
+- [x] Add `width`/`height` attributes to all `<image-slot>` elements to prevent cumulative layout shift (CLS).
+- [ ] **Static prerender** — `work/prerender.mjs` script generates pre-rendered island HTML, removing `unsafe-eval` requirement. Foundation ready; requires component class extraction and full piece rendering.
+- [ ] **Per-poem static pages** — See `POEM_PAGES_GUIDE.md`. Create `/poems/{slug}.html` for each poem (5 pages). Improves SEO and social sharing. Template provided.
+
 ## Later, only if needed
 - [x] Replace archive Vimeo iframes with click-to-load poster cards.
 - [x] Self-host/subset fonts.
 - [x] Add automated visual smoke checks for desktop and mobile.
-- [ ] Add per-poem static pages for SEO and shareability.
-- [ ] Add privacy-friendly analytics (e.g. Plausible) to measure reach.
 - [x] Preload first-fold hero WebP + primary fonts stylesheet in `index.html` `<head>` to reduce render-blocking.
+- [ ] Add privacy-friendly analytics (e.g. Plausible) to measure reach.
