@@ -43,7 +43,7 @@
     div[style*="position:fixed;top:26px;left:30px"]{top:calc(26px + env(safe-area-inset-top))!important;left:calc(24px + env(safe-area-inset-left))!important;}
     div[style*="position:fixed;bottom:26px;left:50%;transform:translateX(-50%)"]{bottom:calc(26px + env(safe-area-inset-bottom))!important;}
     button[style*="position:fixed;top:30px;right:34px"]{top:calc(30px + env(safe-area-inset-top))!important;right:calc(28px + env(safe-area-inset-right))!important;}
-    div[style*="font-style:italic;font-size:15px;letter-spacing:.22em;color:#3F8278"]{max-width:min(88vw,420px);padding:0 10px;font-size:13px!important;letter-spacing:.16em!important;line-height:1.7;text-align:center;color:#2F6E66!important;}
+    div[style*="font-style:italic;font-size:15px;letter-spacing:.22em;color:#2C6960"]{max-width:min(88vw,420px);padding:0 10px;font-size:13px!important;letter-spacing:.16em!important;line-height:1.7;text-align:center;}
   }
 </style>
 <script src="./image-slot.js"></script>
@@ -125,15 +125,15 @@
                 <img src="assets/logo-white.webp" alt="al colibrí" decoding="async" style="width:min(520px,120vw);height:auto;position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);filter:brightness(0);opacity:.75;mix-blend-mode:multiply;">
               </div>
               <div style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:30px;color:#181410;margin-top:16px;letter-spacing:-.01em;">al colibrí</div>
-              <div style="font-family:'Space Mono',monospace;font-style:italic;font-size:13px;letter-spacing:.07em;color:#3F8278;max-width:360px;">Taíno in diaspora · transmedia artist</div>
-              <div style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.07em;color:#BC2E1C;">the artist →</div>
+              <div style="font-family:'Space Mono',monospace;font-style:italic;font-size:13px;letter-spacing:.07em;color:#2C6960;max-width:360px;">Taíno in diaspora · transmedia artist</div>
+              <div style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.07em;color:#B82D1B;">the artist →</div>
             </sc-if>
 
             <sc-if value="{{ p.isPoem }}" hint-placeholder-val="{{ false }}">
-              <div style="font-family:'Space Mono',monospace;font-size:13px;font-style:italic;letter-spacing:.1em;color:#3F8278;">{{ p.tag }}</div>
+              <div style="font-family:'Space Mono',monospace;font-size:13px;font-style:italic;letter-spacing:.1em;color:#2C6960;">{{ p.tag }}</div>
               <div style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:30px;line-height:.98;color:#181410;max-width:340px;letter-spacing:-.015em;">{{ p.title }}</div>
               <div style="max-width:330px;max-height:128px;overflow:hidden;font-family:'Spectral',serif;font-weight:300;font-size:17px;line-height:1.5;color:#181410;white-space:pre-wrap;-webkit-mask-image:linear-gradient(180deg,#000 50%,transparent);mask-image:linear-gradient(180deg,#000 50%,transparent);">{{ p.preview }}</div>
-              <div style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.07em;color:#BC2E1C;">{{ p.cue }}</div>
+              <div style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.07em;color:#B82D1B;">{{ p.cue }}</div>
             </sc-if>
 
             <sc-if value="{{ p.isMedia }}" hint-placeholder-val="{{ false }}">
@@ -146,7 +146,7 @@
 
             <sc-if value="{{ p.isLink }}" hint-placeholder-val="{{ false }}">
               <div style="{{ p.linkBoxStyle }}">
-                <div style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#3F8278;">{{ p.tag }}</div>
+                <div style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#2C6960;">{{ p.tag }}</div>
                 <div style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:30px;line-height:.95;color:#181410;letter-spacing:-.01em;">{{ p.title }} →</div>
               </div>
             </sc-if>
@@ -192,9 +192,9 @@
 
       <sc-if value="{{ selected.isPoemModal }}" hint-placeholder-val="{{ false }}">
         <div data-palfx onClick="{{ stop }}" style="max-width:720px;max-height:86vh;overflow:auto;text-align:center;padding:8px 6px;cursor:auto;">
-          <div style="font-family:'Space Mono',monospace;font-style:italic;font-size:15px;letter-spacing:.16em;color:#3F8278;margin-bottom:26px;">{{ selected.tag }}</div>
+          <div style="font-family:'Space Mono',monospace;font-style:italic;font-size:15px;letter-spacing:.16em;color:#2C6960;margin-bottom:26px;">{{ selected.tag }}</div>
           <sc-if value="{{ selected.hasNative }}" hint-placeholder-val="{{ false }}">
-            <div lang="tnq" style="font-family:'Spectral',serif;font-style:italic;font-weight:400;font-size:clamp(19px,2.3vw,26px);line-height:1.62;color:#3F8278;white-space:pre-wrap;margin-bottom:22px;">{{ selected.native }}</div>
+            <div lang="tnq" style="font-family:'Spectral',serif;font-style:italic;font-weight:400;font-size:clamp(19px,2.3vw,26px);line-height:1.62;color:#2C6960;white-space:pre-wrap;margin-bottom:22px;">{{ selected.native }}</div>
             <div style="margin:0 auto 26px;height:3px;width:54px;background:#181410;opacity:.4;"></div>
           </sc-if>
           <div style="font-family:'Spectral',serif;font-weight:300;font-size:clamp(20px,2.5vw,30px);line-height:1.74;color:#181410;white-space:pre-wrap;letter-spacing:.005em;">{{ selected.body }}</div>
@@ -205,7 +205,7 @@
 
       <sc-if value="{{ selected.isVideoModal }}" hint-placeholder-val="{{ false }}">
         <div data-palfx onClick="{{ stop }}" style="text-align:center;max-width:920px;max-height:88vh;overflow:auto;cursor:auto;">
-          <div style="font-family:'Space Mono',monospace;font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:#3F8278;margin-bottom:20px;">{{ selected.kindLabel }}</div>
+          <div style="font-family:'Space Mono',monospace;font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:#2C6960;margin-bottom:20px;">{{ selected.kindLabel }}</div>
           <div style="width:min(900px,86vw);aspect-ratio:16/9;margin:0 auto;border:3px solid #181410;box-shadow:12px 12px 0 #BC2E1C;background:#000;">
             <iframe data-video-src="{{ selected.videoSrc }}" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen style="width:100%;height:100%;border:0;display:block;" title="{{ selected.title }}"></iframe>
           </div>
@@ -230,7 +230,7 @@
             <image-slot id="{{ selected.bioSlotId }}" src="{{ selected.bioImg }}" srcset="{{ selected.bioSrcset }}" sizes="{{ selected.bioSizes }}" alt="al colibrí before a hummingbird mural" width="340" height="340" loading="lazy" shape="rect" fit="cover" style="position:absolute;inset:0;width:100%;height:100%;" placeholder="drop a portrait"></image-slot>
           </div>
           <div style="max-width:470px;">
-            <div style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:#3F8278;margin-bottom:12px;">the artist</div>
+            <div style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:#2C6960;margin-bottom:12px;">the artist</div>
             <div style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(42px,6vw,62px);line-height:.9;letter-spacing:-.02em;color:#181410;margin-bottom:24px;">al colibrí</div>
             <div style="font-family:'Spectral',serif;font-weight:300;font-size:clamp(18px,2vw,21px);line-height:1.66;color:#181410;">{{ selected.bio }}</div>
             <div style="margin-top:26px;height:8px;width:90px;background:#F4C20D;transform:rotate(-1deg);"></div>
@@ -260,7 +260,7 @@
             <img src="assets/logo-white.webp" style="width:42px;height:42px;filter:brightness(0);opacity:.88;pointer-events:none;" alt="">
           </div>
           <div style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(56px,11vw,140px);line-height:.86;color:#181410;letter-spacing:-.02em;">al<br>colibrí</div>
-          <div style="font-family:'Space Mono',monospace;font-style:italic;font-size:15px;letter-spacing:.22em;color:#3F8278;">koyaha · irudahialo · karariwa</div>
+          <div style="font-family:'Space Mono',monospace;font-style:italic;font-size:15px;letter-spacing:.22em;color:#2C6960;">koyaha · irudahialo · karariwa</div>
           <div style="font-family:'Space Mono',monospace;font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:#181410;opacity:.66;margin-top:8px;">drift in →</div>
         </div>
       </sc-if>
@@ -296,6 +296,7 @@ class Component extends DCLogic {
     this._reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     this.raf = requestAnimationFrame(this.tick);
     this._packTimers = [setTimeout(() => this.schedulePack(), 280), setTimeout(() => this.schedulePack(), 1000)];
+    document.getElementById('nc')?.remove();
   }
   componentWillUnmount() {
     window.removeEventListener('pointermove', this.onPointerMove);
@@ -828,24 +829,23 @@ class Component extends DCLogic {
   }
 }
 </script>
-<noscript>
 <style>
   #nc{font-family:'Spectral',Georgia,serif;background:#E7DCC4;color:#181410;min-height:100vh;margin:0;padding:0;}
   #nc .nc-wrap{max-width:720px;margin:0 auto;padding:48px 28px 100px;}
   #nc .nc-wordmark{font-family:'Bricolage Grotesque',Arial,sans-serif;font-weight:800;font-size:clamp(48px,10vw,96px);line-height:.88;letter-spacing:-.02em;margin:0 0 16px;}
-  #nc .nc-tag{font-family:'Space Mono',monospace;font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:#3F8278;margin:0 0 36px;}
+  #nc .nc-tag{font-family:'Space Mono',monospace;font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:#2C6960;margin:0 0 36px;}
   #nc .nc-rule{height:8px;width:90px;background:#F4C20D;transform:rotate(-1deg);margin:0 0 40px;}
   #nc .nc-bio{font-size:20px;line-height:1.66;font-weight:300;margin:0 0 60px;}
   #nc h2{font-family:'Bricolage Grotesque',Arial,sans-serif;font-weight:800;font-size:28px;letter-spacing:-.01em;border-bottom:2px solid #181410;padding-bottom:10px;margin:52px 0 28px;}
   #nc article{margin:0 0 44px;}
-  #nc .poem-tag{font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#3F8278;margin:0 0 6px;}
-  #nc .poem-native{font-style:italic;color:#3F8278;white-space:pre-wrap;line-height:1.7;margin:0 0 16px;font-size:17px;}
+  #nc .poem-tag{font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#2C6960;margin:0 0 6px;}
+  #nc .poem-native{font-style:italic;color:#2C6960;white-space:pre-wrap;line-height:1.7;margin:0 0 16px;font-size:17px;}
   #nc .poem-rule{height:2px;width:44px;background:#181410;opacity:.35;margin:0 0 16px;}
   #nc h3{font-family:'Bricolage Grotesque',Arial,sans-serif;font-weight:800;font-size:24px;letter-spacing:-.01em;margin:0 0 14px;}
   #nc .poem-body{white-space:pre-wrap;font-size:19px;line-height:1.72;font-weight:300;margin:0 0 10px;}
-  #nc .poem-link{font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.08em;color:#BC2E1C;text-decoration:none;border-bottom:1px solid #BC2E1C;}
+  #nc .poem-link{font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.08em;color:#B82D1B;text-decoration:none;border-bottom:1px solid #BC2E1C;}
   #nc .film-item{margin:0 0 20px;}
-  #nc .film-item a{font-family:'Space Mono',monospace;font-size:13px;letter-spacing:.06em;color:#BC2E1C;text-decoration:none;border-bottom:1px solid #BC2E1C;}
+  #nc .film-item a{font-family:'Space Mono',monospace;font-size:13px;letter-spacing:.06em;color:#B82D1B;text-decoration:none;border-bottom:1px solid #BC2E1C;}
   #nc .perf-item{display:flex;gap:16px;align-items:baseline;padding:12px 0;border-bottom:1px solid rgba(24,20,16,.15);}
   #nc .perf-date{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.1em;background:#181410;color:#F4C20D;padding:2px 6px;flex-shrink:0;}
   #nc .perf-venue{font-size:17px;}
@@ -1060,11 +1060,9 @@ May our bodies
 
   <footer class="nc-footer">
     <p>© al colibrí — all rights reserved · <a href="archive.html">the archive</a></p>
-    <p style="margin-top:8px;opacity:.6;">Enable JavaScript for the full drifting-sea experience.</p>
   </footer>
 
 </div>
 </div>
-</noscript>
 </body>
 </html>
