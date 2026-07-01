@@ -61,7 +61,7 @@
   </div>
 
   <!-- THE SEA -->
-  <div ref="{{ seaViewportRef }}" style="position:absolute;inset:0;overflow:hidden;cursor:grab;touch-action:none;" onPointerDown="{{ onSeaPointerDown }}">
+  <div ref="{{ seaViewportRef }}" style="position:absolute;inset:0;overflow:hidden;cursor:grab;touch-action:none;">
     <div ref="{{ seaRef }}" style="position:absolute;left:50%;top:50%;width:2600px;height:1700px;transform:translate(-50%,-50%);will-change:transform;">
 
       <!-- floating taíno petroglyphs -->
@@ -271,7 +271,7 @@
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;driftSpeed&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;tidal&quot;,&quot;options&quot;:[&quot;calm&quot;,&quot;tidal&quot;,&quot;lively&quot;],&quot;tsType&quot;:&quot;string&quot;},&quot;parallax&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;floatAmp&quot;:{&quot;editor&quot;:&quot;float&quot;,&quot;default&quot;:1.2,&quot;min&quot;:0,&quot;max&quot;:2.5,&quot;step&quot;:0.1,&quot;tsType&quot;:&quot;number&quot;},&quot;spread&quot;:{&quot;editor&quot;:&quot;float&quot;,&quot;default&quot;:1.65,&quot;min&quot;:0.7,&quot;max&quot;:2,&quot;step&quot;:0.05,&quot;tsType&quot;:&quot;number&quot;},&quot;islandScale&quot;:{&quot;editor&quot;:&quot;float&quot;,&quot;default&quot;:1.1,&quot;min&quot;:0.75,&quot;max&quot;:1.35,&quot;step&quot;:0.05,&quot;tsType&quot;:&quot;number&quot;},&quot;palette&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;full&quot;,&quot;options&quot;:[&quot;full&quot;,&quot;sun-bleached&quot;,&quot;muted&quot;],&quot;tsType&quot;:&quot;string&quot;},&quot;entrancePace&quot;:{&quot;editor&quot;:&quot;float&quot;,&quot;default&quot;:1,&quot;min&quot;:0.4,&quot;max&quot;:2,&quot;step&quot;:0.1,&quot;tsType&quot;:&quot;number&quot;},&quot;grain&quot;:{&quot;editor&quot;:&quot;float&quot;,&quot;default&quot;:0,&quot;min&quot;:0,&quot;max&quot;:1,&quot;step&quot;:0.05,&quot;tsType&quot;:&quot;number&quot;}}">
 class Component extends DCLogic {
-  state = { phase: 'seed', selected: null };
+  state = { phase: location.hash === '#sea' ? 'sea' : 'seed', selected: null };
 
   pan = { x: 0, y: 0 };
   target = { x: 0, y: 0 };
@@ -283,6 +283,10 @@ class Component extends DCLogic {
     window.addEventListener('pointermove', this.onPointerMove, { passive: false });
     window.addEventListener('pointerup', this.onPointerUp);
     window.addEventListener('pointercancel', this.onPointerUp);
+    window.addEventListener('pointerdown', this.onSeaPointerDown, { passive: true });
+    window.addEventListener('mousedown', this.onSeaMouseDown, { passive: true });
+    window.addEventListener('mousemove', this.onMouseMove, { passive: false });
+    window.addEventListener('mouseup', this.onMouseUp);
     window.addEventListener('touchmove', this.onSeaTouchMove, { passive: false });
     window.addEventListener('touchend', this.onSeaTouchEnd);
     window.addEventListener('touchcancel', this.onSeaTouchEnd);
@@ -296,10 +300,18 @@ class Component extends DCLogic {
     window.removeEventListener('pointermove', this.onPointerMove);
     window.removeEventListener('pointerup', this.onPointerUp);
     window.removeEventListener('pointercancel', this.onPointerUp);
+    window.removeEventListener('pointerdown', this.onSeaPointerDown);
+    window.removeEventListener('mousedown', this.onSeaMouseDown);
+    window.removeEventListener('mousemove', this.onMouseMove);
+    window.removeEventListener('mouseup', this.onMouseUp);
     window.removeEventListener('touchmove', this.onSeaTouchMove);
     window.removeEventListener('touchend', this.onSeaTouchEnd);
     window.removeEventListener('touchcancel', this.onSeaTouchEnd);
-    if (this._seaViewport) this._seaViewport.removeEventListener('touchstart', this.onSeaTouchStart);
+    if (this._seaViewport) {
+      this._seaViewport.removeEventListener('pointerdown', this.onSeaPointerDown);
+      this._seaViewport.removeEventListener('mousedown', this.onSeaMouseDown);
+      this._seaViewport.removeEventListener('touchstart', this.onSeaTouchStart);
+    }
     window.removeEventListener('resize', this._onResize);
     window.removeEventListener('keydown', this.onGlobalKeyDown);
     (this._packTimers || []).forEach(clearTimeout);
@@ -458,6 +470,7 @@ class Component extends DCLogic {
   };
 
   onSeaPointerDown = (e) => {
+    if (this.state.phase !== 'sea' || this.state.selected) return;
     if (e.button != null && e.button !== 0) return;
     if (e.currentTarget?.setPointerCapture && e.pointerId != null) {
       try { e.currentTarget.setPointerCapture(e.pointerId); this._dragEl = e.currentTarget; } catch {}
@@ -466,7 +479,15 @@ class Component extends DCLogic {
     this._moved = false;
     this.mouseN = { x: (e.clientX / window.innerWidth - 0.5) * 2, y: (e.clientY / window.innerHeight - 0.5) * 2 };
   };
+  onSeaMouseDown = (e) => {
+    if (this.state.phase !== 'sea' || this.state.selected) return;
+    if (e.button != null && e.button !== 0) return;
+    this.drag = { mouse: true, sx: e.clientX, sy: e.clientY, ox: this.target.x, oy: this.target.y };
+    this._moved = false;
+    this.mouseN = { x: (e.clientX / window.innerWidth - 0.5) * 2, y: (e.clientY / window.innerHeight - 0.5) * 2 };
+  };
   onSeaTouchStart = (e) => {
+    if (this.state.phase !== 'sea' || this.state.selected) return;
     if (!e.touches || e.touches.length !== 1) return;
     const t = e.touches[0];
     this.drag = { id: t.identifier, touch: true, sx: t.clientX, sy: t.clientY, ox: this.target.x, oy: this.target.y };
@@ -480,10 +501,10 @@ class Component extends DCLogic {
     const ddx = touch.clientX - this.drag.sx;
     const ddy = touch.clientY - this.drag.sy;
     if (Math.abs(ddx) + Math.abs(ddy) > 8) this._moved = true;
-    this.target = this.clampTarget({ x: this.drag.ox + ddx * 2.65, y: this.drag.oy + ddy * 2.65 });
+    this.target = this.clampTarget({ x: this.drag.ox + ddx * 2.25, y: this.drag.oy + ddy * 2.25 });
     if (this._moved) {
-      this.pan.x += (this.target.x - this.pan.x) * 0.65;
-      this.pan.y += (this.target.y - this.pan.y) * 0.65;
+      this.pan.x += (this.target.x - this.pan.x) * 0.6;
+      this.pan.y += (this.target.y - this.pan.y) * 0.6;
       if (e.cancelable) e.preventDefault();
     }
   };
@@ -494,17 +515,21 @@ class Component extends DCLogic {
   };
   onPointerMove = (e) => {
     this.mouseN = { x: (e.clientX / window.innerWidth - 0.5) * 2, y: (e.clientY / window.innerHeight - 0.5) * 2 };
+    if (!this.drag && e.buttons === 1 && this.state.phase === 'sea' && !this.state.selected) {
+      this.drag = { id: e.pointerId, sx: e.clientX, sy: e.clientY, ox: this.target.x, oy: this.target.y };
+      this._moved = false;
+    }
     if (this.drag && (this.drag.id == null || e.pointerId === this.drag.id)) {
       const ddx = e.clientX - this.drag.sx;
       const ddy = e.clientY - this.drag.sy;
       const isCoarse = e.pointerType === 'touch' || (!e.pointerType && window.matchMedia?.('(pointer: coarse)').matches);
       const threshold = isCoarse ? 8 : 6;
       if (Math.abs(ddx) + Math.abs(ddy) > threshold) this._moved = true;
-      const scale = isCoarse ? 2.65 : 1;
+      const scale = isCoarse ? 2.25 : 1;
       this.target = this.clampTarget({ x: this.drag.ox + ddx * scale, y: this.drag.oy + ddy * scale });
       if (this._moved) {
-        this.pan.x += (this.target.x - this.pan.x) * 0.65;
-        this.pan.y += (this.target.y - this.pan.y) * 0.65;
+        this.pan.x += (this.target.x - this.pan.x) * 0.6;
+        this.pan.y += (this.target.y - this.pan.y) * 0.6;
         if (e.cancelable) e.preventDefault();
       }
     }
@@ -516,6 +541,26 @@ class Component extends DCLogic {
     }
     this._dragEl = null;
     this.drag = null;
+  };
+  onMouseMove = (e) => {
+    this.mouseN = { x: (e.clientX / window.innerWidth - 0.5) * 2, y: (e.clientY / window.innerHeight - 0.5) * 2 };
+    if (!this.drag && e.buttons === 1 && this.state.phase === 'sea' && !this.state.selected) {
+      this.drag = { mouse: true, sx: e.clientX, sy: e.clientY, ox: this.target.x, oy: this.target.y };
+      this._moved = false;
+    }
+    if (!this.drag?.mouse) return;
+    const ddx = e.clientX - this.drag.sx;
+    const ddy = e.clientY - this.drag.sy;
+    if (Math.abs(ddx) + Math.abs(ddy) > 6) this._moved = true;
+    this.target = this.clampTarget({ x: this.drag.ox + ddx, y: this.drag.oy + ddy });
+    if (this._moved) {
+      this.pan.x += (this.target.x - this.pan.x) * 0.6;
+      this.pan.y += (this.target.y - this.pan.y) * 0.6;
+      if (e.cancelable) e.preventDefault();
+    }
+  };
+  onMouseUp = () => {
+    if (this.drag?.mouse) this.drag = null;
   };
 
   enter = () => {
@@ -563,16 +608,19 @@ class Component extends DCLogic {
 
       { kind: 'poem', title: 'The Ancestors', tag: "ka hebeyo'no", accent: BLU, href: 'Archive.dc.html#poem-ancestors',
         x: 600, y: 430, rot: -3, amp: 1.2, phase: 0.6,
+        modalKind: 'poem',
         native: `Gua'arikawabu\nNaiko aban\nHewibo hiana ka yuca\nKa kawia k'akirikatti\nWa itaa le bu abon'o\nWa eibun'no le bu kanowa\nAxahawa a yoba kaya'no\nAita'ni yara le aba hamaka  bia'bu\nYaha alu ka inkayeke`,
         body: `We see you\nLittle one\nRipening like the yucca\nThe waxing pumpkin moon\nOur blood is your rivers\nOur bones are your canoe\nWander to many islands\nKnowing there is a hammock for you\nHere in the village` },
 
       { kind: 'poem', title: 'Discovery Day', tag: 'arawak', accent: RED, href: 'Archive.dc.html#poem-discovery',
         x: 2010, y: 430, rot: 2, amp: 1.7, phase: 1.7,
+        modalKind: 'poem',
         native: `Bu amariha kuiriba'no oma da\nBu karuda kasabi oma da\nMei da kuwata da anaka\nKena bu anuka tuei le waiba'ki lan da`,
         body: `You make friends with me\nYou break bread with me\nThen I turn my back\nAnd you take what's left of me` },
 
       { kind: 'poem', title: 'Black Squirrel Rhythm', tag: 'february', accent: TEAL, href: 'Archive.dc.html#poem-black-squirrel',
         x: 470, y: 1180, rot: 3, amp: 1.3, phase: 2.9,
+        modalKind: 'poem',
         body: `Something about the violining trees in winter\nallows the grief to ease and sway\nUncongealing like the thawing swamps\nBudding green algae in the cool air\n      Chlorophyll calm\n      Life is on the way\nThat "ivy vines on a deadwood" chill\nA sun-dappled trunk beating heart,\nto a tune unhurried by human ears\n       Black squirrel rhythm\n       Wrestling tambourine leaves\nA winter blues becomes spring jazz\nYet it's February,\n      and life is still better in twos` },
 
       { kind: 'poem', title: 'Gimme That Swamp Song', tag: 'bayou · published', accent: YEL, href: 'https://poets.ca/gimme-that-swamp-song-by-al-colibri/', external: true, cue: 'read at the League of Canadian Poets →',
@@ -581,6 +629,7 @@ class Component extends DCLogic {
 
       { kind: 'poem', title: 'Ode to the Small Gods', tag: 'cemís', accent: PINK, href: 'Archive.dc.html#poem-small-gods',
         x: 1060, y: 1380, rot: 1, amp: 0.95, phase: 5.0,
+        modalKind: 'poem',
         body: `This is an ode to the small gods\nTobacco stones\n   and prayer beads\nRaven on a power line\nTarot card, sunflower seed\n   teary-eyed incense\nCandlelight and wind chime\n\nSong sung in the deep of night\n\nGold scarab in a sewage ditch\n   half-danced rattles\nAnd daggers prayer-licked with blood\nSalt bowl\n   amulet\n      sage smoked fan\nCrystal, string, and braids\nFaded shell\n   and feather in flight\nTattooed shadow on the firelit wall of a cave\nCairns and clustered stars\nAnd that single tree\n   standing tall in the meadow\n\nYou who touch\n   the fingers of the big gods\nEver present listeners\nWe see\n   and smell\n      and sing\nFor you who actualize our hope\nHang softly round our necks\n   held gently\n   in palms\nCalm hearts with beats\nAnd breath\n   make sense\n   and divine sensuality\nVisualing the world with meaning\n\nYou are the truly mattering gods\n\nBrick and mortar gods\n\nMud and sewage gods\n\nPain and pleasure gods\n\nOh mighty living ones\n\nMay our bodies\n   be your temples of worship` },
 
       { kind: 'media', subtype: 'video', title: 'The Gay Science', kindLabel: 'film · visual essay', accent: PINK, modalKind: 'video',
@@ -674,7 +723,11 @@ class Component extends DCLogic {
       if (r.kind === 'poem') {
         p.preview = (r.body || '').split('\n').slice(0, 5).join('\n');
         p.cue = r.cue || 'read the full poem →';
-        p.open = () => { if (this._moved) return; if (r.external) window.open(r.href, '_blank', 'noopener'); else window.location.href = r.href; };
+        p.open = () => {
+          if (this._moved) return;
+          if (r.external) window.open(r.href, '_blank', 'noopener');
+          else this.openPiece({ ...p, modalKind: 'poem' });
+        };
       } else if (r.kind === 'link' || r.kind === 'perf') {
         p.open = () => { if (!this._moved) window.location.href = r.href; };
       } else {
@@ -703,11 +756,20 @@ class Component extends DCLogic {
       closeOnEscape: this.closeOnEscape,
       stop: (e) => e.stopPropagation(),
       onSeaPointerDown: this.onSeaPointerDown,
+      onSeaMouseDown: this.onSeaMouseDown,
       seaViewportRef: (el) => {
         if (this._seaViewport === el) return;
-        if (this._seaViewport) this._seaViewport.removeEventListener('touchstart', this.onSeaTouchStart);
+        if (this._seaViewport) {
+          this._seaViewport.removeEventListener('pointerdown', this.onSeaPointerDown);
+          this._seaViewport.removeEventListener('mousedown', this.onSeaMouseDown);
+          this._seaViewport.removeEventListener('touchstart', this.onSeaTouchStart);
+        }
         this._seaViewport = el;
-        if (el) el.addEventListener('touchstart', this.onSeaTouchStart, { passive: true });
+        if (el) {
+          el.addEventListener('pointerdown', this.onSeaPointerDown, { passive: true });
+          el.addEventListener('mousedown', this.onSeaMouseDown, { passive: true });
+          el.addEventListener('touchstart', this.onSeaTouchStart, { passive: true });
+        }
       },
       seaRef: (el) => { this._sea = el; },
     };
