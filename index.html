@@ -21,7 +21,8 @@
 <link rel="preload" href="assets/site-fonts.css" as="style">
 <link rel="preload" href="assets/logo-white.webp" as="image" type="image/webp">
 <link href="assets/site-fonts.css" rel="stylesheet">
-<style>x-dc{display:none!important}</style>
+<style>x-dc{display:none!important}.js-boot #nc{display:none}</style>
+<script>document.documentElement.classList.add('js-boot');window.__dcMountTimeout=setTimeout(function(){document.documentElement.classList.remove('js-boot');},4000);</script>
 <script src="./support.js"></script>
 </head>
 <body>
@@ -308,6 +309,7 @@ class Component extends DCLogic {
     this._isTouch = !!(window.matchMedia && window.matchMedia('(pointer: coarse)').matches);
     this.raf = requestAnimationFrame(this.tick);
     this._packTimers = [setTimeout(() => this.schedulePack(), 280), setTimeout(() => this.schedulePack(), 1000)];
+    clearTimeout(window.__dcMountTimeout);
     document.getElementById('nc')?.remove();
     if (this.state.phase === 'sea') this.maybeShowDragHint();
   }
