@@ -52,3 +52,48 @@
 - [x] Add automated visual smoke checks for desktop and mobile.
 - [x] Preload first-fold hero WebP + primary fonts stylesheet in `index.html` `<head>` to reduce render-blocking.
 - [ ] Add privacy-friendly analytics (e.g. Plausible) to measure reach.
+
+## Phase 6 - Mobile: restore & harden (from 2026-08-18 mobile audit)
+Quick, low-risk, no redesign. See `MOBILE_UX_AUDIT.md` for full writeups (F-numbers below).
+- [ ] Reinstate the first-visit drag hint as its own isolated commit, so it can't be swept up
+      in an unrelated revert again (F1). Touch-aware copy via `pointer:coarse` was already
+      designed in commit `7af161b` before it was accidentally reverted in `5add280`.
+- [ ] Enlarge the modal close button ("drift back ↩") to a real 44×44px tap area via padding,
+      not just text (F4).
+- [ ] Verify/adjust the home-anchor control so its visual pieces read as tappable, not just the
+      combined hit area (F8).
+- [ ] Bump undersized UI-label font sizes (tags, cues, metadata) at the ≤480px breakpoint (F6).
+- [ ] Convert remaining fixed-pixel card/frame widths (perf card, media frames) to
+      `min(Npx, calc(100vw - Xpx))`, matching the pattern already used for the hero mark and
+      entrance heading (F5).
+- [ ] Add an `overflow:hidden` gradient-fade fallback alongside the `mask-image` poem-preview
+      fade for older Android WebView/Samsung Internet (F10).
+
+## Phase 7 - Mobile: wayfinding & escape hatches (from 2026-08-18 mobile audit)
+Interaction design, moderate effort — the site's core discoverability gap on mobile.
+- [ ] Give mobile a persistent, always-visible way to leave the spatial "sea" for a linear list
+      of poems/archive — not just the keyboard-only `.skip-link` (F2). The existing `#nc` linear
+      content block is a strong starting point for what this view should contain.
+- [ ] Add a lightweight "you are here" cue (edge fade, dot trail, or minimal minimap) so mobile
+      users can sense how much of the world remains unexplored and in which direction (F3, F7).
+- [ ] Add an explicit way to see more of the world at once on mobile — e.g. double-tap-to-recenter
+      or a "zoom out" control — since `touch-action:none` removes native pinch-zoom entirely (F7).
+
+## Phase 8 - Mobile: viewport-adaptive spatial scale (from 2026-08-18 mobile audit)
+The one structural change. Larger effort — design + engineering + re-validation together.
+- [ ] Make the packed-world scale (`spread`, `islandScale`, or an equivalent radius passed into
+      `packIslands()`) responsive to viewport width, so phones see a denser, faster-to-explore
+      cluster instead of inheriting the desktop world size (F3).
+- [ ] Re-tune `packIslands()`'s `GAP`/`GRAVITY` constants for the compressed mobile canvas so
+      islands don't feel cramped once brought closer together.
+- [ ] Re-validate touch drag distance/multiplier and the seed → bloom → sea entrance pacing at
+      the new mobile scale — both were tuned against the current, larger world.
+
+## Phase 9 - Mobile: verification & regression-proofing (from 2026-08-18 mobile audit)
+- [ ] Extend `work/visual-smoke-check.mjs` beyond the single 390px width to include 360px
+      (common Android baseline) and 428px (Pro Max-class), plus one landscape pass (F9).
+- [ ] Manual on-device pass (iOS Safari + Android Chrome) focused on `100dvh`/safe-area behavior
+      against the collapsing Safari toolbar, `mask-image` fallback rendering, and drag ergonomics
+      — screenshots alone won't catch this class of bug (F9).
+- [ ] Re-run the WCAG contrast pass on any new UI introduced in Phases 6-8, since the existing
+      fix only covered the pre-existing teal/red text.
