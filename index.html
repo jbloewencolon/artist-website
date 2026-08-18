@@ -21,8 +21,7 @@
 <link rel="preload" href="assets/site-fonts.css" as="style">
 <link rel="preload" href="assets/logo-white.webp" as="image" type="image/webp">
 <link href="assets/site-fonts.css" rel="stylesheet">
-<style>x-dc{display:none!important}.js-boot #nc{display:none}</style>
-<script>document.documentElement.classList.add('js-boot');window.__dcMountTimeout=setTimeout(function(){document.documentElement.classList.remove('js-boot');},4000);</script>
+<style>x-dc{display:none!important}</style>
 <script src="./support.js"></script>
 </head>
 <body>
@@ -36,8 +35,6 @@
   .skip-link:focus{transform:none;}
   button{font:inherit;}
   @keyframes washIn{0%{opacity:.45;filter:blur(11px)}100%{opacity:1;filter:blur(0)}}
-  @keyframes hintIn{0%{opacity:0;transform:translate(-50%,-6px)}100%{opacity:1;transform:translate(-50%,0)}}
-  @keyframes hintDotPulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.45;transform:scale(.72)}}
   @media (prefers-reduced-motion: reduce){
     *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.001ms!important;}
   }
@@ -47,7 +44,6 @@
     div[style*="position:fixed;bottom:26px;left:50%;transform:translateX(-50%)"]{bottom:calc(26px + env(safe-area-inset-bottom))!important;}
     button[style*="position:fixed;top:30px;right:34px"]{top:calc(30px + env(safe-area-inset-top))!important;right:calc(28px + env(safe-area-inset-right))!important;}
     div[style*="font-style:italic;font-size:15px;letter-spacing:.22em;color:#2C6960"]{max-width:min(88vw,420px);padding:0 10px;font-size:13px!important;letter-spacing:.16em!important;line-height:1.7;text-align:center;}
-    .drag-hint{top:calc(66px + env(safe-area-inset-top))!important;}
   }
 </style>
 <script src="./image-slot.js"></script>
@@ -126,7 +122,7 @@
 
             <sc-if value="{{ p.isHero }}" hint-placeholder-val="{{ false }}">
               <div style="width:min(260px,60vw);height:min(260px,60vw);overflow:hidden;position:relative;pointer-events:none;">
-                <img src="assets/mark-color.webp" srcset="assets/mark-color-480.webp 480w, assets/mark-color-960.webp 960w, assets/mark-color.webp 1024w" sizes="min(520px,120vw)" alt="al colibrí" decoding="async" style="width:min(520px,120vw);height:auto;position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);">
+                <img src="assets/logo-white.webp" alt="al colibrí" decoding="async" style="width:min(520px,120vw);height:auto;position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);filter:brightness(0);opacity:.75;mix-blend-mode:multiply;">
               </div>
               <div style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:30px;color:#181410;margin-top:16px;letter-spacing:-.01em;">al colibrí</div>
               <div style="font-family:'Space Mono',monospace;font-style:italic;font-size:13px;letter-spacing:.07em;color:#2C6960;max-width:360px;">Taíno in diaspora · transmedia artist</div>
@@ -189,14 +185,6 @@
     <div data-bob="1" style="width:40px;height:40px;border:2px solid #181410;border-radius:50%;background:repeating-linear-gradient(45deg,#E69BA6 0 6px,transparent 6px 12px),#efe6d2;box-shadow:3px 3px 0 #1E3FCC;"></div>
     <div style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#181410;opacity:.72;">home</div>
   </div>
-
-  <!-- DRAG HINT (first-visit only, dismissed on first interaction) -->
-  <sc-if value="{{ showDragHint }}" hint-placeholder-val="{{ false }}">
-    <div class="drag-hint" aria-hidden="true" style="position:fixed;top:calc(26px + env(safe-area-inset-top));left:50%;transform:translateX(-50%);z-index:45;pointer-events:none;display:flex;align-items:center;gap:10px;max-width:calc(100vw - 40px);padding:10px 18px;border:2px dashed #181410;background:rgba(231,220,196,.94);animation:hintIn .6s ease forwards;">
-      <div style="width:8px;height:8px;border-radius:50%;background:#BC2E1C;flex-shrink:0;animation:hintDotPulse 1.6s ease-in-out infinite;"></div>
-      <div style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#181410;">{{ dragHintLabel }}</div>
-    </div>
-  </sc-if>
 
   <!-- POEM / PIECE ENCOUNTER -->
   <sc-if value="{{ selected }}" hint-placeholder-val="{{ false }}">
@@ -284,7 +272,7 @@
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;driftSpeed&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;tidal&quot;,&quot;options&quot;:[&quot;calm&quot;,&quot;tidal&quot;,&quot;lively&quot;],&quot;tsType&quot;:&quot;string&quot;},&quot;parallax&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;floatAmp&quot;:{&quot;editor&quot;:&quot;float&quot;,&quot;default&quot;:1.2,&quot;min&quot;:0,&quot;max&quot;:2.5,&quot;step&quot;:0.1,&quot;tsType&quot;:&quot;number&quot;},&quot;spread&quot;:{&quot;editor&quot;:&quot;float&quot;,&quot;default&quot;:1.65,&quot;min&quot;:0.7,&quot;max&quot;:2,&quot;step&quot;:0.05,&quot;tsType&quot;:&quot;number&quot;},&quot;islandScale&quot;:{&quot;editor&quot;:&quot;float&quot;,&quot;default&quot;:1.1,&quot;min&quot;:0.75,&quot;max&quot;:1.35,&quot;step&quot;:0.05,&quot;tsType&quot;:&quot;number&quot;},&quot;palette&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;full&quot;,&quot;options&quot;:[&quot;full&quot;,&quot;sun-bleached&quot;,&quot;muted&quot;],&quot;tsType&quot;:&quot;string&quot;},&quot;entrancePace&quot;:{&quot;editor&quot;:&quot;float&quot;,&quot;default&quot;:1,&quot;min&quot;:0.4,&quot;max&quot;:2,&quot;step&quot;:0.1,&quot;tsType&quot;:&quot;number&quot;},&quot;grain&quot;:{&quot;editor&quot;:&quot;float&quot;,&quot;default&quot;:0,&quot;min&quot;:0,&quot;max&quot;:1,&quot;step&quot;:0.05,&quot;tsType&quot;:&quot;number&quot;}}">
 class Component extends DCLogic {
-  state = { phase: location.hash === '#sea' ? 'sea' : 'seed', selected: null, showDragHint: false };
+  state = { phase: location.hash === '#sea' ? 'sea' : 'seed', selected: null };
 
   pan = { x: 0, y: 0 };
   target = { x: 0, y: 0 };
@@ -306,12 +294,9 @@ class Component extends DCLogic {
     window.addEventListener('resize', this._onResize);
     window.addEventListener('keydown', this.onGlobalKeyDown);
     this._reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    this._isTouch = !!(window.matchMedia && window.matchMedia('(pointer: coarse)').matches);
     this.raf = requestAnimationFrame(this.tick);
     this._packTimers = [setTimeout(() => this.schedulePack(), 280), setTimeout(() => this.schedulePack(), 1000)];
-    clearTimeout(window.__dcMountTimeout);
     document.getElementById('nc')?.remove();
-    if (this.state.phase === 'sea') this.maybeShowDragHint();
   }
   componentWillUnmount() {
     window.removeEventListener('pointermove', this.onPointerMove);
@@ -333,7 +318,6 @@ class Component extends DCLogic {
     window.removeEventListener('keydown', this.onGlobalKeyDown);
     (this._packTimers || []).forEach(clearTimeout);
     clearTimeout(this._movedTimer);
-    clearTimeout(this._dragHintTimer);
     if (this._packRaf) cancelAnimationFrame(this._packRaf);
     cancelAnimationFrame(this.raf);
   }
@@ -491,7 +475,6 @@ class Component extends DCLogic {
   onSeaPointerDown = (e) => {
     if (this.state.phase !== 'sea' || this.state.selected) return;
     if (e.button != null && e.button !== 0) return;
-    this.dismissDragHint();
     this._pressButton = e.target?.closest?.('[data-sea-piece="1"]') || null;
     if (e.currentTarget?.setPointerCapture && e.pointerId != null) {
       try { e.currentTarget.setPointerCapture(e.pointerId); this._dragEl = e.currentTarget; } catch {}
@@ -503,7 +486,6 @@ class Component extends DCLogic {
   onSeaMouseDown = (e) => {
     if (this.state.phase !== 'sea' || this.state.selected) return;
     if (e.button != null && e.button !== 0) return;
-    this.dismissDragHint();
     this._pressButton = e.target?.closest?.('[data-sea-piece="1"]') || null;
     this.drag = { mouse: true, sx: e.clientX, sy: e.clientY, ox: this.target.x, oy: this.target.y };
     this._moved = false;
@@ -512,7 +494,6 @@ class Component extends DCLogic {
   onSeaTouchStart = (e) => {
     if (this.state.phase !== 'sea' || this.state.selected) return;
     if (!e.touches || e.touches.length !== 1) return;
-    this.dismissDragHint();
     const t = e.touches[0];
     this._pressButton = e.target?.closest?.('[data-sea-piece="1"]') || null;
     this.drag = { id: t.identifier, touch: true, sx: t.clientX, sy: t.clientY, ox: this.target.x, oy: this.target.y };
@@ -612,23 +593,10 @@ class Component extends DCLogic {
 
   enter = () => {
     if (this.state.phase !== 'seed') return;
-    if (this._reduceMotion) { this.setState({ phase: 'sea' }); this.maybeShowDragHint(); return; }
+    if (this._reduceMotion) { this.setState({ phase: 'sea' }); return; }
     this.setState({ phase: 'bloom' });
     const pace = this.props.entrancePace || 1;
-    setTimeout(() => { this.setState({ phase: 'sea' }); this.maybeShowDragHint(); }, 1650 * pace);
-  };
-  maybeShowDragHint = () => {
-    let seen = false;
-    try { seen = !!localStorage.getItem('colibri-drag-hint-seen'); } catch {}
-    if (seen) return;
-    this.setState({ showDragHint: true });
-    this._dragHintTimer = setTimeout(() => this.dismissDragHint(), 5200);
-  };
-  dismissDragHint = () => {
-    if (!this.state.showDragHint) return;
-    clearTimeout(this._dragHintTimer);
-    this.setState({ showDragHint: false });
-    try { localStorage.setItem('colibri-drag-hint-seen', '1'); } catch {}
+    setTimeout(() => this.setState({ phase: 'sea' }), 1650 * pace);
   };
 
   onGlobalKeyDown = (e) => {
@@ -684,7 +652,7 @@ class Component extends DCLogic {
     const INK = '#181410', YEL = '#F4C20D', RED = '#BC2E1C', BLU = '#1E3FCC', TEAL = '#4F9E94', PINK = '#E69BA6';
     const raw = [
       { kind: 'hero', title: 'al colibrí', modalKind: 'bio', accent: RED,
-        slotId: 'hero-mark', img: 'assets/mark-color.webp',
+        slotId: 'hero-mark', img: 'assets/logo-white.webp',
         bioSlotId: 'artist-portrait', bioImg: 'assets/mural.webp',
         bio: 'al colibrí is a Taíno in diaspora, living and working on the lands of the peoples of Tkaronto. He is a transmedia artist who experiments with digital video, gaming, poetry and non-fiction, and focuses on themes of spiritualized nature, the tenderness of grief, ancestral kinetics, and playful decadence. When he isn’t critically fabulating, he moonlights as a professor at multiple universities in Canada and the US and is a father of two little love goblins (emphasis on the goblins).',
         x: 1300, y: 800, rot: -2, amp: 1.4, phase: 0, ph: [360, 300] },
@@ -832,8 +800,6 @@ class Component extends DCLogic {
       showOverlay: phase !== 'sea',
       isSeed: phase === 'seed',
       isBloom: phase === 'bloom',
-      showDragHint: this.state.showDragHint,
-      dragHintLabel: this._isTouch ? 'press + drag to drift through the islands' : 'click + drag to drift through the islands',
       enter: this.enter,
       close: this.close,
       goHome: this.goHome,
