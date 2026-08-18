@@ -36,6 +36,8 @@
   .skip-link:focus{transform:none;}
   button{font:inherit;}
   @keyframes washIn{0%{opacity:.45;filter:blur(11px)}100%{opacity:1;filter:blur(0)}}
+  @keyframes hintIn{0%{opacity:0;transform:translate(-50%,-6px)}100%{opacity:1;transform:translate(-50%,0)}}
+  @keyframes hintDotPulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.45;transform:scale(.72)}}
   @media (prefers-reduced-motion: reduce){
     *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.001ms!important;}
   }
@@ -45,6 +47,13 @@
     div[style*="position:fixed;bottom:26px;left:50%;transform:translateX(-50%)"]{bottom:calc(26px + env(safe-area-inset-bottom))!important;}
     button[style*="position:fixed;top:30px;right:34px"]{top:calc(30px + env(safe-area-inset-top))!important;right:calc(28px + env(safe-area-inset-right))!important;}
     div[style*="font-style:italic;font-size:15px;letter-spacing:.22em;color:#2C6960"]{max-width:min(88vw,420px);padding:0 10px;font-size:13px!important;letter-spacing:.16em!important;line-height:1.7;text-align:center;}
+    .drag-hint{top:calc(66px + env(safe-area-inset-top))!important;}
+  }
+  @media (max-width:480px){
+    .ui-label{font-size:13px!important;letter-spacing:.08em!important;}
+  }
+  @supports not (mask-image: linear-gradient(#000, transparent)) and not (-webkit-mask-image: linear-gradient(#000, transparent)) {
+    .poem-preview{box-shadow:inset 0 -46px 30px -18px #E7DCC4;}
   }
 </style>
 <script src="./image-slot.js"></script>
@@ -126,19 +135,19 @@
                 <img src="assets/logo-white.webp" alt="al colibrí" decoding="async" style="width:min(520px,120vw);height:auto;position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);filter:brightness(0);opacity:.75;mix-blend-mode:multiply;">
               </div>
               <div style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:30px;color:#181410;margin-top:16px;letter-spacing:-.01em;">al colibrí</div>
-              <div style="font-family:'Space Mono',monospace;font-style:italic;font-size:13px;letter-spacing:.07em;color:#2C6960;max-width:360px;">Taíno in diaspora · transmedia artist</div>
-              <div style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.07em;color:#B82D1B;">the artist →</div>
+              <div class="ui-label" style="font-family:'Space Mono',monospace;font-style:italic;font-size:13px;letter-spacing:.07em;color:#2C6960;max-width:360px;">Taíno in diaspora · transmedia artist</div>
+              <div class="ui-label" style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.07em;color:#B82D1B;">the artist →</div>
             </sc-if>
 
             <sc-if value="{{ p.isPoem }}" hint-placeholder-val="{{ false }}">
-              <div style="font-family:'Space Mono',monospace;font-size:13px;font-style:italic;letter-spacing:.1em;color:#2C6960;">{{ p.tag }}</div>
+              <div class="ui-label" style="font-family:'Space Mono',monospace;font-size:13px;font-style:italic;letter-spacing:.1em;color:#2C6960;">{{ p.tag }}</div>
               <div style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:30px;line-height:.98;color:#181410;max-width:340px;letter-spacing:-.015em;">{{ p.title }}</div>
-              <div style="max-width:330px;max-height:128px;overflow:hidden;font-family:'Spectral',serif;font-weight:300;font-size:17px;line-height:1.5;color:#181410;white-space:pre-wrap;-webkit-mask-image:linear-gradient(180deg,#000 50%,transparent);mask-image:linear-gradient(180deg,#000 50%,transparent);">{{ p.preview }}</div>
-              <div style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.07em;color:#B82D1B;">{{ p.cue }}</div>
+              <div class="poem-preview" style="max-width:330px;max-height:128px;overflow:hidden;font-family:'Spectral',serif;font-weight:300;font-size:17px;line-height:1.5;color:#181410;white-space:pre-wrap;-webkit-mask-image:linear-gradient(180deg,#000 50%,transparent);mask-image:linear-gradient(180deg,#000 50%,transparent);">{{ p.preview }}</div>
+              <div class="ui-label" style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.07em;color:#B82D1B;">{{ p.cue }}</div>
             </sc-if>
 
             <sc-if value="{{ p.isMedia }}" hint-placeholder-val="{{ false }}">
-              <div style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#181410;opacity:.7;">{{ p.kindLabel }}</div>
+              <div class="ui-label" style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#181410;opacity:.7;">{{ p.kindLabel }}</div>
               <div style="{{ p.frameStyle }}">
                 <image-slot id="{{ p.slotId }}" src="{{ p.img }}" srcset="{{ p.srcset }}" sizes="{{ p.sizes }}" alt="{{ p.alt }}" width="{{ p.phW }}" height="{{ p.phH }}" loading="lazy" shape="rect" fit="cover" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;" placeholder="drop an image"></image-slot>
               </div>
@@ -147,27 +156,27 @@
 
             <sc-if value="{{ p.isLink }}" hint-placeholder-val="{{ false }}">
               <div style="{{ p.linkBoxStyle }}">
-                <div style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#2C6960;">{{ p.tag }}</div>
+                <div class="ui-label" style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#2C6960;">{{ p.tag }}</div>
                 <div style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:30px;line-height:.95;color:#181410;letter-spacing:-.01em;">{{ p.title }} →</div>
               </div>
             </sc-if>
 
             <sc-if value="{{ p.isPerf }}" hint-placeholder-val="{{ false }}">
-              <div style="width:320px;background:#F4C20D;border:3px solid #181410;box-shadow:9px 9px 0 #181410;">
+              <div style="width:min(320px,calc(100vw - 48px));background:#F4C20D;border:3px solid #181410;box-shadow:9px 9px 0 #181410;">
                 <div style="padding:14px 18px 10px;border-bottom:3px solid #181410;display:flex;justify-content:space-between;align-items:baseline;">
-                  <div style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#181410;">recent</div>
+                  <div class="ui-label" style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#181410;">recent</div>
                   <div style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:19px;letter-spacing:-.01em;color:#181410;">Performances</div>
                 </div>
                 <sc-for list="{{ p.events }}" as="ev" hint-placeholder-count="3">
                   <div style="padding:12px 18px;border-bottom:1.5px solid rgba(24,20,16,.2);display:flex;flex-direction:column;gap:4px;">
                     <div style="display:flex;gap:10px;align-items:center;">
-                      <div style="font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;background:#181410;color:#F4C20D;padding:2px 6px;">{{ ev.date }}</div>
-                      <div style="font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#181410;opacity:.65;">{{ ev.tag }}</div>
+                      <div class="ui-label" style="font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;background:#181410;color:#F4C20D;padding:2px 6px;">{{ ev.date }}</div>
+                      <div class="ui-label" style="font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#181410;opacity:.65;">{{ ev.tag }}</div>
                     </div>
                     <div style="font-family:'Spectral',serif;font-weight:400;font-size:16px;line-height:1.3;color:#181410;">{{ ev.venue }}</div>
                   </div>
                 </sc-for>
-                <div style="padding:10px 18px;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.1em;color:#181410;opacity:.8;">all performances in archive →</div>
+                <div class="ui-label" style="padding:10px 18px;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.1em;color:#181410;opacity:.8;">all performances in archive →</div>
               </div>
             </sc-if>
 
@@ -182,10 +191,18 @@
   <div style="position:fixed;top:26px;left:30px;z-index:40;pointer-events:none;font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:22px;letter-spacing:-.01em;color:#181410;">al colibrí</div>
 
   <!-- HOME / EXIT ANCHOR (the floor) -->
-  <div style="position:fixed;bottom:26px;left:50%;transform:translateX(-50%);z-index:60;display:flex;flex-direction:column;align-items:center;gap:8px;cursor:pointer;" onClick="{{ goHome }}" role="button" tabIndex="0" aria-label="Return to the center of the sea" onKeyDown="{{ activateHome }}">
+  <div style="position:fixed;bottom:26px;left:50%;transform:translateX(-50%);z-index:60;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:10px 16px;min-width:44px;min-height:44px;cursor:pointer;" onClick="{{ goHome }}" role="button" tabIndex="0" aria-label="Return to the center of the sea" onKeyDown="{{ activateHome }}">
     <div data-bob="1" style="width:40px;height:40px;border:2px solid #181410;border-radius:50%;background:repeating-linear-gradient(45deg,#E69BA6 0 6px,transparent 6px 12px),#efe6d2;box-shadow:3px 3px 0 #1E3FCC;"></div>
-    <div style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#181410;opacity:.72;">home</div>
+    <div class="ui-label" style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#181410;opacity:.72;">home</div>
   </div>
+
+  <!-- DRAG HINT (first-visit only, dismissed on first interaction) -->
+  <sc-if value="{{ showDragHint }}" hint-placeholder-val="{{ false }}">
+    <div class="drag-hint" aria-hidden="true" style="position:fixed;top:calc(26px + env(safe-area-inset-top));left:50%;transform:translateX(-50%);z-index:45;pointer-events:none;display:flex;align-items:center;gap:10px;max-width:calc(100vw - 40px);padding:10px 18px;border:2px dashed #181410;background:rgba(231,220,196,.94);animation:hintIn .6s ease forwards;">
+      <div style="width:8px;height:8px;border-radius:50%;background:#BC2E1C;flex-shrink:0;animation:hintDotPulse 1.6s ease-in-out infinite;"></div>
+      <div style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#181410;">{{ dragHintLabel }}</div>
+    </div>
+  </sc-if>
 
   <!-- POEM / PIECE ENCOUNTER -->
   <sc-if value="{{ selected }}" hint-placeholder-val="{{ false }}">
@@ -206,7 +223,7 @@
 
       <sc-if value="{{ selected.isVideoModal }}" hint-placeholder-val="{{ false }}">
         <div data-palfx onClick="{{ stop }}" style="text-align:center;max-width:920px;max-height:88vh;overflow:auto;cursor:auto;">
-          <div style="font-family:'Space Mono',monospace;font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:#2C6960;margin-bottom:20px;">{{ selected.kindLabel }}</div>
+          <div class="ui-label" style="font-family:'Space Mono',monospace;font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:#2C6960;margin-bottom:20px;">{{ selected.kindLabel }}</div>
           <div style="width:min(900px,86vw);aspect-ratio:16/9;margin:0 auto;border:3px solid #181410;box-shadow:12px 12px 0 #BC2E1C;background:#000;">
             <iframe data-video-src="{{ selected.videoSrc }}" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen style="width:100%;height:100%;border:0;display:block;" title="{{ selected.title }}"></iframe>
           </div>
@@ -231,7 +248,7 @@
             <image-slot id="{{ selected.bioSlotId }}" src="{{ selected.bioImg }}" srcset="{{ selected.bioSrcset }}" sizes="{{ selected.bioSizes }}" alt="al colibrí before a hummingbird mural" width="340" height="340" loading="lazy" shape="rect" fit="cover" style="position:absolute;inset:0;width:100%;height:100%;" placeholder="drop a portrait"></image-slot>
           </div>
           <div style="max-width:470px;">
-            <div style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:#2C6960;margin-bottom:12px;">the artist</div>
+            <div class="ui-label" style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:#2C6960;margin-bottom:12px;">the artist</div>
             <div style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(42px,6vw,62px);line-height:.9;letter-spacing:-.02em;color:#181410;margin-bottom:24px;">al colibrí</div>
             <div style="font-family:'Spectral',serif;font-weight:300;font-size:clamp(18px,2vw,21px);line-height:1.66;color:#181410;">{{ selected.bio }}</div>
             <div style="margin-top:26px;height:8px;width:90px;background:#F4C20D;transform:rotate(-1deg);"></div>
@@ -239,7 +256,7 @@
         </div>
       </sc-if>
 
-      <button type="button" onClick="{{ close }}" style="position:fixed;top:30px;right:34px;appearance:none;border:0;background:transparent;font-family:'Space Mono',monospace;font-size:13px;letter-spacing:.1em;color:#181410;opacity:.8;cursor:pointer;">drift back ↩</button>
+      <button type="button" onClick="{{ close }}" style="position:fixed;top:30px;right:34px;appearance:none;border:0;background:transparent;font-family:'Space Mono',monospace;font-size:13px;letter-spacing:.1em;color:#181410;opacity:.8;cursor:pointer;padding:14px 16px;min-height:44px;min-width:44px;display:inline-flex;align-items:center;justify-content:center;">drift back ↩</button>
     </div>
   </sc-if>
 
@@ -262,7 +279,7 @@
           </div>
           <div style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(56px,11vw,140px);line-height:.86;color:#181410;letter-spacing:-.02em;">al<br>colibrí</div>
           <div style="font-family:'Space Mono',monospace;font-style:italic;font-size:15px;letter-spacing:.22em;color:#2C6960;">koyaha · irudahialo · karariwa</div>
-          <div style="font-family:'Space Mono',monospace;font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:#181410;opacity:.66;margin-top:8px;">drift in →</div>
+          <div class="ui-label" style="font-family:'Space Mono',monospace;font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:#181410;opacity:.66;margin-top:8px;">drift in →</div>
         </div>
       </sc-if>
 
@@ -273,7 +290,7 @@
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;driftSpeed&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;tidal&quot;,&quot;options&quot;:[&quot;calm&quot;,&quot;tidal&quot;,&quot;lively&quot;],&quot;tsType&quot;:&quot;string&quot;},&quot;parallax&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;floatAmp&quot;:{&quot;editor&quot;:&quot;float&quot;,&quot;default&quot;:1.2,&quot;min&quot;:0,&quot;max&quot;:2.5,&quot;step&quot;:0.1,&quot;tsType&quot;:&quot;number&quot;},&quot;spread&quot;:{&quot;editor&quot;:&quot;float&quot;,&quot;default&quot;:1.65,&quot;min&quot;:0.7,&quot;max&quot;:2,&quot;step&quot;:0.05,&quot;tsType&quot;:&quot;number&quot;},&quot;islandScale&quot;:{&quot;editor&quot;:&quot;float&quot;,&quot;default&quot;:1.1,&quot;min&quot;:0.75,&quot;max&quot;:1.35,&quot;step&quot;:0.05,&quot;tsType&quot;:&quot;number&quot;},&quot;palette&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;full&quot;,&quot;options&quot;:[&quot;full&quot;,&quot;sun-bleached&quot;,&quot;muted&quot;],&quot;tsType&quot;:&quot;string&quot;},&quot;entrancePace&quot;:{&quot;editor&quot;:&quot;float&quot;,&quot;default&quot;:1,&quot;min&quot;:0.4,&quot;max&quot;:2,&quot;step&quot;:0.1,&quot;tsType&quot;:&quot;number&quot;},&quot;grain&quot;:{&quot;editor&quot;:&quot;float&quot;,&quot;default&quot;:0,&quot;min&quot;:0,&quot;max&quot;:1,&quot;step&quot;:0.05,&quot;tsType&quot;:&quot;number&quot;}}">
 class Component extends DCLogic {
-  state = { phase: location.hash === '#sea' ? 'sea' : 'seed', selected: null };
+  state = { phase: location.hash === '#sea' ? 'sea' : 'seed', selected: null, showDragHint: false };
 
   pan = { x: 0, y: 0 };
   target = { x: 0, y: 0 };
@@ -295,10 +312,12 @@ class Component extends DCLogic {
     window.addEventListener('resize', this._onResize);
     window.addEventListener('keydown', this.onGlobalKeyDown);
     this._reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    this._isTouch = !!(window.matchMedia && window.matchMedia('(pointer: coarse)').matches);
     this.raf = requestAnimationFrame(this.tick);
     document.getElementById('nc')?.remove();
     this.schedulePack();
     this._packTimers = [setTimeout(() => this.schedulePack(), 280), setTimeout(() => { this.schedulePack(); window.__dcReady?.(); }, 1000)];
+    if (this.state.phase === 'sea') this.maybeShowDragHint();
   }
   componentWillUnmount() {
     window.removeEventListener('pointermove', this.onPointerMove);
@@ -320,6 +339,7 @@ class Component extends DCLogic {
     window.removeEventListener('keydown', this.onGlobalKeyDown);
     (this._packTimers || []).forEach(clearTimeout);
     clearTimeout(this._movedTimer);
+    clearTimeout(this._dragHintTimer);
     if (this._packRaf) cancelAnimationFrame(this._packRaf);
     cancelAnimationFrame(this.raf);
   }
@@ -477,6 +497,7 @@ class Component extends DCLogic {
   onSeaPointerDown = (e) => {
     if (this.state.phase !== 'sea' || this.state.selected) return;
     if (e.button != null && e.button !== 0) return;
+    this.dismissDragHint();
     this._pressButton = e.target?.closest?.('[data-sea-piece="1"]') || null;
     if (e.currentTarget?.setPointerCapture && e.pointerId != null) {
       try { e.currentTarget.setPointerCapture(e.pointerId); this._dragEl = e.currentTarget; } catch {}
@@ -488,6 +509,7 @@ class Component extends DCLogic {
   onSeaMouseDown = (e) => {
     if (this.state.phase !== 'sea' || this.state.selected) return;
     if (e.button != null && e.button !== 0) return;
+    this.dismissDragHint();
     this._pressButton = e.target?.closest?.('[data-sea-piece="1"]') || null;
     this.drag = { mouse: true, sx: e.clientX, sy: e.clientY, ox: this.target.x, oy: this.target.y };
     this._moved = false;
@@ -496,6 +518,7 @@ class Component extends DCLogic {
   onSeaTouchStart = (e) => {
     if (this.state.phase !== 'sea' || this.state.selected) return;
     if (!e.touches || e.touches.length !== 1) return;
+    this.dismissDragHint();
     const t = e.touches[0];
     this._pressButton = e.target?.closest?.('[data-sea-piece="1"]') || null;
     this.drag = { id: t.identifier, touch: true, sx: t.clientX, sy: t.clientY, ox: this.target.x, oy: this.target.y };
@@ -595,10 +618,23 @@ class Component extends DCLogic {
 
   enter = () => {
     if (this.state.phase !== 'seed') return;
-    if (this._reduceMotion) { this.setState({ phase: 'sea' }); return; }
+    if (this._reduceMotion) { this.setState({ phase: 'sea' }); this.maybeShowDragHint(); return; }
     this.setState({ phase: 'bloom' });
     const pace = this.props.entrancePace || 1;
-    setTimeout(() => this.setState({ phase: 'sea' }), 1650 * pace);
+    setTimeout(() => { this.setState({ phase: 'sea' }); this.maybeShowDragHint(); }, 1650 * pace);
+  };
+  maybeShowDragHint = () => {
+    let seen = false;
+    try { seen = !!localStorage.getItem('colibri-drag-hint-seen'); } catch {}
+    if (seen) return;
+    this.setState({ showDragHint: true });
+    this._dragHintTimer = setTimeout(() => this.dismissDragHint(), 5200);
+  };
+  dismissDragHint = () => {
+    if (!this.state.showDragHint) return;
+    clearTimeout(this._dragHintTimer);
+    this.setState({ showDragHint: false });
+    try { localStorage.setItem('colibri-drag-hint-seen', '1'); } catch {}
   };
 
   onGlobalKeyDown = (e) => {
@@ -741,7 +777,8 @@ class Component extends DCLogic {
       let frameStyle = null;
       if (r.ph) {
         frameStyle = {
-          position: 'relative', width: r.ph[0] + 'px', height: r.ph[1] + 'px',
+          position: 'relative', width: `min(${r.ph[0]}px, calc(100vw - 48px))`,
+          aspectRatio: `${r.ph[0]} / ${r.ph[1]}`,
           border: '3px solid #181410', boxShadow: `9px 9px 0 ${r.accent}`,
           background: '#efe6d2', overflow: 'hidden',
         };
@@ -802,6 +839,8 @@ class Component extends DCLogic {
       showOverlay: phase !== 'sea',
       isSeed: phase === 'seed',
       isBloom: phase === 'bloom',
+      showDragHint: this.state.showDragHint,
+      dragHintLabel: this._isTouch ? 'press + drag to drift through the islands' : 'click + drag to drift through the islands',
       enter: this.enter,
       close: this.close,
       goHome: this.goHome,
