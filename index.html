@@ -21,7 +21,8 @@
 <link rel="preload" href="assets/site-fonts.css" as="style">
 <link rel="preload" href="assets/logo-white.webp" as="image" type="image/webp">
 <link href="assets/site-fonts.css" rel="stylesheet">
-<style>x-dc{display:none!important}</style>
+<style>html,body{margin:0;padding:0;background:#E7DCC4}x-dc{display:none!important}x-dc.dc-ready{display:block;opacity:0;transition:opacity .3s ease}@media(prefers-reduced-motion:reduce){x-dc.dc-ready{transition:none}}x-dc.dc-ready.dc-revealed{opacity:1}</style>
+<script>window.__dcReady=()=>{const r=document.querySelector('x-dc');if(r){r.classList.add('dc-ready');if(document.fonts&&document.fonts.ready){document.fonts.ready.then(()=>{r.classList.add('dc-revealed')}).catch(()=>{setTimeout(()=>r.classList.add('dc-revealed'),2000)});setTimeout(()=>{r.classList.add('dc-revealed')},2000)}else{r.classList.add('dc-revealed')}}}</script>
 <script src="./support.js"></script>
 </head>
 <body>
@@ -295,8 +296,9 @@ class Component extends DCLogic {
     window.addEventListener('keydown', this.onGlobalKeyDown);
     this._reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     this.raf = requestAnimationFrame(this.tick);
-    this._packTimers = [setTimeout(() => this.schedulePack(), 280), setTimeout(() => this.schedulePack(), 1000)];
     document.getElementById('nc')?.remove();
+    this.schedulePack();
+    this._packTimers = [setTimeout(() => this.schedulePack(), 280), setTimeout(() => { this.schedulePack(); window.__dcReady?.(); }, 1000)];
   }
   componentWillUnmount() {
     window.removeEventListener('pointermove', this.onPointerMove);
