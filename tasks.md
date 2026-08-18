@@ -55,19 +55,19 @@
 
 ## Phase 6 - Mobile: restore & harden (from 2026-08-18 mobile audit)
 Quick, low-risk, no redesign. See `MOBILE_UX_AUDIT.md` for full writeups (F-numbers below).
-- [ ] Reinstate the first-visit drag hint as its own isolated commit, so it can't be swept up
+- [x] Reinstate the first-visit drag hint as its own isolated commit, so it can't be swept up
       in an unrelated revert again (F1). Touch-aware copy via `pointer:coarse` was already
       designed in commit `7af161b` before it was accidentally reverted in `5add280`.
-- [ ] Enlarge the modal close button ("drift back ↩") to a real 44×44px tap area via padding,
+- [x] Enlarge the modal close button ("drift back ↩") to a real 44×44px tap area via padding,
       not just text (F4).
-- [ ] Verify/adjust the home-anchor control so its visual pieces read as tappable, not just the
+- [x] Verify/adjust the home-anchor control so its visual pieces read as tappable, not just the
       combined hit area (F8).
-- [ ] Bump undersized UI-label font sizes (tags, cues, metadata) at the ≤480px breakpoint (F6).
-- [ ] Convert remaining fixed-pixel card/frame widths (perf card, media frames) to
+- [x] Bump undersized UI-label font sizes (tags, cues, metadata) at the ≤480px breakpoint (F6).
+- [x] Convert remaining fixed-pixel card/frame widths (perf card, media frames) to
       `min(Npx, calc(100vw - Xpx))`, matching the pattern already used for the hero mark and
       entrance heading (F5).
-- [ ] Add an `overflow:hidden` gradient-fade fallback alongside the `mask-image` poem-preview
-      fade for older Android WebView/Samsung Internet (F10).
+- [x] Add a `box-shadow`-based fade fallback alongside the `mask-image` poem-preview fade for
+      browsers without mask-image support, gated behind `@supports not (...)` (F10).
 
 ## Phase 7 - Mobile: wayfinding & escape hatches (from 2026-08-18 mobile audit)
 Interaction design, moderate effort — the site's core discoverability gap on mobile.
